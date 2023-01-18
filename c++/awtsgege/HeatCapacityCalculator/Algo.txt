@@ -1,0 +1,10 @@
+1. Start the program
+2. Initialize variables needed (choice, mass, deltaT, heatCapacity, specificHeatCapacity)
+3. Print the available choices and ask the user to press any key corresponding on the choice
+4. Switch case
+	- if choice is 1, get the user inputs needed to compute heat capacity. Compute and print.Ask the user if he/she wants to continue. If not end the program, else go back to number 3
+	- if choice is 2, get the user inputs needed to compute specific heat capacity. Compute and print. Ask the user if he/she wants to continue. If not end the program, else go back to number 3
+	- if choice is 3, get the user inputs needed to compute mass. Compute and print. Ask the user if he/she wants to continue. If not end the program, else go back to number 3
+	- if choice is 4, get the user inputs needed to compute change in temperature. Compute and print. Ask the user if he/she wants to continue. If not end the program, else go back to number 3
+	- if choice is 5, end the program
+5. End the program

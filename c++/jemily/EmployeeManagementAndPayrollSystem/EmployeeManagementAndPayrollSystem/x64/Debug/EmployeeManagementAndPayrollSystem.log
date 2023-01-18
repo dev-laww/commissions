@@ -1,0 +1,5 @@
+﻿  EmployeeManagementAndPayrollSystem.cpp
+C:\Users\Programming\Documents\Projects\Commissions\c++\jemily\EmployeeManagementAndPayrollSystem\EmployeeManagementAndPayrollSystem\EmployeeManagementAndPayrollSystem.cpp(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Programming\Documents\Projects\Commissions\c++\jemily\EmployeeManagementAndPayrollSystem\EmployeeManagementAndPayrollSystem\EmployeeManagementAndPayrollSystem.cpp(15,6): warning C4101: 'workHours': unreferenced local variable
+C:\Users\Programming\Documents\Projects\Commissions\c++\jemily\EmployeeManagementAndPayrollSystem\EmployeeManagementAndPayrollSystem\EmployeeManagementAndPayrollSystem.cpp(18,86): warning C4101: 'total': unreferenced local variable
+  EmployeeManagementAndPayrollSystem.vcxproj -> C:\Users\Programming\Documents\Projects\Commissions\c++\jemily\EmployeeManagementAndPayrollSystem\x64\Debug\EmployeeManagementAndPayrollSystem.exe

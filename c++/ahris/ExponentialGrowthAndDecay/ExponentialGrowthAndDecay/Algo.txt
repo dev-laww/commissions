@@ -1,0 +1,13 @@
+1. Start by declaring variables for the initial amount (amountI), final amount (amountF), rate, time (time1), and growth rate (gRate).
+2. Define several constants for colors, total, and characters to be used later in the program.
+3. Create a function called 'finalGrowth' that calculates the final growth of an amount using the formula P(t) = P(0) * e^(rt), where P(t) is the final value, P(0) is the initial value, t is the time in discreet intervals, and r is the growth or decay rate. The function should take no arguments and return the final growth value.
+4. Create a function called 'initialGrowth' that calculates the initial growth of an amount using the formula P(0) = P(t) / e^(rt), where P(0) is the initial value, P(t) is the final value, t is the time in discreet intervals, and r is the growth or decay rate. The function should take no arguments and return the initial growth value.
+5. Create a function called 'lengthTime' that calculates the length of time it takes for an amount to grow or decay using the formula t = ln(A/B) / r, where t is the time in discreet intervals, A is the final amount, B is the initial amount, and r is the growth or decay rate. The function should take no arguments and return the length of time.
+6. Create a function called 'growthRate' that calculates the growth or decay rate using the formula r = ln(A/B) / t, where r is the growth or decay rate, A is the final amount, B is the initial amount, and t is the time in discreet intervals. The function should take no arguments and return the growth or decay rate.
+7. Create a function called 'printNextLine' that prints a specified number of newline characters. The function should take an integer argument 'n' and return nothing.
+8. In the main function, use a while loop to display a loading bar while a progress counter is less than or equal to the total.
+9. After the loading bar, display a welcome message and information about the program.
+10. Prompt the user to enter their choice of calculation (final growth, initial growth, length of time, or growth rate).
+11. Based on the user's choice, prompt them to enter the necessary values and call the appropriate function to perform the calculation.
+12. Display the result of the calculation to the user.
+13. Prompt the user to perform another calculation or exit the program. If the user chooses to perform another calculation, go back to step 10. If the user chooses to exit the program, end the main function and the program.

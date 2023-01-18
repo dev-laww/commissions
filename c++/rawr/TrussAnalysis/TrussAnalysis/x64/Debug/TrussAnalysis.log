@@ -1,0 +1,11 @@
+﻿  TrussAnalysis.cpp
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(35,10): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(35,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(42,11): warning C4309: 'initializing': truncation of constant value
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(42,20): warning C4309: 'initializing': truncation of constant value
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(167,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(168,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(364,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(365,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\TrussAnalysis\TrussAnalysis.cpp(367,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  TrussAnalysis.vcxproj -> C:\Users\Programming\Documents\Projects\Commissions\c++\rawr\TrussAnalysis\x64\Debug\TrussAnalysis.exe

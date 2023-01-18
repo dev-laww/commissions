@@ -1,0 +1,14 @@
+1. Set up the necessary libraries and variables, including font information, a handle to the console, and various constants such as the length of the loading bar and the time it takes to load.
+2. Define a helper function called "center_indent" that takes in the length of a string and returns the necessary indentation to center the string on the console.
+3. Print the title art for the program, using the "unroll_print" function to animate the printing.
+4. Print a loading bar, using the "loading_bar" function to animate the progress.
+5. Enter an infinite loop to allow for continuous calculations.
+6. Clear the console.
+7. Reprint the title art and reset the center indentation.
+8. Prompt the user to input the values of X and Y for a vector and read in the values.
+9. Calculate the magnitude and angle of the vector using the formulas:
+	- magnitude = sqrt(x^2 + y^2)
+	- angle = atan2(y, x)
+10. Print the results to the console, using the "center_indent" function to center the output.
+11. Prompt the user to press enter to continue or any other key to exit the program.
+12. If the user presses enter, return to the beginning of the loop. If they press any other key, exit the program.

@@ -1,0 +1,9 @@
+﻿  Vector.cpp
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(30,118): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(30,118): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(42,5): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(80,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(90,57): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(94,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\Vector\Vector.cpp(121,27): warning C4244: 'argument': conversion from 'double' to 'DWORD', possible loss of data
+  Vector.vcxproj -> C:\Users\Programming\Documents\Projects\Commissions\c++\dembear the great\Vector\x64\Debug\Vector.exe

@@ -1,0 +1,26 @@
+1. Display "ROCK STRENGTH CALCULATOR" and the name and stubcode.
+2. Display options for the type of rock strength to calculate: compressive, tensile, or shear.
+3. Prompt the user to enter a letter corresponding to the type of rock strength they want to calculate.
+4. If the user entered "C" or "c":
+    a. Display instructions for calculating compressive strength.
+    b. Prompt the user to enter the value of P.
+    c. Prompt the user to enter the value of A.
+    d. Calculate the compressive strength by dividing P by A.
+    e. Display the calculated compressive strength.
+5. If the user entered "T" or "t":
+    a. Display instructions for calculating tensile strength.
+    b. Prompt the user to enter the value of P.
+    c. Prompt the user to enter the value of t.
+    d. Prompt the user to enter the value of D.
+    e. Calculate the tensile strength by using this formula -> tensile =(2*p)/(3.1416 * d * t)
+    f. Display the calculated tensile strength.
+6. If the user entered "S" or "s":
+    a. Display instructions for calculating shear strength.
+    b. Prompt the user to enter the value of Z.
+    c. Prompt the user to enter the value of t.
+    d. Prompt the user to enter the value of C.
+    e. Calculate the shear strength by using this formula -> shear = z + i * tan(f)
+    f. Display the calculated shear strength.
+7. Prompt the user to enter a key to calculate rock strength again or "n" to exit.
+8. If the user entered a key other than "n", go back to step 3.
+9. If the user entered "n", display a farewell message and exit the program.

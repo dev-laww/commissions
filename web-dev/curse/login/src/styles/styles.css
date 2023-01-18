@@ -1,0 +1,146 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1rem, 0.6875rem + 1vw, 1.25rem);
+  box-sizing: border-box;
+}
+
+body {
+  background: rgb(116, 57, 219);
+  background: linear-gradient(
+    90deg,
+    rgba(116, 57, 219, 1) 0%,
+    rgba(198, 111, 188, 1) 50%,
+    rgba(247, 148, 77, 1) 100%
+  );
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+label {
+  font-size: 0.625rem;
+  align-self: flex-start;
+}
+
+button {
+  margin: 1rem 0;
+  border: none;
+  background-color: white;
+  padding: 1em;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  color: black;
+  width: 100%;
+  transition: all 300ms ease-in-out;
+}
+
+button:hover {
+  background-color: #c66fbc;
+  color: white;
+}
+
+/* Typography */
+h2 {
+  font-size: clamp(2rem, 1.375rem + 2vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-align: center;
+  color: #000;
+}
+
+p {
+  margin-bottom: 2em;
+}
+
+/* Form */
+.container {
+  margin: 1em 0;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1em;
+  background-color: #fff;
+  border-radius: 10px;
+  min-height: 50vh;
+  max-width: 900px;
+}
+
+.input {
+  margin-bottom: 0.3em;
+  padding: 1rem;
+  outline: none;
+  border: 1px solid #e0e0e0;
+  width: 100%;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 1000px) {
+  h2 {
+    grid-column: span 2;
+  }
+
+  p {
+    grid-column: span 2;
+  }
+  
+  .auth-form {
+    max-width: 80vw;
+  }
+
+  #login, #forgot-pass{
+    padding: 5em;
+  }
+  
+  #register-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+
+  .input, button, a {
+    width: 100%;
+    grid-column: span 2;
+  }
+
+  #first-name {
+    grid-column: 1 / 2;
+    grid-row: 2;
+  }
+
+  #last-name {
+    grid-column: 2 / 3;
+    grid-row: 2;
+  }
+}

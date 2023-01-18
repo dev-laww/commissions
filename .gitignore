@@ -1,0 +1,8 @@
+.vs
+.vscode
+.idea
+*.zip
+node_modules
+venv
+bin
+obj

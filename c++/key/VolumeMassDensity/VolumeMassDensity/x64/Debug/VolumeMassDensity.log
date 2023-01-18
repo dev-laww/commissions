@@ -1,0 +1,7 @@
+﻿  VolumeMassDensity.cpp
+C:\Users\Programming\Documents\Projects\Commissions\c++\key\VolumeMassDensity\VolumeMassDensity\VolumeMassDensity.cpp(11,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Programming\Documents\Projects\Commissions\c++\key\VolumeMassDensity\VolumeMassDensity\VolumeMassDensity.cpp(126,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\key\VolumeMassDensity\VolumeMassDensity\VolumeMassDensity.cpp(221,12): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Programming\Documents\Projects\Commissions\c++\key\VolumeMassDensity\VolumeMassDensity\VolumeMassDensity.cpp(13,11): warning C4101: 'm': unreferenced local variable
+C:\Users\Programming\Documents\Projects\Commissions\c++\key\VolumeMassDensity\VolumeMassDensity\VolumeMassDensity.cpp(13,14): warning C4101: 'g': unreferenced local variable
+  VolumeMassDensity.vcxproj -> C:\Users\Programming\Documents\Projects\Commissions\c++\key\VolumeMassDensity\x64\Debug\VolumeMassDensity.exe

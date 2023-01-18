@@ -1,0 +1,16 @@
+1. The user is prompted to choose among three types of trusses: Howe, Cantilever, or Fink.
+	This step involves presenting the user with a menu or list of options, and asking them to choose one of the three truss types. The truss type they choose will determine the specific steps that follow.
+
+2. If the user chooses the Howe truss, they are prompted to input the external forces at joints B, C, D, E, F, and G, as well as the height and length of the truss.
+	In this step, the user is asked to provide specific input values that are necessary to perform the calculations for a Howe truss. The external forces at joints B, C, D, E, F, and G represent the forces acting on the truss from the environment, such as the weight of a load being supported by the truss. The height and length of the truss are also important inputs, as they determine the size and shape of the truss.
+
+3. The support forces at joints A and H are calculated using the inputted external forces and the length of the truss.
+	In this step, the support forces at joints A and H are determined using the external forces and the length of the truss. These support forces are necessary to balance the external forces and ensure that the truss remains stable.
+
+4. The forces in each member of the truss are then calculated using the inputted external forces, support forces, and the length and height of the truss.
+	In this step, the forces acting on each member of the truss are calculated using the input values provided in the previous steps. These calculations involve solving for the internal forces within the truss using principles of statics and structural engineering.
+
+5. The program then outputs the calculated forces for each member of the truss.
+	Finally, the program displays the calculated forces for each member of the truss. This output provides the user with a detailed understanding of the forces acting on the truss, which can be useful for designing and analyzing the structural integrity of the truss.
+
+If the user chooses a Cantilever or Fink truss, the process for calculating the forces in each member of the truss is similar to the process for a Howe truss. The specific input values and calculations will differ based on the specific type of truss chosen, but the overall process of inputting data, performing calculations, and outputting the results will be the same.

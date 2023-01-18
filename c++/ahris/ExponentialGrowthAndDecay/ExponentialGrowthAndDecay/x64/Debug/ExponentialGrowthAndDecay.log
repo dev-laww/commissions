@@ -1,0 +1,6 @@
+﻿  ExponentialGrowthAndDecay.cpp
+C:\Users\Programming\Documents\Projects\Commissions\c++\ahris\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay.cpp(26,16): warning C4309: 'initializing': truncation of constant value
+C:\Users\Programming\Documents\Projects\Commissions\c++\ahris\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay.cpp(26,25): warning C4309: 'initializing': truncation of constant value
+C:\Users\Programming\Documents\Projects\Commissions\c++\ahris\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay.cpp(75,9): warning C4101: 'growthRate': unreferenced local variable
+C:\Users\Programming\Documents\Projects\Commissions\c++\ahris\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay\ExponentialGrowthAndDecay.cpp(94,1): warning C4102: 'start': unreferenced label
+  ExponentialGrowthAndDecay.vcxproj -> C:\Users\Programming\Documents\Projects\Commissions\c++\ahris\ExponentialGrowthAndDecay\x64\Debug\ExponentialGrowthAndDecay.exe
