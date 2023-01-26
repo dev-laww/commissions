@@ -1,0 +1,2 @@
+    StockNumber       ShoeType      ShoeBrand   DatePurchase   shoeQuantity       shoeCost     TotalValue
+       12345-10          Wedge         Figlia      9-11-2011             10         999.00        9990.00
