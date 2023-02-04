@@ -1,3 +1,7 @@
+/**
+ * @author tora
+ */
+
 package surname_E1;
 
 import java.io.File;
@@ -14,6 +18,12 @@ public class SURNAME_E1_className {
     private final double[][] matrix1;
     private final double[][] matrix2;
 
+    /**
+     * Constructor
+     *
+     * @param q number of rows
+     * @param r number of columns
+     */
     public SURNAME_E1_className(int q, int r) {
 
         this.q = q <= 5 ? q * 2 : q;
@@ -23,6 +33,9 @@ public class SURNAME_E1_className {
         matrix2 = new double[this.q][this.r];
     }
 
+    /**
+     * Fill matrix1 with random numbers
+     */
     public void fillA1() {
         Random random = new Random();
         for (int i = 0; i < q; i++) {
@@ -32,6 +45,10 @@ public class SURNAME_E1_className {
         }
     }
 
+
+    /**
+     * Fill matrix2 with random numbers
+     */
     public void fillA2() {
         Random random = new Random();
         for (int i = 0; i < q; i++) {
@@ -41,15 +58,16 @@ public class SURNAME_E1_className {
         }
     }
 
+    /**
+     * Add or subtract matrix1 and matrix2
+     *
+     * @param flag 0 - subtract, 1 - add
+     */
     public void addSubA1A2(int flag) {
         double[][] result = new double[q][r];
         for (int i = 0; i < q; i++) {
             for (int j = 0; j < r; j++) {
-                if (flag != 0) {
-                    result[i][j] = matrix1[i][j] + matrix2[i][j];
-                } else {
-                    result[i][j] = matrix1[i][j] - matrix2[i][j];
-                }
+                result[i][j] = flag != 0 ? matrix1[i][j] + matrix2[i][j] : matrix1[i][j] - matrix2[i][j];
             }
         }
         System.out.println("Resultant matrix: ");
@@ -61,6 +79,9 @@ public class SURNAME_E1_className {
         }
     }
 
+    /**
+     * Multiply from input file
+     */
     public void multB1B2() {
         int m = 5, n = 7, p = 5;
         double[][] b1 = new double[m][n];
@@ -99,6 +120,11 @@ public class SURNAME_E1_className {
         }
     }
 
+    /**
+     * toString method
+     *
+     * @return string
+     */
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
