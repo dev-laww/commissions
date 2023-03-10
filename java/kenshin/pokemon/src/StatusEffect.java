@@ -1,5 +1,5 @@
 public class StatusEffect {
-    private String name;
+    private final String name;
     private int duration;
 
     public StatusEffect(String name, int duration) {
