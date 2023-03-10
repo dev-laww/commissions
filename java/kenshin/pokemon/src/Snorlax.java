@@ -32,8 +32,8 @@ public class Snorlax extends Pokemon {
         int damage_taken = this.maxHealth - this.health;
         int heal = (int) (damage_taken * 0.3);
         this.bonusDamage += 20;
+        this.reduceStatusEffectDuration();
         this.heal(heal);
-        System.out.println(this.getClass().getSimpleName() + " has healed " + heal + " HP.");
     }
 
     public void bodySlam(Pokemon target) {
@@ -52,15 +52,18 @@ public class Snorlax extends Pokemon {
             return;
         }
 
-        int damage =(int) (0.4 * this.maxHealth) + (this.level * 5) + this.bonusDamage;
-        target.takeDamage(damage);
-        target.applyStatusEffect(new StatusEffect("Sleep", 2));
+        System.out.println(this.getClass().getSimpleName() + " has body slammed " + target.getClass().getSimpleName() + ".");
 
+        int damage =(int) (0.4 * this.maxHealth) + (this.level * 5) + this.bonusDamage;
+        target.takeDamage(Damage.PHYSICAL(damage), this);
+        target.applyStatusEffect(StatusEffect.SLEEP);
+
+        this.reduceStatusEffectDuration();
         this.energy -= 25;
     }
 
-    public void takeDamage(int damage, Pokemon attacker) {
-
+    @Override
+    public void takeDamage(Damage damage, Pokemon attacker) {
         if (this.endureCounter > 0) {
             this.endureCounter--;
             System.out.println(this.getClass().getSimpleName() + " has endured the attack.");
@@ -69,18 +72,18 @@ public class Snorlax extends Pokemon {
         
         if (this.lastAttacker == attacker) {
             double grudgeBonus = 0.2;
-            int grudgeDamage = (int) (damage * grudgeBonus);
+            int grudgeDamage = (int) (damage.getDamage() * grudgeBonus);
             int grudgeBonusDamage = (int) (this.level * 0.02);
 
-            this.takeDamage(grudgeDamage + grudgeBonusDamage);
+            this.takeDamage(Damage.PHYSICAL(grudgeDamage + grudgeBonusDamage), this);
         }
 
         if (this.hard) {
-            damage = (int) (damage * 0.5);
+            damage.setDamage((int) (damage.getDamage() * 0.5));
             this.hard = false;
         }
 
         this.lastAttacker = attacker;
-        super.takeDamage(damage);
+        super.takeDamage(damage, this);
     }
 }
