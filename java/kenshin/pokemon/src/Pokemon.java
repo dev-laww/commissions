@@ -10,7 +10,7 @@ public abstract class Pokemon {
     protected int energy;
     protected int maxHealth;
     protected int maxEnergy;
-    protected StatusEffect[] statusEffects;
+    protected StatusEffect[] statusEffects = new StatusEffect[20];
 
     public Pokemon(int health, int level, int energy) {
         this.health = health;
@@ -20,7 +20,7 @@ public abstract class Pokemon {
         this.maxEnergy = energy;
     }
 
-    public int getHealth() {
+    public int getHP() {
         return health;
     }
 
@@ -32,13 +32,18 @@ public abstract class Pokemon {
         return level;
     }
 
+    public StatusEffect[] getStatusEffects() {
+        return statusEffects;
+    }
+
 
     /**
      * Method to take damage from the target Pokemon.
      *
      * @param damage the damage to take
      */
-    public void takeDamage(int damage) {
+    public void takeDamage(Damage damage, Pokemon attacker) {
+        int damageValue = damage.getDamage();
         int damage_bonus = 0;
 
         for (StatusEffect statusEffect : statusEffects) {
@@ -46,23 +51,36 @@ public abstract class Pokemon {
 
             switch (statusEffect.getName()) {
                 case "Burn", "Poison":
-                    damage_bonus += (int) (0.1 * damage);
+                    damage_bonus += (int) (0.05 * damageValue);
                     break;
                 case "Freeze":
-                    damage_bonus += (int) (0.2 * damage);
+                    damage_bonus += (int) (0.2 * damageValue);
                     break;
                 case "Paralysis":
                     if (Math.random() < 0.25) {
-                        damage_bonus += (int) (0.25 * damage);
+                        damage_bonus += (int) (0.25 * damageValue);
                     }
                     break;
                 case "Sleep":
-                    damage_bonus += (int) (0.3 * damage);
+                    damage_bonus += (int) (0.3 * damageValue);
                     break;
+                case "Electrocuted":
+                    damage_bonus += (int) (0.1 * damageValue);
             }
         }
 
-        health -= damage + damage_bonus;
+        switch (damage.getType()) {
+            case "Electric":
+                this.applyStatusEffect(StatusEffect.ELECTROCUTED);
+        }
+
+        this.reduceStatusEffectDuration();
+
+        if (damage.isCritical) {
+            damage_bonus += (int) (0.3 * damageValue);
+        }
+
+        health -= damageValue + damage_bonus;
         if (health <= 0) {
             health = 0;
             System.out.println(this.getClass().getSimpleName() + " has fainted.");
@@ -96,6 +114,8 @@ public abstract class Pokemon {
         if (health > maxHealth) {
             health = maxHealth;
         }
+
+        System.out.println(this.getClass().getSimpleName() + " has healed " + amount + " HP.");
     }
 
     public boolean ableToAttack() {
@@ -108,5 +128,13 @@ public abstract class Pokemon {
             }
         }
         return true;
+    }
+
+    public void levelUp() {
+        this.level++;
+        this.maxHealth += 0.1 * this.maxHealth;
+        this.maxEnergy += 0.1 * this.maxEnergy;
+        this.health = this.maxHealth;
+        this.energy = this.maxEnergy;
     }
 }
