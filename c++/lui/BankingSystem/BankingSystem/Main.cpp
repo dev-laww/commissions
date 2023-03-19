@@ -5,9 +5,9 @@
 using namespace std;
 
 int main() {
-	BankingSystem system;
+	BankingSystem bankingSystem;
 
-	system.run();
+	bankingSystem.run();
 
     char again;
 
@@ -22,7 +22,8 @@ int main() {
         }
 
         if (tolower(again) == 'y') {
-            system.run();
+            system("cls");
+            bankingSystem.run();
         }
 
     } while (tolower(again) != 'n');

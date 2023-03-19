@@ -130,7 +130,6 @@ void BankingSystem::run() {
         return;
     }
 
-
     do {
         system("cls");
         cout << "Welcome " << currentAccountNode->account.getOwner() << "!" << endl;
@@ -174,7 +173,7 @@ void BankingSystem::run() {
                 break;
             }
         }
-    } while (choice != 4);
+    } while (choice != 5);
 }
 
 void BankingSystem::addAccount() {
