@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="BankAccount.h" />
     <ClInclude Include="BankAccountList.h" />
+    <ClInclude Include="BankingSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
