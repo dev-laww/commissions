@@ -63,6 +63,18 @@ public:
         }
     }
 
+    bool usernameExists(string username) {
+        BankAccountNode* current = head;
+
+        while (current != nullptr) {
+            BankAccount acc = current->account;
+
+            if (acc.getUsername() == username) return true;
+        }
+
+        return false;
+    }
+
     BankAccountNode* findAccount(const string& accountName) {
         BankAccountNode* current = head;
 
