@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Windows.h>
 #include "BankingSystem.h"
 
 using namespace std;
@@ -46,6 +47,12 @@ void BankingSystem::login() {
                     break;
                 }
             }
+
+            if (!success) {
+                cout << "Invalid username or password. Please try again." << endl;
+                Sleep(500);
+            }
+
             continue;
         }
 
@@ -61,6 +68,7 @@ void BankingSystem::login() {
 
         if (!success) {
             cout << "Invalid username or password. Please try again." << endl;
+            Sleep(500);
         }
     } while (!success);
 }
@@ -95,18 +103,24 @@ void BankingSystem::run() {
             {
             case 1:
                 addAccount();
+                Sleep(1000);
                 break;
             case 2:
                 removeAccount();
+                Sleep(2000);
                 break;
             case 3:
+                system("cls");
                 cout << "Accounts List:" << endl;
                 accounts.printAllAccounts();
+                Sleep(2000);
                 break;
             case 4:
                 logout();
+                break;
             default:
                 cout << "Invalid Choice!" << endl;
+                Sleep(2000);
                 break;
             }
         } while (choice != 4);
@@ -132,18 +146,23 @@ void BankingSystem::run() {
             {
             case 1:
                 cout << "Current Balance: " << currentAccount->getBalance() << endl;
+                Sleep(2000);
                 break;
             case 2:
                 deposit();
+                Sleep(2000);
                 break;
             case 3:
                 withdraw();
+                Sleep(2000);
                 break;
             case 4:
                 logout();
+                Sleep(2000);
                 break;
             default:
                 cout << "Invalid Choice!" << endl;
+                Sleep(2000);
                 break;
             }
         }
