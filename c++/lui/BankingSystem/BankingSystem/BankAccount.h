@@ -17,15 +17,19 @@ struct Transaction {
 class BankAccount {
 public:
 	BankAccount(); // default constructor
-	BankAccount(string name, double balance); // constructor with parameters
+	BankAccount(string name, double balance, string username, string pin); // constructor with parameters
 	void deposit(double amount);
 	void withdraw(double amount);
 	void transfer(double amount, BankAccount& receipient);
     void checkBalance();
 	double getBalance() const;
 	string getOwner() const;
+    string getPin() const;
+    string getUsername() const;
 private:
 	string owner;
+    string pin;
+    string username;
 	double balance;
 	void writeTransaction(const string& transactionType, double amount = 0.0, string receipient = "") {
         time_t now = time(nullptr);

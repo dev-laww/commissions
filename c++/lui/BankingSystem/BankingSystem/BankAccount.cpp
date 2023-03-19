@@ -7,11 +7,15 @@ using namespace std;
 BankAccount::BankAccount() {
     owner = "Unknown";
     balance = 0;
+    pin = "0000";
+    username = "unkown";
 }
 
-BankAccount::BankAccount(string name, double balance) {
+BankAccount::BankAccount(string name, double balance, string username, string pin) {
     owner = name;
     this->balance = balance;
+    this->username = username;
+    this->pin = pin;
 }
 
 void BankAccount::deposit(double amount) {
@@ -58,4 +62,12 @@ double BankAccount::getBalance() const {
 
 string BankAccount::getOwner() const {
     return owner;
+}
+
+string BankAccount::getPin() const {
+    return pin;
+}
+
+string BankAccount::getUsername() const {
+    return username;
 }
