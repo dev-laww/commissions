@@ -138,6 +138,7 @@ void BankingSystem::run() {
             << "[2] Deposit" << endl
             << "[3] Withdraw" << endl
             << "[4] Transfer" << endl
+            << "[5] Logout" << endl
             << "Enter your choice: ";
 
         cin >> choice;
@@ -159,6 +160,9 @@ void BankingSystem::run() {
                 Sleep(2000);
                 break;
             case 4:
+                transfer();
+                Sleep(2000);
+            case 5:
                 logout();
                 Sleep(2000);
                 break;
