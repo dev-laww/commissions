@@ -130,9 +130,10 @@ void BankingSystem::run() {
         return;
     }
 
-    cout << "Welcome " << currentAccountNode->account.getOwner() << "!" << endl;
+
     do {
         system("cls");
+        cout << "Welcome " << currentAccountNode->account.getOwner() << "!" << endl;
         cout << "What would you like to do?" << endl
             << "[1] Check Balance" << endl
             << "[2] Deposit" << endl
@@ -162,6 +163,7 @@ void BankingSystem::run() {
             case 4:
                 transfer();
                 Sleep(2000);
+                break;
             case 5:
                 logout();
                 Sleep(2000);
@@ -181,10 +183,18 @@ void BankingSystem::addAccount() {
     cout << "Enter bank account name: ";
     getline(cin, name);
     getline(cin, name);
-    cout << "Enter username: ";
-    cin >> username;
     cout << "Enter pin: ";
     cin >> pin;
+
+    do {
+        cout << "Enter username: ";
+        cin >> username;
+
+        if (accounts.usernameExists(username)) {
+            cout << "Username Exists! Try again." << endl;
+        }
+
+    } while (accounts.usernameExists(username));
 
     while (pin.length() != 4) {
         system("cls");

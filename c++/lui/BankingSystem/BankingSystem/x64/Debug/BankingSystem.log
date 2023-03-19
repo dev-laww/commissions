@@ -1,2 +1,5 @@
-﻿  LINK : C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\x64\Debug\BankingSystem.exe not found or not built by the last incremental link; performing full link
+﻿  BankingSystem.cpp
+C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\BankingSystem\BankingSystem.cpp(176,9): warning C4065: switch statement contains 'default' but no 'case' labels
+  Main.cpp
+  Generating Code...
   BankingSystem.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\x64\Debug\BankingSystem.exe
