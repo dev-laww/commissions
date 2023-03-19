@@ -57,14 +57,12 @@ void BankingSystem::login() {
         }
 
         // check if client username and password match
-        BankAccountNode* node = accounts.login(username, password);
+        BankAccount* account = accounts.login(username, password);
 
-        if (node != nullptr) {
+        if (account != nullptr) {
             cout << "Login successful!" << endl;
             success = true;
-            currentAccountNode = node;
-
-            cout << node->account.getOwner();
+            currentAccount = account;
         }
         
 
@@ -76,7 +74,7 @@ void BankingSystem::login() {
 }
 
 void BankingSystem::logout() {
-    currentAccountNode = nullptr;
+    currentAccount = nullptr;
     isAdmin = false;
     cout << "Logged out successfully." << endl;
 }
@@ -130,7 +128,7 @@ void BankingSystem::run() {
         return;
     }
 
-    cout << "Welcome " << currentAccountNode->account.getOwner() << "!" << endl;
+    cout << "Welcome " << currentAccount->getOwner() << "!" << endl;
     do {
         system("cls");
         cout << "What would you like to do?" << endl
@@ -147,7 +145,7 @@ void BankingSystem::run() {
             switch (choice)
             {
             case 1:
-                cout << "Current Balance: " << currentAccountNode->account.getBalance() << endl;
+                cout << "Current Balance: " << currentAccount->getBalance() << endl;
                 Sleep(2000);
                 break;
             case 2:
@@ -175,8 +173,7 @@ void BankingSystem::addAccount() {
     system("cls");
     string name, pin, username;
     cout << "Enter bank account name: ";
-    getline(cin, name);
-    getline(cin, name);
+    cin >> name;
     cout << "Enter username: ";
     cin >> username;
     cout << "Enter pin: ";
@@ -196,23 +193,23 @@ void BankingSystem::addAccount() {
 
 void BankingSystem::removeAccount() {
     string name, pin;
-    BankAccountNode* node = nullptr;
+    BankAccount* account = nullptr;
     system("cls");
     do {
         cout << "Enter bank account name: ";
         cin >> name;
 
-        node = accounts.findAccount(name);
-    } while (node == nullptr);
+        account = accounts.findAccount(name);
+    } while (account == nullptr);
 
     do {
         cout << "Enter pin: ";
         cin >> pin;
 
-        if (pin != node->account.getPin()) {
+        if (pin != account->getPin()) {
             cout << "Incorrect pin! Try again." << endl;
         }
-    } while (pin != node->account.getPin());
+    } while (pin != account->getPin());
 
     accounts.removeAccount(name);
 
@@ -231,7 +228,7 @@ void BankingSystem::deposit() {
         }
     } while (amount <= 0);
 
-    currentAccountNode->account.deposit(amount);
+    currentAccount->deposit(amount);
 }
 
 void BankingSystem::withdraw() {
@@ -252,18 +249,18 @@ void BankingSystem::withdraw() {
         cout << "Enter pin: ";
         cin >> pin;
 
-        if (pin != currentAccountNode->account.getPin()) {
+        if (pin != currentAccount->getPin()) {
             cout << "Incorrect pin! Try again." << endl;
         }
-    } while (pin != currentAccountNode->account.getPin());
+    } while (pin != currentAccount->getPin());
 
-    currentAccountNode->account.withdraw(amount);
+    currentAccount->withdraw(amount);
 }
 
 void BankingSystem::transfer() {
     double amount;
     string receipientName, pin;
-    BankAccountNode* receipient = nullptr;
+    BankAccount* receipient = nullptr;
 
     system("cls");
     do {
@@ -286,10 +283,10 @@ void BankingSystem::transfer() {
         cout << "Enter pin: ";
         cin >> pin;
 
-        if (pin != currentAccountNode->account.getPin()) {
+        if (pin != currentAccount->getPin()) {
             cout << "Incorrect pin! Try again." << endl;
         }
-    } while (pin != currentAccountNode->account.getPin());
+    } while (pin != currentAccount->getPin());
 
-    currentAccountNode->account.transfer(amount, receipient->account);
+    currentAccount->transfer(amount, *receipient);
 }

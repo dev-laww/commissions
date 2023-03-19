@@ -63,7 +63,7 @@ public:
         }
     }
 
-    BankAccountNode* findAccount(const string& accountName) {
+    BankAccount* findAccount(const string& accountName) {
         BankAccountNode* current = head;
 
         while (current != nullptr && current->account.getOwner() != accountName) {
@@ -75,10 +75,12 @@ public:
             return nullptr;
         }
 
-        return current;
+        BankAccount account = current->account;
+
+        return &account;
     }
 
-    BankAccountNode* login(const string& accountUsername, const string& pin) {
+    BankAccount* login(const string& accountUsername, const string& pin) {
         BankAccountNode* current = head;
 
         while (current != nullptr && current->account.getUsername() != accountUsername) {
@@ -90,12 +92,14 @@ public:
             return nullptr;
         }
 
-        if (!(current->account.getPin() == pin)) {
+        BankAccount account = current->account;
+
+        if (!(account.getPin() == pin)) {
             cout << "Wrong pin!" << endl;
             return nullptr;
         }
 
-        return current;
+        return &account;
     }
 
     void printAllAccounts() const {
