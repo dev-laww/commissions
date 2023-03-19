@@ -1,5 +1,2 @@
-﻿  BankingSystem.cpp
-C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\BankingSystem\BankingSystem.cpp(184,9): warning C4065: switch statement contains 'default' but no 'case' labels
-C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\BankingSystem\BankAccountList.h(102): warning C4172: returning address of local variable or temporary: account
-C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\BankingSystem\BankAccountList.h(80): warning C4172: returning address of local variable or temporary: account
+﻿  LINK : C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\x64\Debug\BankingSystem.exe not found or not built by the last incremental link; performing full link
   BankingSystem.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\x64\Debug\BankingSystem.exe

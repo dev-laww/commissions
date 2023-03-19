@@ -63,24 +63,22 @@ public:
         }
     }
 
-    BankAccount* findAccount(const string& accountName) {
+    BankAccountNode* findAccount(const string& accountName) {
         BankAccountNode* current = head;
 
         while (current != nullptr && current->account.getOwner() != accountName) {
             current = current->next;
         }
-        
+
         if (current == nullptr) {
             cout << "Acccount not found!" << endl;
             return nullptr;
         }
 
-        BankAccount account = current->account;
-
-        return &account;
+        return current;
     }
 
-    BankAccount* login(const string& accountUsername, const string& pin) {
+    BankAccountNode* login(const string& accountUsername, const string& pin) {
         BankAccountNode* current = head;
 
         while (current != nullptr && current->account.getUsername() != accountUsername) {
@@ -92,19 +90,17 @@ public:
             return nullptr;
         }
 
-        BankAccount account = current->account;
-
-        if (!(account.getPin() == pin)) {
+        if (!(current->account.getPin() == pin)) {
             cout << "Wrong pin!" << endl;
             return nullptr;
         }
 
-        return &account;
+        return current;
     }
 
     void printAllAccounts() const {
         BankAccountNode* current = head;
-        
+
         int counter = 0;
 
         while (current != nullptr) {
