@@ -10,14 +10,14 @@ public class Book {
 
     public void setInfo() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter book ID: ");
+        System.out.print("Enter book ID: ");
         this.bookId = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Enter book title: ");
+        System.out.print("Enter book title: ");
         this.title = scanner.nextLine();
-        System.out.println("Enter book ISBN: ");
+        System.out.print("Enter book ISBN: ");
         this.ISBN = scanner.nextLine();
-        System.out.println("Enter book category: ");
+        System.out.print("Enter book category: ");
         this.category = scanner.nextLine();
     }
 

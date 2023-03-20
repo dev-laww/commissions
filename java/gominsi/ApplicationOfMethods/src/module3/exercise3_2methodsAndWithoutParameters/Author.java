@@ -10,12 +10,12 @@ public class Author {
     public void setInfo() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter author ID: ");
+        System.out.print("Enter author ID: ");
         this.authorId = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Enter author's last name: ");
+        System.out.print("Enter author's last name: ");
         this.lastName = scanner.nextLine();
-        System.out.println("Enter author's first name: ");
+        System.out.print("Enter author's first name: ");
         this.firstName = scanner.nextLine();
 
     }
