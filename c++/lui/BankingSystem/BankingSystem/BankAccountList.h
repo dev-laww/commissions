@@ -37,10 +37,10 @@ public:
         }
     }
 
-    void removeAccount(const string& accountName) {
+    void removeAccount(const string& username) {
         BankAccountNode* current = head;
 
-        while (current != nullptr && current->account.getOwner() != accountName) {
+        while (current != nullptr && current->account.getUsername() != username) {
             current = current->next;
         }
 
@@ -63,24 +63,21 @@ public:
         }
     }
 
-    BankAccount* findAccount(const string& accountName) {
+    BankAccountNode* findAccount(const string& username) {
         BankAccountNode* current = head;
 
-        while (current != nullptr && current->account.getOwner() != accountName) {
+        while (current != nullptr && current->account.getUsername() != username) {
             current = current->next;
         }
         
         if (current == nullptr) {
             cout << "Acccount not found!" << endl;
-            return nullptr;
         }
 
-        BankAccount account = current->account;
-
-        return &account;
+        return current;
     }
 
-    BankAccount* login(const string& accountUsername, const string& pin) {
+    BankAccountNode* login(const string& accountUsername, const string& pin) {
         BankAccountNode* current = head;
 
         while (current != nullptr && current->account.getUsername() != accountUsername) {
@@ -92,14 +89,12 @@ public:
             return nullptr;
         }
 
-        BankAccount account = current->account;
-
-        if (!(account.getPin() == pin)) {
+        if (!(current->account.getPin() == pin)) {
             cout << "Wrong pin!" << endl;
             return nullptr;
         }
 
-        return &account;
+        return current;
     }
 
     void printAllAccounts() const {
@@ -115,6 +110,16 @@ public:
             cout << counter << ". " << account.getOwner() << " - " << account.getBalance() << endl;
             current = current->next;
         }
+    }
+
+    bool isExisting(string username) {
+        BankAccountNode* current = head;
+
+        while (current != nullptr && current->account.getUsername() != username) {
+            current = current->next;
+        }
+
+        return current != nullptr;
     }
 
     ~BankAccountList() {

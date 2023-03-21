@@ -20,7 +20,7 @@ public:
 	void removeAccount();
 private:
 	BankAccountList accounts;
-	BankAccount* currentAccount;
+	BankAccountNode* currentNode;
 	string adminUsernames[5];
 	string adminPasswords[5];
 	bool isAdmin;
