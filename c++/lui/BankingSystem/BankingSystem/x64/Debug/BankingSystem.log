@@ -1,0 +1,6 @@
+﻿  BankAccount.cpp
+  BankingSystem.cpp
+C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\BankingSystem\BankingSystem.cpp(173,9): warning C4065: switch statement contains 'default' but no 'case' labels
+  Main.cpp
+  Generating Code...
+  BankingSystem.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c++\lui\BankingSystem\x64\Debug\BankingSystem.exe
