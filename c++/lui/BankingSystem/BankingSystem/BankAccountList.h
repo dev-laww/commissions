@@ -37,10 +37,10 @@ public:
         }
     }
 
-    void removeAccount(const string& accountName) {
+    void removeAccount(const string& username) {
         BankAccountNode* current = head;
 
-        while (current != nullptr && current->account.getOwner() != accountName) {
+        while (current != nullptr && current->account.getUsername() != username) {
             current = current->next;
         }
 
@@ -63,28 +63,15 @@ public:
         }
     }
 
-    bool usernameExists(string username) {
+    BankAccountNode* findAccount(const string& username) {
         BankAccountNode* current = head;
 
-        while (current != nullptr) {
-            BankAccount acc = current->account;
-
-            if (acc.getUsername() == username) return true;
-        }
-
-        return false;
-    }
-
-    BankAccountNode* findAccount(const string& accountName) {
-        BankAccountNode* current = head;
-
-        while (current != nullptr && current->account.getOwner() != accountName) {
+        while (current != nullptr && current->account.getUsername() != username) {
             current = current->next;
         }
-
+        
         if (current == nullptr) {
             cout << "Acccount not found!" << endl;
-            return nullptr;
         }
 
         return current;
@@ -112,7 +99,7 @@ public:
 
     void printAllAccounts() const {
         BankAccountNode* current = head;
-
+        
         int counter = 0;
 
         while (current != nullptr) {
@@ -123,6 +110,16 @@ public:
             cout << counter << ". " << account.getOwner() << " - " << account.getBalance() << endl;
             current = current->next;
         }
+    }
+
+    bool isExisting(string username) {
+        BankAccountNode* current = head;
+
+        while (current != nullptr && current->account.getUsername() != username) {
+            current = current->next;
+        }
+
+        return current != nullptr;
     }
 
     ~BankAccountList() {

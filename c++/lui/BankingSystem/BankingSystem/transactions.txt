@@ -99,27 +99,27 @@ Account: John Smith
 Recipient: Test
 Amount: $1000
 ------------------------------------------
-2023-03-19 14:20:32
+2023-03-21 09:56:33
 
 Type: Withdraw
-Account: Test Account
+Account: Test
 Amount: $1000
 ------------------------------------------
-2023-03-19 14:20:45
-
-Type: Withdraw
-Account: Test Account
-Amount: $500
-------------------------------------------
-2023-03-19 14:24:08
+2023-03-21 10:05:19
 
 Type: Withdraw
 Account: Test1
-Amount: $5000
+Amount: $1000
 ------------------------------------------
-2023-03-19 14:24:25
+2023-03-21 10:05:53
 
 Type: Transfer
 Account: Test1
 Recipient: Test2
 Amount: $500
+------------------------------------------
+2023-03-21 10:06:10
+
+Type: Withdraw
+Account: Test1
+Amount: $250
