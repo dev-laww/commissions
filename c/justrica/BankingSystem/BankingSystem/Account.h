@@ -16,5 +16,9 @@ typedef struct Account {
 	double balance;
 } Account;
 
+void generate_account_no(char* account_no);
+void withdraw(Account* account, double amount);
+void deposit(Account* account, double amount);
+
 #endif
 

@@ -11,6 +11,10 @@ void generate_account_no(char* account_no) {
     sprintf_s(account_no, ACCOUNT_NO_LENGTH + 1, "%0*d", ACCOUNT_NO_LENGTH, rand_num);
 }
 
+void check_balance(Account* account) {
+    printf("Account balance: %.2f\n", account->balance);
+}
+
 void deposit(Account* account, double amount) {
     account->balance += amount;
     printf("Success!");
@@ -24,8 +28,4 @@ void withdraw(Account* account, double amount) {
 
     account->balance -= amount;
     printf("Success!");
-}
-
-void check_balance(Account* account) {
-    printf("Account balance: %.2f\n", account->balance);
 }
