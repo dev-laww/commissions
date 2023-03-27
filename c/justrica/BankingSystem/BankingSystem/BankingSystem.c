@@ -208,10 +208,7 @@ int main() {
 				break;
 			}
 
-			if (choice == 'd' || choice == 'D')
-				break;
-
-		} while (choice != 'd' || choice != 'D');
+		} while (choice != 'd' && choice != 'D');
 
 	}
 	else if (choice == 'b' || choice == 'B') {
