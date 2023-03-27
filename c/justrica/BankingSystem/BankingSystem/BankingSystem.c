@@ -8,28 +8,47 @@
 
 Account accounts[MAX_ACCOUNTS];
 int num_accounts = 0;
-const char* admin_username = "admin";
-const char* admin_password = "admin";
+char filepath[] = "C:\\Users\\roren\\Documents\\Projects\\commissions\\c\\justrica\\BankingSystem\\x64\\Debug\\accounts.csv";
 
 void create_account() {
+	char account_no[13], name[50], gender[7], contact_no[12], address[150];
+	double balance;
 	// Get user input for account information
-	printf("\nEnter name: ");
-	scanf_s("%s", accounts[num_accounts].name, sizeof(accounts[num_accounts].name));
 
-	printf("Enter gender: ");
-	scanf_s("%s", accounts[num_accounts].gender, sizeof(accounts[num_accounts].gender));
+	printf("Enter account name: ");
+	scanf_s("%s", name, sizeof(name));
 
-	printf("Enter contact number: ");
-	scanf_s("%s", accounts[num_accounts].contact_no, sizeof(accounts[num_accounts].contact_no));
+	printf("Enter gender (Male/Female): ");
+	scanf_s("%s", gender, sizeof(gender));
+
+	printf("Enter phone number: ");
+	scanf_s("%s", contact_no, sizeof(contact_no));
 
 	printf("Enter address: ");
-	scanf_s("%s", accounts[num_accounts].address, sizeof(accounts[num_accounts].address));
+	scanf_s("%s", address, sizeof(address));
 
-	printf("Enter initial balance: ");
-	scanf_s("%lf", &accounts[num_accounts].balance);
+	printf("Enter account balance: ");
+	scanf_s("%lf", &balance);
+
+	generate_account_no(&account_no);
+
+	if (num_accounts == MAX_ACCOUNTS) {
+		printf("Error: Unable to create account. Maximum number of accounts reached.\n");
+		return;
+	}
+
+	// Create a new account
+	Account account;
+	strcpy_s(account.account_no, sizeof(account.account_no), account_no);
+	strcpy_s(account.name, sizeof(account.name), name);
+	strcpy_s(account.gender, sizeof(account.gender), gender);
+	strcpy_s(account.contact_no, sizeof(account.contact_no), contact_no);
+	strcpy_s(account.address, sizeof(account.address), address);
+	account.balance = balance;
+	accounts[num_accounts] = account;
+	num_accounts++;
 
 	// Generate a random account number
-	generate_account_no(accounts[num_accounts].account_no);
 
 	printf("\nAccount created successfully!\n");
 }
@@ -55,7 +74,7 @@ int load_accounts(Account accounts[]) {
 	char line[MAX_LINE_LENGTH];
 	int num_accounts = 0;
 
-	errno_t error = fopen_s(&fp, "C:\\Users\\roren\\Documents\\Projects\\commissions\\c\\justrica\\BankingSystem\\x64\\Debug\\accounts.csv", "r");
+	errno_t error = fopen_s(&fp, filepath, "r");
 
 	if (error != 0) {
 		printf("Error: Unable to open file 'accounts.csv'\n");
