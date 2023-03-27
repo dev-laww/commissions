@@ -20,6 +20,7 @@ void generate_account_no(char* account_no);
 void withdraw(Account* account, double amount);
 void deposit(Account* account, double amount);
 void check_balance(Account* account);
+void details(Account* account);
 
 #endif
 

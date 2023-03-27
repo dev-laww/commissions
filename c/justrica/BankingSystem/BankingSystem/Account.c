@@ -17,7 +17,7 @@ void check_balance(Account* account) {
 
 void deposit(Account* account, double amount) {
     account->balance += amount;
-    printf("Success!");
+    printf("Success!\n");
 }
 
 void withdraw(Account* account, double amount) {
@@ -27,5 +27,15 @@ void withdraw(Account* account, double amount) {
     }
 
     account->balance -= amount;
-    printf("Success!");
+    printf("Success!\n");
+}
+
+void details(Account* account) {
+    printf("Account Details:\n");
+
+    printf("Account number: %s\n", account->account_no);
+    printf("Name: %s\n", account->name);
+    printf("Gender: %s\n", account->gender);
+    printf("Address: %s\n", account->address);
+    printf("Contact number: %s\n", account->contact_no);
 }
