@@ -80,7 +80,7 @@ int load_accounts(Account accounts[]) {
 		error = strcpy_s(accounts[num_accounts].contact_no, 12, token);
 
 		token = strtok_s(NULL, ",", &next_token);
-		error = strcpy_s(accounts[num_accounts].address, 100, token);
+		error = strcpy_s(accounts[num_accounts].address, 150, token);
 
 		token = strtok_s(NULL, ",", &next_token);
 		accounts[num_accounts].balance = atoi(token);
