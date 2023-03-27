@@ -115,7 +115,7 @@ int load_accounts(Account accounts[]) {
 
 		token = strtok_s(NULL, ",", &next_token);
 		accounts[num_accounts].balance = strtod(token, &next_token);
-		
+
 		num_accounts++;
 	}
 
@@ -216,32 +216,71 @@ int main() {
 	}
 	else if (choice == 'b' || choice == 'B') {
 		char account_no[13];
+		int account_index = -1;
 
 		printf("Enter account number: ");
 		scanf_s("%s", account_no, sizeof(account_no));
 
-		printf("USER MENU\n");
-		printf("[A] Check Balance\n");
-		printf("[B] Deposit\n");
-		printf("[C] Withdraw\n");
-		printf("[D] Exit\n");
-		scanf_s("%c", &choice, sizeof(choice));
+		for (int i = 0; i < num_accounts; i++) {
+			if (strcmp(accounts[i].account_no, account_no) != 0)
+				continue;
 
-		switch (choice)
-		{
-		case 'a':
-		case 'A':
-
-			break;
-		case 'b':
-		case 'B':
-			break;
-		case 'c':
-		case 'C':
-			break;
-		default:
+			printf("Welcome %s!\n", accounts[i].name);
+			account_index = i;
 			break;
 		}
+
+		if (account_index == -1) {
+			printf("Account not found!\n");
+			return 1;
+		}
+
+		do {
+			double amount;
+
+			printf("USER MENU\n");
+			printf("[A] Check Balance\n");
+			printf("[B] Deposit\n");
+			printf("[C] Withdraw\n");
+			printf("[D] Account Details\n");
+			printf("[E] Exit\n");
+			printf("Enter your choice: ");
+			scanf_s("%c", &choice, sizeof(choice));
+			scanf_s("%c", &choice, sizeof(choice));
+
+			switch (choice)
+			{
+			case 'a':
+			case 'A':
+				check_balance(&accounts[account_index]);
+				break;
+			case 'b':
+			case 'B':
+				printf("Enter amount to deposit: ");
+				scanf_s("%lf", &amount);
+				deposit(&accounts[account_index], amount);
+				break;
+			case 'c':
+			case 'C':
+				printf("Enter amount to withdraw: ");
+				scanf_s("%lf", &amount);
+				withdraw(&accounts[account_index], amount);
+				break;
+			case 'd':
+			case 'D':
+				details(&accounts[account_index]);
+				break;
+			case 'e':
+			case 'E':
+				printf("Exiting...\n");
+				save_accounts(accounts, num_accounts, filepath);
+				break;
+			default:
+				printf("Invalid choice!\n");
+				break;
+			}
+
+		} while (choice != 'e' && choice != 'E');
 	}
 	else {
 		printf("Invalid choice!\n");
