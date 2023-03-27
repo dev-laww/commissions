@@ -1,2 +1,13 @@
-﻿  BankingSystem.c
+﻿  Account.c
+  BankingSystem.c
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(15,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(15,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(18,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(18,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(21,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(21,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(24,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(24,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(30,5): warning C4013: 'generate_account_no' undefined; assuming extern returning int
+  Generating Code...
   BankingSystem.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\x64\Debug\BankingSystem.exe

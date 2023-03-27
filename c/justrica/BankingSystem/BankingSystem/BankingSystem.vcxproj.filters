@@ -18,5 +18,13 @@
     <ClCompile Include="BankingSystem.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Account.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
