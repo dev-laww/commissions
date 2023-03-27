@@ -31,9 +31,7 @@ void withdraw(Account* account, double amount) {
 }
 
 void details(Account* account) {
-    printf("Account Details:\n");
-
-    printf("Account number: %s\n", account->account_no);
+    printf("Account No. %s\n\n", account->account_no);
     printf("Name: %s\n", account->name);
     printf("Gender: %s\n", account->gender);
     printf("Address: %s\n", account->address);
