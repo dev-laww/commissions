@@ -8,10 +8,10 @@
 #define ACCOUNT_NO_LENGTH 12
 
 typedef struct Account {
-	char account_no[ACCOUNT_NO_LENGTH];
+	char account_no[ACCOUNT_NO_LENGTH + 1];
 	char name[50];
-	char gender[6];
-	char contact_no[11];
+	char gender[7];
+	char contact_no[12];
 	char address[150];
 	double balance;
 } Account;
