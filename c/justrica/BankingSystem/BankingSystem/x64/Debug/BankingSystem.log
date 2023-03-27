@@ -1,28 +1,28 @@
 ﻿  BankingSystem.c
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(17,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(17,13): message : this argument is used as a buffer size
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(20,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(20,13): message : this argument is used as a buffer size
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(23,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(23,13): message : this argument is used as a buffer size
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(26,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(26,13): message : this argument is used as a buffer size
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(58,74): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(58,64): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(59,56): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(59,52): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(60,62): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(60,56): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(61,74): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(61,64): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,57): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,47): warning C4024: 'load_account': different types for formal and actual parameter 1
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,63): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,59): warning C4024: 'load_account': different types for formal and actual parameter 2
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,71): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,65): warning C4024: 'load_account': different types for formal and actual parameter 3
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,83): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(90,73): warning C4024: 'load_account': different types for formal and actual parameter 4
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(114,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
-C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(114,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(19,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(19,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(22,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(22,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(25,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(25,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(28,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(28,13): message : this argument is used as a buffer size
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(60,74): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(60,64): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(61,56): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(61,52): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(62,62): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(62,56): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(63,74): warning C4047: 'function': 'const char *' differs in levels of indirection from 'char **'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(63,64): warning C4024: 'strcpy_s': different types for formal and actual parameter 3
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,57): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,47): warning C4024: 'load_account': different types for formal and actual parameter 1
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,63): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,59): warning C4024: 'load_account': different types for formal and actual parameter 2
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,71): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,65): warning C4024: 'load_account': different types for formal and actual parameter 3
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,83): warning C4047: 'function': 'char **' differs in levels of indirection from 'char *'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(92,73): warning C4024: 'load_account': different types for formal and actual parameter 4
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(116,13): warning C4477: 'scanf_s' : format string '%s' requires an argument of type 'unsigned int', but variadic argument 2 has type 'size_t'
+C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\BankingSystem\BankingSystem.c(116,13): message : this argument is used as a buffer size
   BankingSystem.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\justrica\BankingSystem\x64\Debug\BankingSystem.exe

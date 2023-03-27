@@ -8,6 +8,8 @@
 
 Account* accounts[MAX_ACCOUNTS];
 int num_accounts = 0;
+const char* admin_username = "admin";
+const char* admin_password = "admin";
 
 void create_account() {
     Account* account = malloc(sizeof(Account));
