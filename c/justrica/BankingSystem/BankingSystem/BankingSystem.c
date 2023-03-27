@@ -28,7 +28,9 @@ void create_account() {
 	scanf_s("%s", contact_no, sizeof(contact_no));
 
 	printf("Enter address: ");
-	scanf_s("%s", address, sizeof(address));
+	fgets(address, sizeof(address), stdin);
+	fgets(address, sizeof(address), stdin);
+	address[strcspn(address, "\n")] = '\0';
 
 	printf("Enter account balance: ");
 	scanf_s("%lf", &balance);
