@@ -158,130 +158,137 @@ void delete_account() {
 
 int main() {
 	char choice;
-	num_accounts = load_accounts(accounts);
+	do {
+		num_accounts = load_accounts(accounts);
 
-	if (num_accounts == -1) {
-		return 1;
-	}
-
-	list_accounts();
-
-	printf("MENU\n");
-	printf("[A] Admin Menu\n");
-	printf("[B] User Menu\n");
-	printf("Enter your choice: ");
-	scanf_s("%c", &choice, sizeof(choice));
-
-	if (choice == 'A' || choice == 'a') {
-		do {
-			scanf_s("%c", &choice, sizeof(choice));
-
-			printf("ADMIN MENU\n");
-			printf("[A] Create account\n");
-			printf("[B] Delete account\n");
-			printf("[C] List all accounts\n");
-			printf("[D] Exit\n");
-			printf("Enter your choice: ");
-			scanf_s("%c", &choice, sizeof(choice));
-
-			switch (choice)
-			{
-			case 'a':
-			case 'A':
-				create_account();
-				break;
-			case 'b':
-			case 'B':
-				delete_account();
-				break;
-			case 'c':
-			case 'C':
-				list_accounts();
-				break;
-			case 'd':
-			case 'D':
-				printf("Exiting...\n");
-				save_accounts(accounts, num_accounts, filepath);
-				break;
-			default:
-				printf("Invalid choice!\n");
-				break;
-			}
-
-		} while (choice != 'd' && choice != 'D');
-
-	}
-	else if (choice == 'b' || choice == 'B') {
-		char account_no[13];
-		int account_index = -1;
-
-		printf("Enter account number: ");
-		scanf_s("%s", account_no, sizeof(account_no));
-
-		for (int i = 0; i < num_accounts; i++) {
-			if (strcmp(accounts[i].account_no, account_no) != 0)
-				continue;
-
-			printf("Welcome %s!\n", accounts[i].name);
-			account_index = i;
-			break;
-		}
-
-		if (account_index == -1) {
-			printf("Account not found!\n");
+		if (num_accounts == -1) {
 			return 1;
 		}
 
-		do {
-			double amount;
+		list_accounts();
 
-			printf("USER MENU\n");
-			printf("[A] Check Balance\n");
-			printf("[B] Deposit\n");
-			printf("[C] Withdraw\n");
-			printf("[D] Account Details\n");
-			printf("[E] Exit\n");
-			printf("Enter your choice: ");
-			scanf_s("%c", &choice, sizeof(choice));
-			scanf_s("%c", &choice, sizeof(choice));
+		printf("MENU\n");
+		printf("[A] Admin Menu\n");
+		printf("[B] User Menu\n");
+		printf("[C] Exit\n");
+		printf("Enter your choice: ");
+		scanf_s("%c", &choice, sizeof(choice));
 
-			switch (choice)
-			{
-			case 'a':
-			case 'A':
-				check_balance(&accounts[account_index]);
-				break;
-			case 'b':
-			case 'B':
-				printf("Enter amount to deposit: ");
-				scanf_s("%lf", &amount);
-				deposit(&accounts[account_index], amount);
-				break;
-			case 'c':
-			case 'C':
-				printf("Enter amount to withdraw: ");
-				scanf_s("%lf", &amount);
-				withdraw(&accounts[account_index], amount);
-				break;
-			case 'd':
-			case 'D':
-				details(&accounts[account_index]);
-				break;
-			case 'e':
-			case 'E':
-				printf("Exiting...\n");
-				save_accounts(accounts, num_accounts, filepath);
-				break;
-			default:
-				printf("Invalid choice!\n");
+		if (choice == 'A' || choice == 'a') {
+			do {
+				scanf_s("%c", &choice, sizeof(choice));
+
+				printf("ADMIN MENU\n");
+				printf("[A] Create account\n");
+				printf("[B] Delete account\n");
+				printf("[C] List all accounts\n");
+				printf("[D] Exit\n");
+				printf("Enter your choice: ");
+				scanf_s("%c", &choice, sizeof(choice));
+
+				switch (choice)
+				{
+				case 'a':
+				case 'A':
+					create_account();
+					break;
+				case 'b':
+				case 'B':
+					delete_account();
+					break;
+				case 'c':
+				case 'C':
+					list_accounts();
+					break;
+				case 'd':
+				case 'D':
+					printf("Exiting...\n");
+					save_accounts(accounts, num_accounts, filepath);
+					break;
+				default:
+					printf("Invalid choice!\n");
+					break;
+				}
+
+			} while (choice != 'd' && choice != 'D');
+
+		}
+		else if (choice == 'b' || choice == 'B') {
+			char account_no[13];
+			int account_index = -1;
+
+			printf("Enter account number: ");
+			scanf_s("%s", account_no, sizeof(account_no));
+
+			for (int i = 0; i < num_accounts; i++) {
+				if (strcmp(accounts[i].account_no, account_no) != 0)
+					continue;
+
+				printf("Welcome %s!\n", accounts[i].name);
+				account_index = i;
 				break;
 			}
 
-		} while (choice != 'e' && choice != 'E');
-	}
-	else {
-		printf("Invalid choice!\n");
-	}
+			if (account_index == -1) {
+				printf("Account not found!\n");
+				return 1;
+			}
+
+			do {
+				double amount;
+
+				printf("USER MENU\n");
+				printf("[A] Check Balance\n");
+				printf("[B] Deposit\n");
+				printf("[C] Withdraw\n");
+				printf("[D] Account Details\n");
+				printf("[E] Exit\n");
+				printf("Enter your choice: ");
+				scanf_s("%c", &choice, sizeof(choice));
+				scanf_s("%c", &choice, sizeof(choice));
+
+				switch (choice)
+				{
+				case 'a':
+				case 'A':
+					check_balance(&accounts[account_index]);
+					break;
+				case 'b':
+				case 'B':
+					printf("Enter amount to deposit: ");
+					scanf_s("%lf", &amount);
+					deposit(&accounts[account_index], amount);
+					break;
+				case 'c':
+				case 'C':
+					printf("Enter amount to withdraw: ");
+					scanf_s("%lf", &amount);
+					withdraw(&accounts[account_index], amount);
+					break;
+				case 'd':
+				case 'D':
+					details(&accounts[account_index]);
+					break;
+				case 'e':
+				case 'E':
+					printf("Exiting...\n");
+					save_accounts(accounts, num_accounts, filepath);
+					break;
+				default:
+					printf("Invalid choice!\n");
+					break;
+				}
+
+			} while (choice != 'e' && choice != 'E');
+		}
+		else if (choice == 'c' || choice == 'C') {
+			printf("Exiting...\n");
+			save_accounts(accounts, num_accounts, filepath);
+		}
+		else {
+			printf("Invalid choice!\n");
+		}
+	} while (choice != 'c' && choice != 'C');
 
 	return 0;
 }
