@@ -16,7 +16,10 @@ void create_account() {
 	// Get user input for account information
 
 	printf("Enter account name: ");
-	scanf_s("%s", name, sizeof(name));
+	fgets(name, sizeof(name), stdin);
+	fgets(name, sizeof(name), stdin);
+	name[strcspn(name, "\n")] = '\0';
+
 
 	printf("Enter gender (Male/Female): ");
 	scanf_s("%s", gender, sizeof(gender));
@@ -61,7 +64,16 @@ void save_accounts(Account accounts[], int num_accounts, const char* filename) {
 	}
 
 	for (int i = 0; i < num_accounts; i++) {
-		fprintf(fp, "%s,%s,%s,%s,%.2f\n", accounts[i].account_no, accounts[i].name, accounts[i].gender, accounts[i].contact_no, accounts[i].balance);
+		fprintf(
+			fp,
+			"%s,%s,%s,%s,%s,%.2f\n",
+			accounts[i].account_no,
+			accounts[i].name,
+			accounts[i].gender,
+			accounts[i].contact_no,
+			accounts[i].address,
+			accounts[i].balance
+		);
 	}
 
 	fclose(fp);
@@ -100,7 +112,7 @@ int load_accounts(Account accounts[]) {
 		error = strcpy_s(accounts[num_accounts].address, 150, token);
 
 		token = strtok_s(NULL, ",", &next_token);
-		accounts[num_accounts].balance = atoi(token);
+		accounts[num_accounts].balance = strtod(token, &next_token);
 		
 		num_accounts++;
 	}
@@ -187,6 +199,7 @@ int main() {
 			case 'd':
 			case 'D':
 				printf("Exiting...\n");
+				save_accounts(accounts, num_accounts, filepath);
 				break;
 			default:
 				printf("Invalid choice!\n");
