@@ -48,8 +48,6 @@ void create_account() {
 	accounts[num_accounts] = account;
 	num_accounts++;
 
-	// Generate a random account number
-
 	printf("\nAccount created successfully!\n");
 }
 
