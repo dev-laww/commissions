@@ -59,6 +59,25 @@ public class LabEx3F {
                 }
 
                 System.out.println();
+
+                break;
+            case 2:
+                System.out.print("Enter a list of integers: ");
+                String string = in.nextLine();
+                String[] a = string.split(" ");
+
+                SLL<Integer> list = new SLL<>();
+                System.out.println("Linked List Contents:");
+
+                for (String w : a) {
+                    Integer info = Integer.valueOf(w);
+                    list.insertAsc(info);
+                    list.printAll();
+                }
+                break;
+            default:
+                System.out.println("Invalid Input!");
+                break;
         }
     }
 
