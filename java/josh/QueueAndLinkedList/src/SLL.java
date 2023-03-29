@@ -10,7 +10,15 @@ public class SLL<T extends Comparable<T>> {
     }
 
     public void addToHead(T info) {
-        head = new SLLNode<>(info);
+        SLLNode<T> temp = new SLLNode<>(info);
+
+        if (head == null) {
+            head = temp;
+            return;
+        }
+
+        temp.setNext(head);
+        head = temp;
     }
 
     public void addToTail(T info) {
