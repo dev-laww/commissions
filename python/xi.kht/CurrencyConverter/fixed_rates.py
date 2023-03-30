@@ -70,14 +70,20 @@ class CurrencyConverter:
         ).grid(row=0, column=2, rowspan=2, padx=10, pady=10)
 
     def convert(self):
+        # Get the input values
         from_currency = self.from_currency_var.get()
         to_currency = self.to_currency_var.get()
         amount = float(self.amount_var.get())
+
+        # Convert the currency
         rate = self.currencies[to_currency] / self.currencies[from_currency]
         converted_amount = round(amount * rate, 2)
+
+        # Update the converted amount label
         self.converted_amount_var.set(converted_amount)
 
     def swap_currencies(self):
+        # Swap the "from" and "to" currencies
         from_currency = self.from_currency_var.get()
         to_currency = self.to_currency_var.get()
         self.from_currency_var.set(to_currency)
