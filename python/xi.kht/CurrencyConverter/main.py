@@ -1,11 +1,13 @@
 import tkinter as tk
 
+import requests
+
 
 class CurrencyConverter:
     def __init__(self, master):
         self.master = master
         self.master.title("Currency Converter")
-        self.currencies = {"USD": 1, "EUR": 0.84, "JPY": 108.88, "GBP": 0.72, "AUD": 1.31, "CAD": 1.25}
+        self.api = 'https://api.exchangerate.host/convert?from={}&to={}&amount{}'
         self.from_currency_var = tk.StringVar(value="USD")
         self.to_currency_var = tk.StringVar(value="EUR")
         self.amount_var = tk.StringVar()
@@ -19,7 +21,7 @@ class CurrencyConverter:
         tk.OptionMenu(
             self.master,
             self.from_currency_var,
-            *self.currencies.keys()
+            *['USD', 'EUR']
         ).grid(row=0, column=1, padx=10, pady=10)
 
         tk.Label(
@@ -29,7 +31,7 @@ class CurrencyConverter:
         tk.OptionMenu(
             self.master,
             self.to_currency_var,
-            *self.currencies.keys()
+            *['USD', 'EUR']
         ).grid(row=1, column=1, padx=10, pady=10)
 
         tk.Label(
@@ -58,7 +60,7 @@ class CurrencyConverter:
         from_currency = self.from_currency_var.get()
         to_currency = self.to_currency_var.get()
         amount = float(self.amount_var.get())
-        rate = self.currencies[from_currency] / self.currencies[to_currency]
+        rate = requests.get(self.api.format(from_currency, to_currency, amount)).json()['result']
         converted_amount = round(amount * rate, 2)
         self.converted_amount_var.set(converted_amount)
 
