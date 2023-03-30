@@ -7,13 +7,17 @@ class CurrencyConverter:
     def __init__(self, master):
         self.master = master
         self.master.title("Currency Converter")
+
         self.api = 'https://api.exchangerate.host/convert?from={}&to={}&amount{}'
         self.from_currency_var = tk.StringVar(value="USD")
         self.to_currency_var = tk.StringVar(value="EUR")
         self.amount_var = tk.StringVar()
         self.converted_amount_var = tk.StringVar()
 
-        # Create widgets
+        self._create_widgets()
+
+    def _create_widgets(self):
+        # Create the input widgets
         tk.Label(
             self.master,
             text="From Currency:"
@@ -42,6 +46,8 @@ class CurrencyConverter:
             self.master,
             textvariable=self.amount_var
         ).grid(row=2, column=1, padx=10, pady=10)
+
+        # Create the action widgets
         tk.Button(
             self.master,
             text="Convert",
@@ -56,6 +62,7 @@ class CurrencyConverter:
             textvariable=self.converted_amount_var
         ).grid(row=4, column=1, padx=10, pady=10)
 
+        # Create the "Swap" button
         tk.Button(
             self.master,
             text="Swap",
