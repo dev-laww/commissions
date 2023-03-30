@@ -56,6 +56,12 @@ class CurrencyConverter:
             textvariable=self.converted_amount_var
         ).grid(row=4, column=1, padx=10, pady=10)
 
+        tk.Button(
+            self.master,
+            text="Swap",
+            command=self.swap_currencies
+        ).grid(row=0, column=2, rowspan=2, padx=10, pady=10)
+
     def convert(self):
         from_currency = self.from_currency_var.get()
         to_currency = self.to_currency_var.get()
@@ -63,6 +69,12 @@ class CurrencyConverter:
         rate = requests.get(self.api.format(from_currency, to_currency, amount)).json()['result']
         converted_amount = round(amount * rate, 2)
         self.converted_amount_var.set(converted_amount)
+
+    def swap_currencies(self):
+        from_currency = self.from_currency_var.get()
+        to_currency = self.to_currency_var.get()
+        self.from_currency_var.set(to_currency)
+        self.to_currency_var.set(from_currency)
 
 
 root = tk.Tk()
