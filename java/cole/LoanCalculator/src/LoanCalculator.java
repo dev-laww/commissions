@@ -1,28 +1,23 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoanCalculator extends JFrame {
     JLabel salaryLabel = new JLabel("Basic Monthly Salary:");
-    JTextField salaryField = new JTextField(10);
+    static JTextField salaryField = new JTextField(10);
     JLabel monthsToPayLabel = new JLabel("Months To Pay:");
-    JTextField monthsToPayField = new JTextField(10);
+    static JTextField monthsToPayField = new JTextField(10);
     JLabel loanAmountLabel = new JLabel("Loan Amount:");
-    JTextField loanAmountField = new JTextField(10);
+    static JTextField loanAmountField = new JTextField(10);
     JLabel interestLabel = new JLabel("Interest:");
-    JTextField interestField = new JTextField(10);
+    static JTextField interestField = new JTextField(10);
     JLabel serviceChargeLabel = new JLabel("Service Charge:");
-    JTextField serviceChargeField = new JTextField(10);
+    static JTextField serviceChargeField = new JTextField(10);
     JLabel takeHomeLoanLabel = new JLabel("Take Home Loan:");
-    JTextField takeHomeLoanField = new JTextField(10);
+    static JTextField takeHomeLoanField = new JTextField(10);
     JLabel monthlyAmortizationLabel = new JLabel("Monthly Amortization:");
-    JTextField monthlyAmortizationField = new JTextField(10);
+    static JTextField monthlyAmortizationField = new JTextField(10);
     JButton computeButton = new JButton("Compute");
 
     public LoanCalculator() {
@@ -85,8 +80,56 @@ public class LoanCalculator extends JFrame {
         });
     }
 
-    public static void action() {
+    public void action() {
+        if (salaryField.getText().isEmpty() || monthsToPayField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill up all fields.");
+            return;
+        }
 
+        double monthlySalary = Double.parseDouble(salaryField.getText());
+        int monthsToPay = Integer.parseInt(monthsToPayField.getText());
+        double loanableAmount = computeLoanableAmount(monthlySalary);
+        double interest = computeInterest(monthsToPay, loanableAmount);
+
+        if (interest == 0) {
+            return;
+        }
+
+        double serviceCharge = loanableAmount * 0.02;
+        double takeHomeLoan = computeTakeHomeLoan(loanableAmount, serviceCharge, interest);
+        double monthlyAmortization = computeMonthlyAmortization(takeHomeLoan, monthsToPay);
+
+        loanAmountField.setText(String.format("%,.2f", loanableAmount));
+        interestField.setText(String.format("%,.2f", interest));
+        serviceChargeField.setText(String.format("%,.2f", serviceCharge));
+        takeHomeLoanField.setText(String.format("%,.2f", takeHomeLoan));
+        monthlyAmortizationField.setText(String.format("%,.2f", monthlyAmortization));
+    }
+
+    public static double computeLoanableAmount(double monthlySalary) {
+        return monthlySalary * 2.5;
+    }
+
+    public static double computeInterest(int monthsToPay, double loanAmount) {
+        double interestRate = 0;
+        switch (monthsToPay) {
+            case 1, 2, 3, 4, 5 -> interestRate = 0.0062;
+            case 6, 7, 8, 9, 10 -> interestRate = 0.0065;
+            case 11, 12, 13, 14, 15 -> interestRate = 0.0068;
+            case 16, 17, 18, 19, 20 -> interestRate = 0.0075;
+            case 21, 22, 23, 24, 25 -> interestRate = 0.008;
+            default -> JOptionPane.showMessageDialog(null, "Invalid months to pay.");
+        }
+
+        return loanAmount * interestRate * monthsToPay;
+    }
+
+    public static double computeTakeHomeLoan(double loanAmount, double serviceCharge, double interest) {
+        return loanAmount - serviceCharge - interest;
+    }
+
+    public static double computeMonthlyAmortization(double takeHomeLoan, int monthsToPay) {
+        return takeHomeLoan / monthsToPay;
     }
 
     public static void main(String[] args) {
