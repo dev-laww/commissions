@@ -1,4 +1,5 @@
 #include "Account.h"
+
 #ifndef MESSAGES_H
 #define MESSAGES_H
 
@@ -12,5 +13,6 @@ typedef struct Message {
 } Message;
 
 Message compose(Account* sender, Account* receiver);
+void send(char mode[]);
 
 #endif // !MESSAGES_H

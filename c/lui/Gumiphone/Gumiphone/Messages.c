@@ -18,4 +18,11 @@ Message compose(Account* sender, Account* receiver) {
 	return mess;
 }
 
-
+void send(char mode[]) {
+	if (strcmp(mode, "send") == 0) {
+		printf("Message sent!\n");
+	}
+	else if (strcmp(mode, "draft") == 0) {
+		printf("Message saved as draft!\n");
+	}
+}
