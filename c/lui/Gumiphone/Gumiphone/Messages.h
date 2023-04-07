@@ -1,4 +1,4 @@
-#pragma once
+#include "Account.h"
 #ifndef MESSAGES_H
 #define MESSAGES_H
 
@@ -7,9 +7,10 @@
 typedef struct Message {
 	char sender[41];
 	char receiver[41];
-	char text[MAX_STRING];
+	char subject[MAX_STRING];
+	char body[MAX_STRING];
 } Message;
 
-Message compose();
+Message compose(Account* sender, Account* receiver);
 
 #endif // !MESSAGES_H

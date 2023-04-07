@@ -21,6 +21,9 @@
     <ClCompile Include="Account.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Messages.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Messages.h">
