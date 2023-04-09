@@ -157,6 +157,72 @@ void save_messages(Message messages[], char mode[]) {
 
 void admin_page() {
 	printf("Admin");
+
+	int choice;
+
+	system("cls");
+	printf("-----------------ADMIN MODULE-----------------\n");
+	printf("||                                          ||\n");
+	printf("||     [1] MANAGE USER                      ||\n");
+	printf("||     [2] MANAGE MESSAGES                  ||\n");
+	printf("||     [3] CHANGE PASSWORD                  ||\n");
+	printf("||     [4] EXIT                             ||\n");
+	printf("||                                          ||\n");
+	printf("----------------------------------------------\n");
+	printf("CHOICE: ");
+	scanf("%d", &choice);
+	switch (choice) {
+	case 1:
+		manage_users();
+		break;
+	case 2:
+		manage_messages();
+		break;
+	case 3:
+		system("cls");
+		char pass[MAX_PASS], confirm[MAX_PASS];
+
+		printf("Change Password\n");
+		printf("Enter your current password: ");
+		while (fgets(pass, MAX_PASS, stdin) && pass[0] != '\n');
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+
+		if (strcmp(pass, admin_pass) != 0) {
+			printf("Incorrect password. Try again.\n");
+			Sleep(1000);
+			return;
+		}
+
+		printf("Enter your new password: ");
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+		printf("Confirm password: ");
+		fgets(confirm, MAX_PASS, stdin);
+		confirm[strlen(confirm) - 1] = '\0';
+
+		while (strcmp(pass, confirm) != 0) {
+			system("cls");
+			printf("Passwords do not match. Try again.\n");
+			printf("Enter your password: ");
+			fgets(pass, MAX_PASS, stdin);
+			pass[strlen(pass) - 1] = '\0';
+			printf("Confirm your password: ");
+			fgets(confirm, MAX_PASS, stdin);
+			confirm[strlen(confirm) - 1] = '\0';
+		}
+
+		strcpy(admin_pass, pass);
+		printf("Password changed successfully.\n");
+		Sleep(1000);
+		break;
+	case 4:
+		return;
+	default:
+		printf("Invalid choice. Try again.\n");
+		Sleep(1000);
+		break;
+	}
 }
 
 void account_page(Account* account) {

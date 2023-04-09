@@ -15,17 +15,15 @@ void list_users(Account accounts[]);
 int load_messages(Message messages[], char mode[]);
 void save_messages(Message messages[], char mode[]);
 
-void send_personal_message(Message message, Account* account, Account accounts[], int num_accounts);
-void send_group_message(Message message, Account* account, Account accounts[], int num_accounts);
-void send_announcement(Message message, Account* account, int num_accounts);
-
 int load_messages(Message messages[], char mode[]);
 void save_messages(Message messages[], char mode[]);
 
 void login();
-void logout();
 
 void admin_page();
 void account_page(Account* acc);
+
+void manage_users();
+void manage_messages();
 
 #endif // !GUMIPHONE_H
