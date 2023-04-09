@@ -3,9 +3,11 @@
 #include <Windows.h>
 
 Account accounts[MAX_ACCOUNTS];
-Message messages[150];
-Message announcements[150];
 int num_accounts = 0;
+Message messages[150];
+int num_messages = 0;
+Message announcements[150];
+int num_announcements = 0;
 
 
 int main() {

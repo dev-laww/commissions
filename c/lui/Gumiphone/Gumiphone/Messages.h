@@ -12,7 +12,6 @@ typedef struct Message {
 	char body[MAX_STRING];
 } Message;
 
-Message compose(Account* sender, Account* receiver);
-void send(char mode[]);
+Message compose(Account* sender, Account accounts[], int num_accounts);
 
 #endif // !MESSAGES_H

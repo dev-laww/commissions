@@ -247,6 +247,15 @@ void view_conn(Account* acc) {
 	}
 }
 
+int exists(char username[], Account accounts[], int num_accounts) {
+	for (int i = 0; i < num_accounts; i++) {
+		if (strcmp(username, accounts[i].user_name) == 0) {
+			return i;
+		}
+	}
+	return -1;
+}
+
 
 char* generate_sec_question() {
 	char* security_ques[5] = {
