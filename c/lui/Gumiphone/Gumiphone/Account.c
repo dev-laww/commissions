@@ -63,6 +63,7 @@ void edit_account_details(Account* acc) {
 	printf("Enter your choice: ");
 
 	int choice;
+	char pass[MAX_PASS];
 	scanf("%d", &choice);
 
 	switch (choice) {
@@ -72,6 +73,20 @@ void edit_account_details(Account* acc) {
 		fgets(acc->description, MAX_STRING, stdin);
 		fgets(acc->description, MAX_STRING, stdin);
 		acc->description[strlen(acc->description) - 1] = '\0';
+
+		printf("Enter your current password: ");
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+
+		if (strcmp(pass, acc->pass) != 0) {
+			printf("Incorrect password. Try again.\n");
+			Sleep(1000);
+			edit_account_details(acc);
+			return;
+		}
+
+		printf("Account description changed successfully.\n");
+		Sleep(1000);
 		break;
 	case 2:
 		change_security(acc);
