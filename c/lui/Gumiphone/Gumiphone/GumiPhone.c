@@ -374,6 +374,7 @@ void manage_users() {
 			}
 			num_accounts--;
 			printf("Account deleted successfully.\n");
+			save_accounts(accounts, num_accounts);
 			Sleep(1000);
 		}
 		break;

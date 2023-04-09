@@ -1,7 +1,8 @@
 ﻿  GumiPhone.c
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(679,13): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'Message'
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(769,28): warning C4020: 'save_accounts': too many actual parameters
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(775,28): warning C4020: 'save_accounts': too many actual parameters
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(851,29): warning C4020: 'save_accounts': too many actual parameters
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(964,28): warning C4020: 'save_accounts': too many actual parameters
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(377,28): warning C4020: 'save_accounts': too many actual parameters
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(680,13): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'Message'
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(770,28): warning C4020: 'save_accounts': too many actual parameters
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(776,28): warning C4020: 'save_accounts': too many actual parameters
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(852,29): warning C4020: 'save_accounts': too many actual parameters
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(965,28): warning C4020: 'save_accounts': too many actual parameters
   Gumiphone.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\x64\Debug\Gumiphone.exe
