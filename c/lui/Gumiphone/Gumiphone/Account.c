@@ -57,8 +57,8 @@ void view_account_details(Account* acc) {
 void edit_account_details(Account* acc) {
 	system("cls");
 	printf("Edit account details\n");
-	printf("1. Change description\n");
-	printf("2. Change security question\n");
+	printf("1. Name\n");
+	printf("2. Change description\n");
 	printf("3. Back\n");
 	printf("Enter your choice: ");
 
@@ -68,6 +68,22 @@ void edit_account_details(Account* acc) {
 
 	switch (choice) {
 	case 1:
+		printf("Enter new name: ");
+		fgets(acc->name, MAX_STRING, stdin);
+		acc->name[strlen(acc->name) - 1] = '\0';
+
+		printf("Enter your current password: ");
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+
+		if (strcmp(pass, acc->pass) != 0) {
+			printf("Incorrect password. Try again.\n");
+			Sleep(1000);
+			edit_account_details(acc);
+			return;
+		}
+		break;
+	case 2:
 		printf("Enter new description: ");
 
 		fgets(acc->description, MAX_STRING, stdin);
@@ -87,9 +103,6 @@ void edit_account_details(Account* acc) {
 
 		printf("Account description changed successfully.\n");
 		Sleep(1000);
-		break;
-	case 2:
-		change_security(acc);
 		break;
 	case 3:
 		return;
