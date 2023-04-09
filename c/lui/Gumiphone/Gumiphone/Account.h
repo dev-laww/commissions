@@ -28,6 +28,7 @@ void change_security(Account* acc);
 void add_conn(Account* acc, Account accounts[], int num_accounts);
 void remove_conn(Account* acc, Account accounts[], int num_accounts);
 void view_conn(Account* acc, Account accounts[], int num_accounts);
+void view_user_conn(Account* acc, Account accounts[], int num_accounts);
 int exists(char username[41], Account accounts[], int num_accounts);
 
 char* generate_sec_question();

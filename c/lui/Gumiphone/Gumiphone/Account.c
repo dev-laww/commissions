@@ -8,7 +8,6 @@ Account create_account() {
 	acc.num_of_connections = 0;
 
 	char pass[MAX_PASS], confirm[MAX_PASS];
-	system("cls");
 	printf("Enter your name: ");
 	scanf("%s", acc.name);
 	printf("Enter your username: ");
@@ -254,6 +253,20 @@ int exists(char username[], Account accounts[], int num_accounts) {
 		}
 	}
 	return -1;
+}
+
+void view_user_conn(Account* acc, Account accounts[], int num_accounts) {
+	int counter = 0;
+	printf("List of users in %s's connection list:\n", acc->name);
+	
+	for (int i = 0; i < acc->num_of_connections; i++) {
+		for (int j = 0; j < num_accounts; j++) {
+			if (strcmp(acc->connections[i], accounts[j].username) == 0) {
+				counter++;
+				printf("%d. %s\n", counter, accounts[j].name);
+			}
+		}
+	}
 }
 
 
