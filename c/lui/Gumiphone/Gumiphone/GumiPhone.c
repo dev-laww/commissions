@@ -211,12 +211,11 @@ void load_refresh_req() {
 	FILE* fp = fopen("requests.txt", "r");
 
 	if (fp == NULL) {
-		printf("Error opening file.\n");
-		exit(1);
+		return;
 	}
 
 	while (fgets(refresh_req[num_req], MAX_STRING, fp)) {
-		strok(refresh_req[num_req], "\n");
+		strtok(refresh_req[num_req], "\n");
 		num_req++;
 	}
 
@@ -379,8 +378,13 @@ void manage_users() {
 			printf("Reset password\n");
 
 			printf("Password reset requests:\n");
+
+			if (num_req == 0) {
+				printf("No requests");
+			}
+
 			for (int i = 0; i < num_req; i++) {
-				printf("%d. %s\n", i + 1, refresh_req[num_req]);
+				printf("%d. %s\n", i + 1, refresh_req[num_req - 1]);
 			}
 
 			printf("Enter your choice: ");
@@ -391,6 +395,7 @@ void manage_users() {
 
 			printf("Enter admin password again: ");
 			fgets(pass, MAX_PASS, stdin);
+			fgets(pass, MAX_PASS, stdin);
 			pass[strlen(pass) - 1] = '\0';
 
 			while (strcmp(pass, admin[1]) != 0) {
@@ -398,11 +403,16 @@ void manage_users() {
 				printf("Invalid password!\n");
 				printf("Re-enter password: ");
 				fgets(pass, MAX_PASS, stdin);
+				pass[strlen(pass) - 1] = '\0';
 			}
 
-			int index = exists(refresh_req[num_req, accounts, num_accounts);
-			
+			index = exists(refresh_req[num_req - 1], accounts, num_accounts);
 
+			accounts[index].is_locked = 0;
+			strcpy(accounts[index].pass, default_pass);
+			printf("Success!\n");
+
+			save_accounts(accounts);
 
 			Sleep(1000);
 
@@ -1143,6 +1153,50 @@ void login() {
 		tries++;
 	}
 
+	if (strcmp(pass, default_pass) == 0) {
+		char confirm[MAX_PASS];
+
+		printf("Please reset your password before logging in...\n");
+		printf("You are using the default password.\n");
+		Sleep(1000);
+
+		system("cls");
+		printf("Change Password\n");
+		printf("Enter your current password: ");
+		while (fgets(pass, MAX_PASS, stdin) && pass[0] != '\n');
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+
+		while (strcmp(pass, accounts[index].pass) != 0) {
+			printf("Incorrect password. Try again.\n");
+			printf("Re-enter passowrd: ");
+			scanf("%s", pass);
+			Sleep(1000);
+		}
+
+		printf("Enter your new password: ");
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+		printf("Confirm password: ");
+		fgets(confirm, MAX_PASS, stdin);
+		confirm[strlen(confirm) - 1] = '\0';
+
+		while (strcmp(pass, confirm) != 0) {
+			system("cls");
+			printf("Passwords do not match. Try again.\n");
+			printf("Enter your password: ");
+			fgets(pass, MAX_PASS, stdin);
+			pass[strlen(pass) - 1] = '\0';
+			printf("Confirm your password: ");
+			fgets(confirm, MAX_PASS, stdin);
+			confirm[strlen(confirm) - 1] = '\0';
+		}
+
+		strcpy(accounts[index].pass, pass);
+		printf("Password Changed!\n");
+		Sleep(1000);
+	}
+
 	account_page(&accounts[index]);
 }
 
@@ -1196,9 +1250,12 @@ int main() {
 			}
 
 			strcpy(refresh_req[num_req], username);
-
+			printf("%s\n", refresh_req[num_req]);
 			num_req++;
+
+			printf("Success! Please wait for the admin to reset your password.\n");
 			save_refresh_req();
+			Sleep(1000);
 			break;
 		case 4:
 			exit(0);

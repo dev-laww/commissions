@@ -1,6 +1,6 @@
-John Doe,johndoe,password1,What is your favorite color?,Blue,1,A regular user,A regular user,friend1,friend2,friend3
-Jane Smith,janesmith,password2,What is your favorite animal?,Dog,0,A premium user,A premium user,friend4,friend5
-Bob Johnson,bobjohnson,password3,What is your mother's maiden name?,0,0,A regular user,A regular user,friend2,friend6,friend7
-Emily Chen,emilychen,password4,What city were you born in?,Los Angeles,0,A premium user,A premium user,friend8
-David Lee,davidlee,password5,What is your favorite food?,Pizza,0,A regular user,A regular user,friend1,friend9,friend10,friend11
-a,a,a,What was the name of your elementary school?,a,0,hatdog,hatdog
+John Doe,johndoe,password1,What is your favorite color?,Blue,1,A regular user,A regular user,A regular user,A regular user,A regular user,A regular user,A regular user,friend1,friend2,friend3
+Jane Smith,janesmith,password2,What is your favorite animal?,Dog,0,A premium user,A premium user,A premium user,A premium user,A premium user,A premium user,A premium user,friend4,friend5
+Bob Johnson,bobjohnson,password3,What is your mother's maiden name?,0,0,A regular user,A regular user,A regular user,A regular user,A regular user,A regular user,A regular user,friend2,friend6,friend7
+Emily Chen,emilychen,password4,What city were you born in?,Los Angeles,0,A premium user,A premium user,A premium user,A premium user,A premium user,A premium user,A premium user,friend8
+David Lee,davidlee,password5,What is your favorite food?,Pizza,0,A regular user,A regular user,A regular user,A regular user,A regular user,A regular user,A regular user,friend1,friend9,friend10,friend11
+a,a,password,What was the name of your elementary school?,a,0,hatdog,hatdog,hatdog,hatdog,hatdog,hatdog,hatdog
