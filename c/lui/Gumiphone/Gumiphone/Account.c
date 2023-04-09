@@ -172,7 +172,21 @@ void change_security(Account* acc) {
 		while (fgets(sec_ans, MAX_STRING, stdin) && sec_ans[0] != '\n');
 		fgets(sec_ans, MAX_STRING, stdin);
 		sec_ans[strlen(sec_ans) - 1] = '\0';
+
 		strcpy(acc->sequrity_answer, sec_ans);
+
+		printf("Enter your current password: ");
+		while (fgets(pass, MAX_PASS, stdin) && pass[0] != '\n');
+		fgets(pass, MAX_PASS, stdin);
+		pass[strlen(pass) - 1] = '\0';
+
+		if (strcmp(pass, acc->pass) != 0) {
+			printf("Incorrect password. Try again.\n");
+			Sleep(1000);
+			change_security(acc);
+			return;
+		}
+
 		printf("Answer changed!\n");
 		Sleep(1000);
 		break;
