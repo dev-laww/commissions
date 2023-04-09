@@ -13,7 +13,7 @@ Message compose(Account* sender, Account accounts[], int num_accounts) {
 		return;
 	}
 
-	char receiver[] = accounts[index].name;
+	strcpy(receiver, accounts[index].username);
 
 	Message mess;
 

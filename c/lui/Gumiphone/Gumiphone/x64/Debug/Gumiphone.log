@@ -1,5 +1,2 @@
-﻿  Account.c
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\Account.c(208,52): warning C4029: declared formal parameter list different from definition
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\Account.c(240,30): warning C4029: declared formal parameter list different from definition
-C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\Account.c(264,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  GumiPhone.c
   Gumiphone.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\x64\Debug\Gumiphone.exe
