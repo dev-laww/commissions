@@ -10,13 +10,13 @@
 int load_accounts(Account accounts[]);
 void save_accounts(Account accounts[]);
 
-int load_messages(Message messages[]);
-void save_messages(Message messages[]);
-
-int load_announcements(Message announcements[]);
-void save_announcements(Message announcements[]);
+int load_messages(Message messages[], char mode[]);
+void save_messages(Message messages[], char mode[]);
 
 void login();
 void logout();
+
+void admin_page();
+void user_page(Account* acc);
 
 #endif // !GUMIPHONE_H
