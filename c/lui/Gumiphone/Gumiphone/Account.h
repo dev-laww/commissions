@@ -10,7 +10,7 @@
 
 typedef struct Account {
 	char name[MAX_STRING];
-	char user_name[41];
+	char username[41];
 	char pass[MAX_PASS];
 	char sequrity_question[MAX_STRING];
 	char sequrity_answer[MAX_STRING];

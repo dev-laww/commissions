@@ -7,13 +7,13 @@
 #ifndef GUMIPHONE_H
 #define GUMIPHONE_H
 
-void load_accounts(Account accounts[]);
+int load_accounts(Account accounts[]);
 void save_accounts(Account accounts[]);
 
-void load_messages(Message messages[]);
+int load_messages(Message messages[]);
 void save_messages(Message messages[]);
 
-void load_announcements(Message announcements[]);
+int load_announcements(Message announcements[]);
 void save_announcements(Message announcements[]);
 
 void login();

@@ -12,7 +12,7 @@ Account create_account() {
 	printf("Enter your name: ");
 	scanf("%s", acc.name);
 	printf("Enter your username: ");
-	scanf("%s", acc.user_name);
+	scanf("%s", acc.username);
 	printf("Enter your password: ");
 	fgets(pass, MAX_PASS, stdin);
 	fgets(pass, MAX_PASS, stdin);
@@ -51,7 +51,7 @@ void view_account_details(Account* acc) {
 	system("cls");
 	printf("User details\n");
 	printf("Name: %s\n", acc->name);
-	printf("Username: %s\n", acc->user_name);
+	printf("Username: %s\n", acc->username);
 	printf("Description: %s\n", acc->description);
 }
 
@@ -173,7 +173,7 @@ void add_conn(Account* acc, Account accounts[], int num_accounts) {
 
 	int index = -1;
 	for (int i = 0; i < num_accounts; i++) {
-		if (strcmp(user_name, accounts[i].user_name) == 0) {
+		if (strcmp(user_name, accounts[i].username) == 0) {
 			index = i;
 			break;
 		}
@@ -184,7 +184,7 @@ void add_conn(Account* acc, Account accounts[], int num_accounts) {
 		return;
 	}
 
-	if (strcmp(user_name, acc->user_name) == 0) {
+	if (strcmp(user_name, acc->username) == 0) {
 		printf("You cannot add yourself as a connection.\n");
 		return;
 	}
@@ -249,7 +249,7 @@ void view_conn(Account* acc) {
 
 int exists(char username[], Account accounts[], int num_accounts) {
 	for (int i = 0; i < num_accounts; i++) {
-		if (strcmp(username, accounts[i].user_name) == 0) {
+		if (strcmp(username, accounts[i].username) == 0) {
 			return i;
 		}
 	}
