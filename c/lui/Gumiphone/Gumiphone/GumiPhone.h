@@ -10,7 +10,13 @@
 int load_accounts(Account accounts[]);
 void save_accounts(Account accounts[]);
 
-void list_users(Account accounts[]);
+void list_users(Account accounts[], int num_accounts);
+
+void load_sec_questions(char questions[]);
+void save_sec_questions(char questions[]);
+
+void load_admin(char admin[2][41]);
+void save_admin(char admin[2][41]);
 
 int load_messages(Message messages[], char mode[]);
 void save_messages(Message messages[], char mode[]);
