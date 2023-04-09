@@ -378,6 +378,33 @@ void manage_users() {
 			system("cls");
 			printf("Reset password\n");
 
+			printf("Password reset requests:\n");
+			for (int i = 0; i < num_req; i++) {
+				printf("%d. %s\n", i + 1, refresh_req[num_req]);
+			}
+
+			printf("Enter your choice: ");
+			int req_choice;
+			char pass[MAX_PASS];
+
+			scanf("%d", &req_choice);
+
+			printf("Enter admin password again: ");
+			fgets(pass, MAX_PASS, stdin);
+			pass[strlen(pass) - 1] = '\0';
+
+			while (strcmp(pass, admin[1]) != 0) {
+				system("cls");
+				printf("Invalid password!\n");
+				printf("Re-enter password: ");
+				fgets(pass, MAX_PASS, stdin);
+			}
+
+			int index = exists(refresh_req[num_req, accounts, num_accounts);
+			
+
+
+			Sleep(1000);
 
 			break;
 		case 4:
