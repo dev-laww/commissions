@@ -155,6 +155,61 @@ void save_messages(Message messages[], char mode[]) {
 	fclose(fp);
 }
 
+char* encrypt(char* password) {
+	int i;
+	for (i = 0; i < strlen(password); i++) {
+		password[i] = password[i] + 3; // add 3 to ASCII value
+	}
+	return password;
+}
+
+void manage_users() {
+	system("cls");
+
+	int choice;
+
+	printf("Manage users\n");
+	printf("1. View all users\n");
+	printf("2. Modify user\n");
+	printf("3. Reset password\n");
+	printf("4. Delete user\n");
+	printf("5. Edit security questions\n");
+	printf("6. Back\n");
+	printf("Enter your choice: ");
+	scanf("%d", &choice);
+
+	switch (choice) {
+	case 1:
+		system("cls");
+		printf("All users\n\n");
+		for (int i = 0; i < num_accounts; i++) {
+			char* pass = encrypt(accounts[i].pass);
+			printf("Name: %s\n", accounts[i].name);
+			printf("Username: %s\n", accounts[i].username);
+			printf("Password: %s\n\n", pass);
+
+			printf("Connections\n");
+			if (accounts[i].num_of_connections == 0) {
+				printf("No connections\n");
+			}
+			else {
+				for (int j = 0; j < accounts[i].num_of_connections; j++) {
+					printf("%d. %s\n", j + 1, accounts[i].connections[j]);
+				}
+			}
+			printf("-----------------------------------\n");
+		}
+		printf("Press any key to continue...");
+		_getch();
+		break;
+
+	}
+}
+
+void manage_messages() {
+
+}
+
 void admin_page() {
 	printf("Admin");
 
