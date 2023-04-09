@@ -214,16 +214,67 @@ char* encrypt(char* password) {
 }
 
 void manage_users() {
+	system("cls");
+
 	int choice;
 
-	do {
+	printf("Manage users\n");
+	printf("1. View all users\n");
+	printf("2. Modify user\n");
+	printf("3. Reset password\n");
+	printf("4. Delete user\n");
+	printf("5. Edit security questions\n");
+	printf("6. Back\n");
+	printf("Enter your choice: ");
+	scanf("%d", &choice);
+
+	switch (choice) {
+	case 1:
 		system("cls");
-		printf("Manage users\n");
-		printf("1. View all users\n");
-		printf("2. Modify user\n");
-		printf("3. Reset password\n");
-		printf("4. Delete user\n");
-		printf("5. Edit security questions\n");
+		printf("All users\n\n");
+		for (int i = 0; i < num_accounts; i++) {
+			char* pass = encrypt(accounts[i].pass);
+			printf("Name: %s\n", accounts[i].name);
+			printf("Username: %s\n", accounts[i].username);
+			printf("Password: %s\n\n", pass);
+
+			printf("Connections\n");
+			if (accounts[i].num_of_connections == 0) {
+				printf("No connections\n");
+			}
+			else {
+				for (int j = 0; j < accounts[i].num_of_connections; j++) {
+					printf("%d. %s\n", j + 1, accounts[i].connections[j]);
+				}
+			}
+			printf("-----------------------------------\n");
+		}
+		printf("Press any key to continue...");
+		_getch();
+		break;
+	case 2:
+		system("cls");
+		printf("Modify user\n");
+
+		list_users(accounts, num_accounts);
+
+		printf("Enter username: ");
+		char username[41];
+		scanf("%s", username);
+
+		int index = exists(username, accounts, num_accounts);
+
+		if (index == -1) {
+			printf("Account does not exist.\n");
+			Sleep(1000);
+			break;
+		}
+
+		printf("1. Change name\n");
+		printf("2. Change username\n");
+		printf("3. Change password\n");
+		printf("4. Change description\n");
+		printf("5. Modify connections\n");
 		printf("6. Back\n");
 		printf("Enter your choice: ");
 		scanf("%d", &choice);
@@ -231,255 +282,195 @@ void manage_users() {
 		switch (choice) {
 		case 1:
 			system("cls");
-			printf("All users\n\n");
-			for (int i = 0; i < num_accounts; i++) {
-				char* pass = encrypt(accounts[i].pass);
-				printf("Name: %s\n", accounts[i].name);
-				printf("Username: %s\n", accounts[i].username);
-				printf("Password: %s\n\n", pass);
-
-				printf("Connections\n");
-				if (accounts[i].num_of_connections == 0) {
-					printf("No connections\n");
-				}
-				else {
-					for (int j = 0; j < accounts[i].num_of_connections; j++) {
-						printf("%d. %s\n", j + 1, accounts[i].connections[j]);
-					}
-				}
-				printf("-----------------------------------\n");
-			}
-			printf("Press any key to continue...");
-			_getch();
+			printf("Change name\n");
+			printf("Enter new name: ");
+			fgets(accounts[index].name, 41, stdin);
+			printf("Name changed successfully.\n");
+			Sleep(1000);
 			break;
 		case 2:
 			system("cls");
-			printf("Modify user\n");
-
-			list_users(accounts, num_accounts);
-
-			printf("Enter username: ");
-			char username[41];
-			scanf("%s", username);
-
-			int index = exists(username, accounts, num_accounts);
-
-			if (index == -1) {
-				printf("Account does not exist.\n");
-				Sleep(1000);
-				break;
-			}
-
-			printf("1. Change name\n");
-			printf("2. Change username\n");
-			printf("3. Change password\n");
-			printf("4. Change description\n");
-			printf("5. Modify connections\n");
-			printf("6. Back\n");
-			printf("Enter your choice: ");
-			scanf("%d", &choice);
-
-			switch (choice) {
-			case 1:
-				system("cls");
-				printf("Change name\n");
-				printf("Enter new name: ");
-				fgets(accounts[index].name, 41, stdin);
-				printf("Name changed successfully.\n");
-				Sleep(1000);
-				break;
-			case 2:
-				system("cls");
-				printf("Change username\n");
-				printf("Enter new username: ");
-				fgets(accounts[index].username, 41, stdin);
-				printf("Username changed successfully.\n");
-				Sleep(1000);
-				break;
-			case 3:
-				system("cls");
-				printf("Change password\n");
-				printf("Enter new password: ");
-				fgets(accounts[index].pass, 41, stdin);
-				printf("Password changed successfully.\n");
-				Sleep(1000);
-				break;
-			case 4:
-				system("cls");
-				printf("Change description\n");
-				printf("Enter new description: ");
-				fgets(accounts[index].description, 1001, stdin);
-				printf("Description changed successfully.\n");
-				Sleep(1000);
-				break;
-			case 5:
-				do {
-					system("cls");
-					printf("Modify connections\n");
-					printf("1. Add connection\n");
-					printf("2. Remove connection\n");
-					printf("3. Back\n");
-					printf("Enter your choice: ");
-					scanf("%d", &choice);
-					switch (choice) {
-					case 1:
-						system("cls");
-						printf("Add connection\n");
-						add_conn(&accounts[index], accounts, num_accounts);
-						break;
-					case 2:
-						system("cls");
-						printf("Remove connection\n");
-						remove_conn(&accounts[index], accounts, num_accounts);
-						printf("Connection removed successfully.\n");
-						Sleep(1000);
-						break;
-					case 3:
-						break;
-					default:
-						printf("Invalid choice.\n");
-						Sleep(1000);
-						break;
-					}
-					break;
-				} while (choice != 3);
-				break;
-			}
+			printf("Change username\n");
+			printf("Enter new username: ");
+			fgets(accounts[index].username, 41, stdin);
+			printf("Username changed successfully.\n");
+			Sleep(1000);
 			break;
 		case 3:
 			system("cls");
-			printf("Reset password\n");
-
-
+			printf("Change password\n");
+			printf("Enter new password: ");
+			fgets(accounts[index].pass, 41, stdin);
+			printf("Password changed successfully.\n");
+			Sleep(1000);
 			break;
 		case 4:
 			system("cls");
-			printf("Delete user\n");
-
-			list_users(accounts, num_accounts);
-
-			printf("Enter username: ");
-			char user[41];
-			scanf("%s", user);
-
-			index = exists(user, accounts, num_accounts);
-
-			if (index == -1) {
-				printf("Account does not exist.\n");
-				Sleep(1000);
-				break;
-			}
-
-			printf("Are you sure you want to delete this account? (y/n): ");
-			char choice;
-			scanf(" %c", &choice);
-
-			if (choice == 'y') {
-				for (int i = index; i < num_accounts - 1; i++) {
-					accounts[i] = accounts[i + 1];
-				}
-				num_accounts--;
-				printf("Account deleted successfully.\n");
-				save_accounts(accounts, num_accounts);
-				Sleep(1000);
-			}
+			printf("Change description\n");
+			printf("Enter new description: ");
+			fgets(accounts[index].description, 1001, stdin);
+			printf("Description changed successfully.\n");
+			Sleep(1000);
 			break;
 		case 5:
-			system("cls");
-			printf("What would you like to do?\n");
-			printf("1. Add question\n");
-			printf("2. Remove question\n");
-
-			printf("Enter your choice: ");
-			int q_choice;
-			scanf("%d", &q_choice);
-
-			switch (q_choice) {
-			case 1:
+			do {
 				system("cls");
-
-				FILE* fp;
-
-				char questions[10][MAX_STRING];
-
-				fp = fopen("questions.txt", "r");
-
-				if (fp == NULL) {
-					printf("Error opening file.\n");
-					exit(1);
-				}
-
-				int i = 0;
-				while (fgets(questions[i], MAX_STRING, fp)) {
-					strtok(questions[i], "\n"); // remove the newline character
-					i++;
-				}
-
-				printf("Add question\n");
-
-				if (i == 10) {
-					printf("Maximum number of questions reached.\n");
+				printf("Modify connections\n");
+				printf("1. Add connection\n");
+				printf("2. Remove connection\n");
+				printf("3. Back\n");
+				printf("Enter your choice: ");
+				scanf("%d", &choice);
+				switch (choice) {
+				case 1:
+					system("cls");
+					printf("Add connection\n");
+					add_conn(&accounts[index], accounts, num_accounts);
+					break;
+				case 2:
+					system("cls");
+					printf("Remove connection\n");
+					remove_conn(&accounts[index], accounts, num_accounts);
+					printf("Connection removed successfully.\n");
+					Sleep(1000);
+					break;
+				case 3:
+					break;
+				default:
+					printf("Invalid choice.\n");
 					Sleep(1000);
 					break;
 				}
-
-				printf("Enter question: ");
-				fgets(questions[i++], 1001, stdin);
-				printf("Question added successfully.\n");
-
-				save_sec_questions(questions, i);
-				Sleep(1000);
 				break;
-			case 2:
-				system("cls");
-				fp = fopen("questions.txt", "r");
-
-				if (fp == NULL) {
-					printf("Error opening file.\n");
-					exit(1);
-				}
-
-				i = 0;
-
-				while (fgets(questions[i], MAX_STRING, fp)) {
-					strtok(questions[i], "\n"); // remove the newline character
-					i++;
-				}
-
-				for (int j = 0; j < i; j++) {
-					printf("%d. %s\n", j + 1, questions[j]);
-				}
-
-				printf("Enter question number to remove: ");
-				int q_num;
-				scanf("%d", &q_num);
-
-				if (q_num < 1 || q_num > i) {
-					printf("Invalid question number.\n");
-					Sleep(1000);
-					break;
-				}
-
-				for (int j = q_num - 1; j < i - 1; j++) {
-					strcpy(questions[j], questions[j + 1]);
-				}
-
-				save_sec_questions(questions, i - 1);
-
-				printf("Question removed successfully.\n");
-				Sleep(1000);
-
-				break;
-			}
+			} while (choice != 3);
 			break;
-		case 6:
-			return;
-		default:
-			printf("Invalid choice!");
+		}
+		break;
+	case 3:
+		system("cls");
+		printf("Reset password\n");
+		break;
+	case 4:
+		system("cls");
+		printf("Delete user\n");
+
+		list_users(accounts, num_accounts);
+
+		printf("Enter username: ");
+		char user[41];
+		scanf("%s", user);
+
+		index = exists(user, accounts, num_accounts);
+
+		if (index == -1) {
+			printf("Account does not exist.\n");
 			Sleep(1000);
 			break;
 		}
-	} while (choice != 6);
+
+		printf("Are you sure you want to delete this account? (y/n): ");
+		char choice;
+		scanf(" %c", &choice);
+
+		if (choice == 'y') {
+			for (int i = index; i < num_accounts - 1; i++) {
+				accounts[i] = accounts[i + 1];
+			}
+			num_accounts--;
+			printf("Account deleted successfully.\n");
+			save_accounts(accounts, num_accounts);
+			Sleep(1000);
+		}
+		break;
+	case 5:
+		system("cls");
+		printf("What would you like to do?\n");
+		printf("1. Add question\n");
+		printf("2. Remove question\n");
+
+		printf("Enter your choice: ");
+		int q_choice;
+		scanf("%d", &q_choice);
+
+		switch (q_choice) {
+		case 1:
+			system("cls");
+
+			FILE* fp;
+
+			char questions[10][MAX_STRING];
+
+			fp = fopen("questions.txt", "r");
+
+			if (fp == NULL) {
+				printf("Error opening file.\n");
+				exit(1);
+			}
+
+			int i = 0;
+			while (fgets(questions[i], MAX_STRING, fp)) {
+				strtok(questions[i], "\n"); // remove the newline character
+				i++;
+			}
+
+			printf("Add question\n");
+
+			if (i == 10) {
+				printf("Maximum number of questions reached.\n");
+				Sleep(1000);
+				break;
+			}
+
+			printf("Enter question: ");
+			fgets(questions[i++], 1001, stdin);
+			printf("Question added successfully.\n");
+
+			save_sec_questions(questions, i);
+			Sleep(1000);
+			break;
+		case 2:
+			system("cls");
+			fp = fopen("questions.txt", "r");
+
+			if (fp == NULL) {
+				printf("Error opening file.\n");
+				exit(1);
+			}
+
+			i = 0;
+
+			while (fgets(questions[i], MAX_STRING, fp)) {
+				strtok(questions[i], "\n"); // remove the newline character
+				i++;
+			}
+
+			for (int j = 0; j < i; j++) {
+				printf("%d. %s\n", j + 1, questions[j]);
+			}
+
+			printf("Enter question number to remove: ");
+			int q_num;
+			scanf("%d", &q_num);
+
+			if (q_num < 1 || q_num > i) {
+				printf("Invalid question number.\n");
+				Sleep(1000);
+				break;
+			}
+
+			for (int j = q_num - 1; j < i - 1; j++) {
+				strcpy(questions[j], questions[j + 1]);
+			}
+
+			save_sec_questions(questions, i - 1);
+
+			printf("Question removed successfully.\n");
+			Sleep(1000);
+
+			break;
+		}
+		break;
+	}
 }
 
 void manage_messages() {
@@ -1126,11 +1117,7 @@ int main() {
 			save_accounts(accounts, num_accounts);
 			break;
 		case 3:
-			system("cls");
-			printf("Forgot password\n");
-
-			
-
+			//forgot_password();
 			break;
 		case 4:
 			exit(0);

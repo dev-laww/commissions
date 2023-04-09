@@ -31,7 +31,4 @@ void account_page(Account* acc);
 void manage_users();
 void manage_messages();
 
-void load_refresh_req();
-void save_refresh_req();
-
 #endif // !GUMIPHONE_H
