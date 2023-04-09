@@ -8,7 +8,7 @@ Message compose(Account* sender, Account accounts[], int num_accounts) {
 	scanf("%s", receiver);
 
 	int index = exists(receiver, accounts, num_accounts);
-	if (index == -1) {
+	if (index == -1 && strcmp(receiver, "Announcement") == 0) {
 		printf("User not found.\n");
 		return;
 	}
