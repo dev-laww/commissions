@@ -13,6 +13,9 @@ int num_messages;
 Message announcements[250];
 int num_announcements;
 
+char refresh_req[30][41];
+int num_req = 0;
+
 char admin[2][41];
 char sec_questions[][MAX_STRING];
 
@@ -194,8 +197,7 @@ void save_admin(char admin[2][41]) {
 }
 
 void save_sec_questions(char questions[10][MAX_STRING], int count) {
-	FILE* fp;
-	fp = fopen("questions.txt", "w");
+	FILE* fp = fopen("questions.txt", "w");
 
 	for (int i = 0; i < count; i++) {
 		fprintf(fp, "%s\n", questions[i]);
@@ -204,6 +206,32 @@ void save_sec_questions(char questions[10][MAX_STRING], int count) {
 	fclose(fp);
 }
 
+
+void load_refresh_req() {
+	FILE* fp = fopen("requests.txt", "r");
+
+	if (fp == NULL) {
+		printf("Error opening file.\n");
+		exit(1);
+	}
+
+	while (fgets(refresh_req[num_req], MAX_STRING, fp)) {
+		strok(refresh_req[num_req], "\n");
+		num_req++;
+	}
+
+	fclose(fp);
+}
+
+void save_refresh_req() {
+	FILE* fp = fopen("requests.txt", "w");
+
+	for (int i = 0; i < num_req; i++) {
+		fprintf(fp, "%s\n", refresh_req[i]);
+	}
+
+	fclose(fp);
+}
 
 char* encrypt(char* password) {
 	int i;
@@ -1098,6 +1126,7 @@ int main() {
 	num_announcements = load_messages(announcements, "announcement");
 	num_messages = load_messages(messages, "message");
 	load_admin(admin);
+	load_refresh_req();
 
 	do {
 		system("cls");
@@ -1129,8 +1158,20 @@ int main() {
 			system("cls");
 			printf("Forgot password\n");
 
-			
+			char username[41]; 
 
+			printf("Enter your username: ");
+			scanf("%s", username);
+
+			if (exists(username, accounts, num_accounts) == -1) {
+				printf("Account doesn't exists.\n");
+				break;
+			}
+
+			strcpy(refresh_req[num_req], username);
+
+			num_req++;
+			save_refresh_req();
 			break;
 		case 4:
 			exit(0);
@@ -1140,6 +1181,11 @@ int main() {
 		}
 	} while (choice != 4);
 
+	save_accounts(accounts);
+	save_admin(admin);
+	save_messages(messages, "message");
+	save_messages(announcements, "announcement");
+	save_refresh_req();
 
 	return 0;
 }
