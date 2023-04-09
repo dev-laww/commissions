@@ -276,7 +276,7 @@ char* generate_sec_question() {
 		"What is the name of your favorite pet?",
 		"What is your mother's maiden name?",
 		"What high school did you attend?",
-		"What was the name of your elementary school ? "
+		"What was the name of your elementary school?"
 	};
 
 	srand(time(NULL));

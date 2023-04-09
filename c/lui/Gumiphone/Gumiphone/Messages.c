@@ -17,16 +17,19 @@ Message compose(Account* sender, Account accounts[], int num_accounts) {
 
 	Message mess;
 
-	strcpy(mess.sender, sender->name);
+	strcpy(mess.sender, sender->username);
 	strcpy(mess.receiver, receiver);
 
 
 	printf("Enter the subject: ");
-	while (fgets(mess.subject, MAX_STRING, stdin) && mess.subject[0] == '\n');
 	fgets(mess.subject, MAX_STRING, stdin);
+	fgets(mess.subject, MAX_STRING, stdin);
+	mess.subject[strlen(mess.subject) - 1] = '\0';
+
 
 	printf("Enter your message: ");
 	fgets(mess.body, MAX_STRING, stdin);
+	mess.body[strlen(mess.body) - 1] = '\0';
 
 	return mess;
 }

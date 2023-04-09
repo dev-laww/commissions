@@ -1,2 +1,5 @@
 ﻿  GumiPhone.c
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(291,12): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 3 has type 'Message'
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(341,55): warning C4029: declared formal parameter list different from definition
+C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\Gumiphone\GumiPhone.c(413,28): warning C4020: 'save_accounts': too many actual parameters
   Gumiphone.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\lui\Gumiphone\x64\Debug\Gumiphone.exe

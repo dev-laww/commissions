@@ -2,14 +2,15 @@
 #include "GumiPhone.h"
 
 #include <stdio.h>
+#include <conio.h>
 #include <Windows.h>
 
 
 Account accounts[MAX_ACCOUNTS];
 int num_accounts;
-Message messages[150];
+Message messages[1001];
 int num_messages;
-Message announcements[150];
+Message announcements[250];
 int num_announcements;
 
 char admin[] = "admin";
@@ -19,7 +20,6 @@ int load_accounts(Account accounts[]) {
 	FILE* fp = fopen("accounts.txt", "r");
 
 	if (fp == NULL) {
-		printf("Error: Unable to open file `accounts.txt`\n");
 		return -1;
 	}
 
@@ -73,7 +73,7 @@ void save_accounts(Account accounts[]) {
 	for (int i = 0; i < num_accounts; i++) {
 		fprintf(
 			fp,
-			"%s,%s,%s,%s,%s,%s,",
+			"%s,%s,%s,%s,%s,%s",
 			accounts[i].name,
 			accounts[i].username,
 			accounts[i].pass,
@@ -83,16 +83,76 @@ void save_accounts(Account accounts[]) {
 		);
 
 		for (int j = 0; j < accounts[i].num_of_connections; j++) {
-			fprintf(
-				fp,
-				"%s%s",
-				accounts[i].connections[j],
-				j == accounts[i].num_of_connections - 1 ? "" : ","
-			);
+			fprintf(fp, ",%s", accounts[i].connections[j]);
 		}
-
-		fprintf(fp, "\n");
 	}
+
+	fclose(fp);
+}
+
+int load_messages(Message messages[], char mode[]) {
+
+	FILE* fp;
+	if (strcmp(mode, "announcement") == 0) {
+		fp = fopen("announcements.txt", "r");
+	}
+	else {
+		fp = fopen("messages.txt", "r");
+	}
+
+	if (fp == NULL) {
+		return -1;
+	}
+
+	int num_messages = 0;
+	char line[1024];
+	while (fgets(line, 1024, fp)) {
+		char* token = strtok(line, ",");
+		strcpy(messages[num_messages].sender, token);
+		token = strtok(NULL, ",");
+		strcpy(messages[num_messages].receiver, token);
+		token = strtok(NULL, ",");
+		strcpy(messages[num_messages].subject, token);
+		token = strtok(NULL, ",");
+		strcpy(messages[num_messages].body, token);
+		num_messages++;
+	}
+
+	fclose(fp);
+	return num_messages;
+}
+
+void save_messages(Message messages[], char mode[]) {
+	FILE* fp;
+	if (strcmp(mode, "announcement") == 0) {
+		fp = fopen("announcements.txt", "w");
+	}
+	else {
+		fp = fopen("messages.txt", "w+");
+	}
+
+	if (fp == NULL) {
+		printf("Error: Unable to open file\n");
+		return;
+	}
+
+	int num_ = strcmp("announcement", mode) == 0 ? num_announcements : num_messages;
+
+	for (int i = 0; i < num_; i++) {
+
+		messages[i].body[strlen(messages[i].body) - 1] = '\0';
+
+		fprintf(
+			fp,
+			"%s,%s,%s,%s\n",
+			messages[i].sender,
+			messages[i].receiver,
+			messages[i].subject,
+			messages[i].body
+		);
+	}
+
+	fclose(fp);
 }
 
 void admin_page() {
@@ -100,6 +160,11 @@ void admin_page() {
 }
 
 void account_page(Account* account) {
+	int choice;
+
+	Message message;
+
+
 	system("cls");
 	printf("-----------------USER MODULE-----------------\n");
 	printf("||                                         ||\n");
@@ -115,8 +180,169 @@ void account_page(Account* account) {
 	printf("||                                         ||\n");
 	printf("---------------------------------------------\n");
 	printf("CHOICE: ");
+	scanf("%d", &choice);
 
-	Sleep(1000);
+	switch (choice) {
+	case 1:
+		system("cls");
+		printf("Compose\n");
+		printf("Send as:\n");
+		printf("[1] Personal Message\n");
+		printf("[2] Group Message \n");
+		printf("[3] Announcement\n");
+		printf("Choice: ");
+		scanf("%d", &choice);
+
+		switch (choice) {
+		case 1:
+			message = compose(account, accounts, num_accounts);
+			messages[num_messages] = message;
+			num_messages++;
+
+			printf("Sending message...\n");
+			printf("Message sent.\n");
+			Sleep(1000);
+			save_messages(messages, "message");
+			break;
+		case 2:
+			printf("Enter the subject: ");
+			fgets(message.subject, MAX_STRING, stdin);
+			fgets(message.subject, MAX_STRING, stdin);
+			message.subject[strlen(message.subject) - 1] = '\0';
+
+			printf("Enter your message: ");
+			fgets(message.body, MAX_STRING, stdin);
+			message.body[strlen(message.body) - 1] = '\0';
+
+			strcpy(message.sender, account->username);
+
+			printf("Enter usernames of recipients (separated by commas without spaces): ");
+
+			char line[1024];
+			fgets(line, 1024, stdin);
+
+			char* token = strtok(line, ",");
+			char* usernames[15];
+			int num_users = 0;
+
+			while (token != NULL) {
+				if (token[strlen(token) - 1] == '\n')
+					token[strlen(token) - 1] = '\0';
+
+				if (exists(token, accounts, num_accounts) != -1 && strcmp(token, account->username) != 0) {
+					usernames[num_users++] = token;
+				}
+				token = strtok(NULL, ",");
+			}
+
+			printf("%d\n", num_users);
+
+			for (int i = 0; i < num_users; i++) {
+				strcpy(message.receiver, usernames[i]);
+				messages[num_messages] = message;
+				num_messages++;
+				printf("test\n");
+			}
+
+			printf("%d\n", num_messages);
+
+			for (int i = 0; i < num_messages; i++) {
+				printf("%d. %s\n", i + 1, messages[i].subject);
+			}
+
+			Sleep(5000);
+
+			save_messages(messages, "message");
+			break;
+
+		case 3:
+			printf("Enter the subject: ");
+			fgets(message.subject, MAX_STRING, stdin);
+			fgets(message.subject, MAX_STRING, stdin);
+			message.subject[strlen(message.subject) - 1] = '\0';
+
+			printf("Enter your message: ");
+			fgets(message.body, MAX_STRING, stdin);
+			message.body[strlen(message.body) - 1] = '\0';
+
+			strcpy(message.receiver, "Announcement");
+			strcpy(message.sender, account->username);
+
+			announcements[num_announcements] = message;
+			num_announcements++;
+
+			printf("Message sent.\n");
+			save_messages(announcements, "announcement");
+			break;
+		default:
+			printf("Invalid choice.\n");
+			Sleep(1000);
+			break;
+		}
+		break;
+	case 2:
+		printf("Inbox\n");
+		Message inbox[350];
+		int num_inbox = 0;
+
+		for (int i = 0; i < num_messages; i++) {
+			if (strcmp(messages[i].receiver, account->username) == 0) {
+				inbox[num_inbox++] = messages[i];
+				printf("%d. %s from %s\n", num_inbox, messages[i].subject, messages[i]);
+			}
+		}
+
+		if (num_inbox == 0) {
+			printf("No messages.\n");
+			Sleep(1000);
+			break;
+		}
+
+		printf("Enter the number of the message you want to read: ");
+		int mess_choice;
+		scanf("%d", &mess_choice);
+
+		if (mess_choice < 0 && mess_choice > num_inbox) {
+			printf("Invalid choice.\n");
+			Sleep(1000);
+			break;
+		}
+
+		printf("Subject: %s\n", inbox[mess_choice - 1].subject);
+		printf("Sender: %s\n", inbox[mess_choice - 1].sender);
+		printf("Message: %s\n\n", inbox[mess_choice - 1].body);
+		printf("Do you want to reply? (y/n): ");
+
+		char reply;
+		scanf(" %c", &reply);
+
+		if (reply == 'y') {
+			printf("Enter your message: ");
+			fgets(message.body, MAX_STRING, stdin);
+			fgets(message.body, MAX_STRING, stdin);
+			message.body[strlen(message.body) - 1] = '\0';
+			strcpy(message.receiver, inbox[mess_choice - 1].sender);
+			strcpy(message.sender, account->username);
+			strcpy(message.subject, inbox[mess_choice - 1].subject);
+			messages[num_messages] = message;
+			num_messages++;
+			printf("Message sent.\n");
+			save_messages(messages, "message");
+		}
+		Sleep(1000);
+
+		break;
+	default:
+		printf("Invalid choice.\n");
+		Sleep(1000);
+		break;
+	}
+}
+
+void list_users(Account accounts[], int num_accounts) {
+	for (int i = 0; i < num_accounts; i++) {
+		printf("%d. %s\n", i + 1, accounts[i].username);
+	}
 }
 
 void login() {
@@ -126,7 +352,7 @@ void login() {
 	scanf("%s", username);
 	printf("Enter your password: ");
 	scanf("%s", pass);
-	
+
 	if (strcmp(admin, username) == 0) {
 		if (strcmp(admin_pass, pass) == 0) {
 			admin_page();
@@ -158,7 +384,8 @@ int main() {
 	int choice;
 
 	num_accounts = load_accounts(accounts);
-
+	num_announcements = load_messages(announcements, "announcement");
+	num_messages = load_messages(messages, "message");
 
 	do {
 		system("cls");
@@ -179,7 +406,12 @@ int main() {
 			login();
 			break;
 		case 2:
-			create_account();
+			system("cls");
+			printf("Create account\n");
+			accounts[num_accounts] = create_account();
+			num_accounts++;
+
+			save_accounts(accounts, num_accounts);
 			break;
 		case 3:
 			//forgot_password();
