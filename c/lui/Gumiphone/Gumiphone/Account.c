@@ -313,15 +313,26 @@ void view_user_conn(Account* acc, Account accounts[], int num_accounts) {
 
 
 char* generate_sec_question() {
-	char* security_ques[5] = {
-		"In what city were you born?",
-		"What is the name of your favorite pet?",
-		"What is your mother's maiden name?",
-		"What high school did you attend?",
-		"What was the name of your elementary school?"
-	};
+	FILE* fp;
+
+	char questions[10][MAX_STRING];
+
+	fp = fopen("questions.txt", "r");
+
+	if (fp == NULL) {
+		printf("Error opening file.\n");
+		exit(1);
+	}
+
+	int i = 0;
+	while (fgets(questions[i], MAX_STRING, fp)) {
+		strtok(questions[i], "\n"); // remove the newline character
+		i++;
+	}
+
+	fclose(fp);
 
 	srand(time(NULL));
 	int random_index = rand() % 5;
-	return security_ques[random_index];
+	return questions[random_index];
 }

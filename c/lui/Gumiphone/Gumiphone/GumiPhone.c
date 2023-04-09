@@ -189,8 +189,16 @@ void save_admin(char admin[2][41]) {
 	fclose(fp);
 }
 
-void load_sec_questions();
+void save_sec_questions(char questions[10][MAX_STRING], int count) {
+	FILE* fp;
+	fp = fopen("questions.txt", "w");
 
+	for (int i = 0; i < count; i++) {
+		fprintf(fp, "%s\n", questions[i]);
+	}
+
+	fclose(fp);
+}
 
 
 char* encrypt(char* password) {
@@ -370,6 +378,95 @@ void manage_users() {
 		}
 		break;
 	case 5:
+		system("cls");
+		printf("What would you like to do?\n");
+		printf("1. Add question\n");
+		printf("2. Remove question\n");
+
+		printf("Enter your choice: ");
+		int q_choice;
+		scanf("%d", &q_choice);
+
+		switch (q_choice) {
+		case 1:
+			system("cls");
+
+			FILE* fp;
+
+			char questions[10][MAX_STRING];
+
+			fp = fopen("questions.txt", "r");
+
+			if (fp == NULL) {
+				printf("Error opening file.\n");
+				exit(1);
+			}
+
+			int i = 0;
+			while (fgets(questions[i], MAX_STRING, fp)) {
+				strtok(questions[i], "\n"); // remove the newline character
+				i++;
+			}
+
+			printf("Add question\n");
+
+			if (i == 10) {
+				printf("Maximum number of questions reached.\n");
+				Sleep(1000);
+				break;
+			}
+
+			printf("Enter question: ");
+			fgets(questions[i++], 1001, stdin);
+			printf("Question added successfully.\n");
+
+			save_sec_questions(questions, i);
+			Sleep(1000);
+			break;
+		case 2:
+			system("cls");
+			fp = fopen("questions.txt", "r");
+
+			if (fp == NULL) {
+				printf("Error opening file.\n");
+				exit(1);
+			}
+
+			i = 0;
+
+			while (fgets(questions[i], MAX_STRING, fp)) {
+				strtok(questions[i], "\n"); // remove the newline character
+				i++;
+			}
+
+			for (int j = 0; j < i; j++) {
+				printf("%d. %s\n", j + 1, questions[j]);
+			}
+
+			printf("Enter question number to remove: ");
+			int q_num;
+			scanf("%d", &q_num);
+
+			if (q_num < 1 || q_num > i) {
+				printf("Invalid question number.\n");
+				Sleep(1000);
+				break;
+			}
+
+			for (int j = q_num - 1; j < i - 1; j++) {
+				strcpy(questions[j], questions[j + 1]);
+			}
+
+			save_sec_questions(questions, i - 1);
+
+			printf("Question removed successfully.\n");
+			Sleep(1000);
+
+			break;
+		}
+
+
+
 		break;
 	}
 }

@@ -12,8 +12,7 @@ void save_accounts(Account accounts[]);
 
 void list_users(Account accounts[], int num_accounts);
 
-void load_sec_questions(char questions[]);
-void save_sec_questions(char questions[]);
+void save_sec_questions();
 
 void load_admin(char admin[2][41]);
 void save_admin(char admin[2][41]);
