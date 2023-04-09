@@ -164,229 +164,341 @@ void account_page(Account* account) {
 
 	Message message;
 
-
-	system("cls");
-	printf("-----------------USER MODULE-----------------\n");
-	printf("||                                         ||\n");
-	printf("||     [1] COMPOSE MESSAGE                 ||\n");
-	printf("||     [2] INBOX                           ||\n");
-	printf("||     [3] SENT                            ||\n");
-	printf("||     [4] VIEW ANNOUNCEMENTS              ||\n");
-	printf("||     [5] EDIT ACCOUNT DETAILS            ||\n");
-	printf("||     [6] MODIFY PERSONAL CONNECTIONS     ||\n");
-	printf("||     [7] BROWSE USERS                    ||\n");
-	printf("||     [8] LOGOUT                          ||\n");
-	printf("||                                         ||\n");
-	printf("---------------------------------------------\n");
-	printf("CHOICE: ");
-	scanf("%d", &choice);
-
-	switch (choice) {
-	case 1:
+	do {
 		system("cls");
-		printf("Compose\n");
-		printf("Send as:\n");
-		printf("[1] Personal Message\n");
-		printf("[2] Group Message \n");
-		printf("[3] Announcement\n");
-		printf("Choice: ");
+		printf("-----------------USER MODULE-----------------\n");
+		printf("||                                         ||\n");
+		printf("||     [1] COMPOSE MESSAGE                 ||\n");
+		printf("||     [2] INBOX                           ||\n");
+		printf("||     [3] SENT                            ||\n");
+		printf("||     [4] VIEW ANNOUNCEMENTS              ||\n");
+		printf("||     [5] MODIFY PERSONAL CONTENTS        ||\n");
+		printf("||     [6] MODIFY ACCOUNT SECURITY         ||\n");
+		printf("||     [7] MODIFY PERSONAL CONNECTIONS     ||\n");
+		printf("||     [8] BROWSE USERS                    ||\n");
+		printf("||     [9] LOGOUT                          ||\n");
+		printf("||                                         ||\n");
+		printf("---------------------------------------------\n");
+		printf("CHOICE: ");
 		scanf("%d", &choice);
 
 		switch (choice) {
 		case 1:
-			message = compose(account, accounts, num_accounts);
-			messages[num_messages] = message;
-			num_messages++;
+			system("cls");
+			printf("Compose\n");
+			printf("Send as:\n");
+			printf("[1] Personal Message\n");
+			printf("[2] Group Message \n");
+			printf("[3] Announcement\n");
+			printf("Choice: ");
+			scanf("%d", &choice);
 
-			printf("Sending message...\n");
-			printf("Message sent.\n");
-			Sleep(1000);
-			save_messages(messages, "message");
-			break;
-		case 2:
-			printf("Enter the subject: ");
-			fgets(message.subject, MAX_STRING, stdin);
-			fgets(message.subject, MAX_STRING, stdin);
-			message.subject[strlen(message.subject) - 1] = '\0';
-
-			printf("Enter your message: ");
-			fgets(message.body, MAX_STRING, stdin);
-			message.body[strlen(message.body) - 1] = '\0';
-
-			strcpy(message.sender, account->username);
-
-			printf("Enter usernames of recipients (separated by commas without spaces): ");
-
-			char line[1024];
-			fgets(line, 1024, stdin);
-
-			char* token = strtok(line, ",");
-			char* usernames[15];
-			int num_users = 0;
-
-			while (token != NULL) {
-				if (token[strlen(token) - 1] == '\n')
-					token[strlen(token) - 1] = '\0';
-
-				if (exists(token, accounts, num_accounts) != -1 && strcmp(token, account->username) != 0) {
-					usernames[num_users++] = token;
-				}
-				token = strtok(NULL, ",");
-			}
-
-			printf("%d\n", num_users);
-
-			for (int i = 0; i < num_users; i++) {
-				strcpy(message.receiver, usernames[i]);
+			switch (choice) {
+			case 1:
+				message = compose(account, accounts, num_accounts);
 				messages[num_messages] = message;
 				num_messages++;
-				printf("test\n");
-			}
 
-			printf("%d\n", num_messages);
+				printf("Sending message...\n");
+				printf("Message sent.\n");
+				Sleep(1000);
+				save_messages(messages, "message");
+				break;
+			case 2:
+				printf("Enter the subject: ");
+				fgets(message.subject, MAX_STRING, stdin);
+				fgets(message.subject, MAX_STRING, stdin);
+				message.subject[strlen(message.subject) - 1] = '\0';
+
+				printf("Enter your message: ");
+				fgets(message.body, MAX_STRING, stdin);
+				message.body[strlen(message.body) - 1] = '\0';
+
+				strcpy(message.sender, account->username);
+
+				printf("Enter usernames of recipients (separated by commas without spaces): ");
+
+				char line[1024];
+				fgets(line, 1024, stdin);
+
+				char* token = strtok(line, ",");
+				char* usernames[15];
+				int num_users = 0;
+
+				while (token != NULL) {
+					if (token[strlen(token) - 1] == '\n')
+						token[strlen(token) - 1] = '\0';
+
+					if (exists(token, accounts, num_accounts) != -1 && strcmp(token, account->username) != 0) {
+						usernames[num_users++] = token;
+					}
+					token = strtok(NULL, ",");
+				}
+
+				printf("%d\n", num_users);
+
+				for (int i = 0; i < num_users; i++) {
+					strcpy(message.receiver, usernames[i]);
+					messages[num_messages] = message;
+					num_messages++;
+					printf("test\n");
+				}
+
+				printf("%d\n", num_messages);
+
+				for (int i = 0; i < num_messages; i++) {
+					printf("%d. %s\n", i + 1, messages[i].subject);
+				}
+
+				Sleep(5000);
+
+				save_messages(messages, "message");
+				break;
+
+			case 3:
+				printf("Enter the subject: ");
+				fgets(message.subject, MAX_STRING, stdin);
+				fgets(message.subject, MAX_STRING, stdin);
+				message.subject[strlen(message.subject) - 1] = '\0';
+
+				printf("Enter your message: ");
+				fgets(message.body, MAX_STRING, stdin);
+				message.body[strlen(message.body) - 1] = '\0';
+
+				strcpy(message.receiver, "Announcement");
+				strcpy(message.sender, account->username);
+
+				announcements[num_announcements] = message;
+				num_announcements++;
+
+				printf("Message sent.\n");
+				save_messages(announcements, "announcement");
+				break;
+			default:
+				printf("Invalid choice.\n");
+				Sleep(1000);
+				break;
+			}
+			break;
+		case 2:
+			system("cls");
+			printf("Inbox\n");
+			Message inbox[350];
+			int num_inbox = 0;
 
 			for (int i = 0; i < num_messages; i++) {
-				printf("%d. %s\n", i + 1, messages[i].subject);
+				if (strcmp(messages[i].receiver, account->username) == 0) {
+					inbox[num_inbox++] = messages[i];
+					printf("%d. %s from %s\n", num_inbox, messages[i].subject, messages[i]);
+				}
 			}
 
-			Sleep(5000);
+			if (num_inbox == 0) {
+				printf("No messages.\n");
+				Sleep(1000);
+				break;
+			}
 
-			save_messages(messages, "message");
+			printf("Enter the number of the message you want to read: ");
+			int mess_choice;
+			scanf("%d", &mess_choice);
+
+			if (mess_choice < 0 && mess_choice > num_inbox) {
+				printf("Invalid choice.\n");
+				Sleep(1000);
+				break;
+			}
+
+			system("cls");
+			printf("Subject: %s\n", inbox[mess_choice - 1].subject);
+			printf("Sender: %s\n", inbox[mess_choice - 1].sender);
+			printf("Message: %s\n\n", inbox[mess_choice - 1].body);
+			printf("Do you want to reply? (y/n): ");
+
+			char reply;
+			scanf(" %c", &reply);
+
+			if (reply == 'y') {
+				system("cls");
+				printf("Enter your message: ");
+				fgets(message.body, MAX_STRING, stdin);
+				fgets(message.body, MAX_STRING, stdin);
+				message.body[strlen(message.body) - 1] = '\0';
+				strcpy(message.receiver, inbox[mess_choice - 1].sender);
+				strcpy(message.sender, account->username);
+				strcpy(message.subject, inbox[mess_choice - 1].subject);
+				messages[num_messages] = message;
+				num_messages++;
+				printf("Message sent.\n");
+				save_messages(messages, "message");
+			}
+			Sleep(1000);
 			break;
-
 		case 3:
-			printf("Enter the subject: ");
-			fgets(message.subject, MAX_STRING, stdin);
-			fgets(message.subject, MAX_STRING, stdin);
-			message.subject[strlen(message.subject) - 1] = '\0';
+			system("cls");
+			printf("Sent\n");
+			int counter = 0;
+			for (int i = 0; i < num_messages; i++) {
+				if (strcmp(messages[i].sender, account->username) == 0) {
+					counter++;
+					printf("%d. %s to %s\n", counter, messages[i].subject, messages[i].receiver);
+				}
+			}
 
-			printf("Enter your message: ");
-			fgets(message.body, MAX_STRING, stdin);
-			message.body[strlen(message.body) - 1] = '\0';
+			if (counter == 0) {
+				printf("No messages.\n");
+				Sleep(1000);
+				break;
+			}
 
-			strcpy(message.receiver, "Announcement");
-			strcpy(message.sender, account->username);
-
-			announcements[num_announcements] = message;
-			num_announcements++;
-
-			printf("Message sent.\n");
-			save_messages(announcements, "announcement");		
+			printf("Press any key to continue...\n");
+			_getch();
 			break;
+
+		case 4:
+			system("cls");
+			printf("Announcements\n");
+			int ann_choice;
+
+			for (int i = 0; i < num_announcements; i++) {
+				printf("%d. %s\n", i + 1, announcements[i].subject);
+			}
+
+			printf("Enter the number of the announcement you want to read: ");
+			scanf("%d", &ann_choice);
+
+			system("cls");
+			printf("Subject: %s\n", announcements[ann_choice - 1].subject);
+			printf("Sender: %s\n", announcements[ann_choice - 1].sender);
+			printf("Message: %s\n\n", announcements[ann_choice - 1].body);
+
+			printf("Press any key to continue...\n");
+			_getch();
+			break;
+
+		case 5:
+			system("cls");
+			edit_account_details(account);
+			save_accounts(accounts, num_accounts);
+			break;
+
+		case 6:
+			system("cls");
+			change_security(account);
+			save_accounts(accounts, num_accounts);
+			break;
+		case 7:
+			system("cls");
+			printf("Modify connections\n");
+			printf("1. Add connection\n");
+			printf("2. Remove connection\n");
+			printf("3. View connections\n");
+			printf("4. View user connections\n");
+			printf("5. Back\n");
+			printf("Enter your choice: ");
+			int conn_choice;
+			scanf("%d", &conn_choice);
+
+			switch (conn_choice) {
+			case 1:
+				system("cls");
+				printf("Add connection\n");
+				add_conn(account, accounts, num_accounts);
+				break;
+			case 2:
+				system("cls");
+				printf("Remove connection\n");
+				remove_conn(account, accounts, num_accounts);
+				break;
+			case 3:
+				system("cls");
+				printf("View connections\n");
+				view_conn(account, accounts, num_accounts);
+				break;
+			case 4:
+				system("cls");
+				printf("View user connections\n");
+				view_user_conn(account, accounts, num_accounts);
+				break;
+			case 5:
+				break;
+			default:
+				printf("Invalid choice.\n");
+				Sleep(1000);
+				break;
+			}
+			break;
+		case 8:
+			system("cls");
+			printf("Browse users\n");
+			list_users(accounts, num_accounts);
+
+			printf("Enter the number of the user you want to view: ");
+			int user_choice;
+			scanf("%d", &user_choice);
+
+			if (user_choice < 0 && user_choice > num_accounts) {
+				printf("Invalid choice.\n");
+				Sleep(1000);
+				break;
+			}
+
+			system("cls");
+			view_account_details(&accounts[user_choice - 1]);
+
+			printf("What do you want to do?\n");
+			printf("1. Add connection\n");
+			printf("2. Send message\n");
+			printf("3. Back\n");
+
+			int user_choice2;
+			scanf("%d", &user_choice2);
+
+			switch (user_choice2) {
+			case 1:
+				system("cls");
+				printf("Add connection\n");
+				strcpy(account->connections[account->num_of_connections], accounts[user_choice].username);
+				account->num_of_connections++;
+				printf("User successfully added as a connection.\n");
+				save_accounts(accounts, num_accounts);
+				Sleep(1000);
+				break;
+			case 2:
+				system("cls");
+				printf("Send message\n");
+				printf("Enter your message: ");
+				fgets(message.body, MAX_STRING, stdin);
+				fgets(message.body, MAX_STRING, stdin);
+				message.body[strlen(message.body) - 1] = '\0';
+				strcpy(message.receiver, accounts[user_choice - 1].username);
+				strcpy(message.sender, account->username);
+				strcpy(message.subject, "No subject");
+				messages[num_messages] = message;
+				num_messages++;
+				printf("Message sent.\n");
+				save_messages(messages, "message");
+				Sleep(1000);
+				break;
+			case 3:
+				break;
+			default:
+				printf("Invalid choice.\n");
+				Sleep(1000);
+				break;
+			}
+			break;
+		case 9:
+			system("cls");
+			printf("Logging out...\n");
+			Sleep(1000);
+			return;
 		default:
 			printf("Invalid choice.\n");
 			Sleep(1000);
 			break;
 		}
-		break;
-	case 2:
-		system("cls");
-		printf("Inbox\n");
-		Message inbox[350];
-		int num_inbox = 0;
-
-		for (int i = 0; i < num_messages; i++) {
-			if (strcmp(messages[i].receiver, account->username) == 0) {
-				inbox[num_inbox++] = messages[i];
-				printf("%d. %s from %s\n", num_inbox, messages[i].subject, messages[i]);
-			}
-		}
-
-		if (num_inbox == 0) {
-			printf("No messages.\n");
-			Sleep(1000);
-			break;
-		}
-
-		printf("Enter the number of the message you want to read: ");
-		int mess_choice;
-		scanf("%d", &mess_choice);
-
-		if (mess_choice < 0 && mess_choice > num_inbox) {
-			printf("Invalid choice.\n");
-			Sleep(1000);
-			break;
-		}
-
-		system("cls");
-		printf("Subject: %s\n", inbox[mess_choice - 1].subject);
-		printf("Sender: %s\n", inbox[mess_choice - 1].sender);
-		printf("Message: %s\n\n", inbox[mess_choice - 1].body);
-		printf("Do you want to reply? (y/n): ");
-
-		char reply;
-		scanf(" %c", &reply);
-
-		if (reply == 'y') {
-			system("cls");
-			printf("Enter your message: ");
-			fgets(message.body, MAX_STRING, stdin);
-			fgets(message.body, MAX_STRING, stdin);
-			message.body[strlen(message.body) - 1] = '\0';
-			strcpy(message.receiver, inbox[mess_choice - 1].sender);
-			strcpy(message.sender, account->username);
-			strcpy(message.subject, inbox[mess_choice - 1].subject);
-			messages[num_messages] = message;
-			num_messages++;
-			printf("Message sent.\n");
-			save_messages(messages, "message");
-		}
-		Sleep(1000);
-		break;
-	case 3:
-		system("cls");
-		printf("Sent\n");
-		int counter = 0;
-		for (int i = 0; i < num_messages; i++) {
-			if (strcmp(messages[i].sender, account->username) == 0) {
-				counter++;
-				printf("%d. %s to %s\n", counter, messages[i].subject, messages[i].receiver);
-			}
-		}
-
-		if (counter == 0) {
-			printf("No messages.\n");
-			Sleep(1000);
-			break;
-		}
-
-		printf("Press any key to continue...\n");
-		_getch();
-		break;
-
-	case 4:
-		system("cls");
-		printf("Announcements\n");
-		int ann_choice;
-
-		for (int i = 0; i < num_announcements; i++) {
-			printf("%d. %s\n", i + 1, announcements[i].subject);
-		}
-
-		printf("Enter the number of the announcement you want to read: ");
-		scanf("%d", &ann_choice);
-
-		system("cls");
-		printf("Subject: %s\n", announcements[ann_choice - 1].subject);
-		printf("Sender: %s\n", announcements[ann_choice - 1].sender);
-		printf("Message: %s\n\n", announcements[ann_choice - 1].body);
-
-		printf("Press any key to continue...\n");
-		_getch();
-		break;
-
-	case 5:
-		system("cls");
-		edit_account_details(account);
-		save_accounts(accounts, num_accounts);
-		break;
-	
-
-	default:
-		printf("Invalid choice.\n");
-		Sleep(1000);
-		break;
-	}
+	} while (choice != 9);
 }
 
 void list_users(Account accounts[], int num_accounts) {
@@ -439,7 +551,7 @@ int main() {
 
 	do {
 		system("cls");
-		printf("\nGUMIPHONE\n");
+		printf("GUMIPHONE\n");
 		printf("---------------MAIN PAGE---------------\n");
 		printf("||                                   ||\n");
 		printf("||     [1] LOG-IN                    ||\n");
