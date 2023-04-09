@@ -43,6 +43,8 @@ Account create_account() {
 	acc.sequrity_answer[strlen(acc.sequrity_answer) - 1] = '\0';
 
 	strcpy(acc.description, "DEFAULT USER");
+
+	acc.is_locked = 0;
 	return acc;
 }
 
@@ -310,7 +312,6 @@ void view_user_conn(Account* acc, Account accounts[], int num_accounts) {
 		}
 	}
 }
-
 
 char* generate_sec_question() {
 	FILE* fp;

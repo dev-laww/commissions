@@ -17,6 +17,7 @@ typedef struct Account {
 	char description[MAX_STRING];
 	char connections[MAX_CONNECTIONS][41];
 	int num_of_connections;
+	int is_locked;
 } Account;
 
 

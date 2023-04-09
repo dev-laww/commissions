@@ -44,9 +44,12 @@ int load_accounts(Account accounts[]) {
 		strcpy(accounts[num_accounts].sequrity_answer, token);
 
 		token = strtok(NULL, ",");
-		strcpy(accounts[num_accounts].description, token);
+		int is_locked = atoi(token);
+		accounts[num_accounts].is_locked = is_locked;
 
 		token = strtok(NULL, ",");
+		strcpy(accounts[num_accounts].description, token);
+
 		int num_of_connections = 0;
 		while (token != NULL) {
 			strcpy(accounts[num_accounts].connections[num_of_connections], token);
@@ -75,12 +78,13 @@ void save_accounts(Account accounts[]) {
 	for (int i = 0; i < num_accounts; i++) {
 		fprintf(
 			fp,
-			"%s,%s,%s,%s,%s,%s",
+			"%s,%s,%s,%s,%s,%d,%s",
 			accounts[i].name,
 			accounts[i].username,
 			accounts[i].pass,
 			accounts[i].sequrity_question,
 			accounts[i].sequrity_answer,
+			accounts[i].is_locked,
 			accounts[i].description
 		);
 
@@ -898,6 +902,9 @@ void list_users(Account accounts[], int num_accounts) {
 void login() {
 	char username[41];
 	char pass[41];
+
+	int tries = 0;
+
 	printf("Enter your username: ");
 	scanf("%s", username);
 	printf("Enter your password: ");
@@ -921,13 +928,33 @@ void login() {
 		return;
 	}
 
-	if (strcmp(accounts[index].pass, pass) == 0) {
-		account_page(&accounts[index]);
+	if (accounts[index].is_locked == 1) {
+		printf("Account is locked.\n");
+		Sleep(1000);
 		return;
 	}
 
-	printf("Invalid password.\n");
-	Sleep(1000);
+	while (strcmp(pass, accounts[index].pass) != 0) {
+		if (tries == 3) {
+			system("cls");
+			printf("Too many invalid attempts.\n");
+			printf("Locking account...\n");
+
+			accounts[index].is_locked = 1;
+
+			save_accounts(accounts, num_accounts);
+			Sleep(1000);
+			return;
+		}
+		system("cls");
+		printf("Invalid password.\n");
+		Sleep(1000);
+		printf("Re-enter passowrd: ");
+		scanf("%s", pass);
+		tries++;
+	}
+
+	account_page(&accounts[index]);
 }
 
 int main() {
