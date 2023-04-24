@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 
 public class User {
     public final String name;
-    private final String id;
+    public final String id;
     private final String email;
     private final String contact;
     private final String address;
     private String pin;
-    private double balance;
+    public double balance;
     public String status;
 
     User(
@@ -125,6 +125,9 @@ public class User {
         this.pin = newPin;
     }
 
+    public String pin() {
+        return this.pin;
+    }
 
     public String name() {
         return this.name;
