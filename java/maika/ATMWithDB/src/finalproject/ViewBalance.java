@@ -5,6 +5,8 @@
 
 package finalproject;
 
+import finalproject.db.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +22,7 @@ public class ViewBalance {
     ImageIcon image = new ImageIcon("pic7.jpeg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
-    ViewBalance(Customer c) {
+    ViewBalance(User user) {
         label1.setBounds(155, 50, 550, 40);
         label1.setText("VIEW BALANCE");
         label1.setFont(new Font(null, Font.BOLD, 40));
@@ -32,7 +34,7 @@ public class ViewBalance {
         label2.setForeground(Color.WHITE);
 
         balance.setBounds(350, 120, 225, 40);
-        balance.setText(String.format("%.2f", c.getBalance()));
+        balance.setText(String.format("%.2f", user.balance));
         balance.setFont(new Font(null, Font.BOLD, 25));
         balance.setForeground(Color.WHITE);
         
@@ -55,11 +57,11 @@ public class ViewBalance {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         
-        exit.addActionListener(new ActionListener(){
+        exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new CustomerMenu(c);
+                new CustomerMenu();
             }
         });
     }

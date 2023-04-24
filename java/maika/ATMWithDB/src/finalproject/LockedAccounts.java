@@ -62,7 +62,7 @@ public class LockedAccounts {
         bottomPanel.add(enter);
         panel.add(bottomPanel, BorderLayout.PAGE_END);
 
-        
+
         frame.add(panel);
         frame.setSize(700, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,75 +70,5 @@ public class LockedAccounts {
         frame.setVisible(true);
 
         // action listeners
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new AdminMenu();
-            }
-        });
-
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               enterPressed();
-            }
-        });
-
-        accountID.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-    }
-
-    private void enterPressed() {
-        HashMap<String, String> admins = BankSystem.idAndPassword.getTellerLoginInfo();
-        JPasswordField passwordField = new JPasswordField();
-        ArrayList<Customer> customers = BankSystem.idAndPassword.getCustomerLoginInfo();
-        int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
-
-        if (!(result == JOptionPane.OK_OPTION)) {
-            JOptionPane.showMessageDialog(null, "Cancelled");
-            return;
-        }
-
-        String adminPass = String.valueOf(passwordField.getPassword());
-
-        if (!admins.get(BankSystem.tellerLoginInfo).equals(adminPass)) {
-            JOptionPane.showMessageDialog(null, "Wrong password");
-            return;
-        }
-
-        String accountIDString = accountID.getText();
-        if (accountIDString.length() != 12) {
-            JOptionPane.showMessageDialog(null, "Invalid account ID");
-            return;
-        }
-
-        boolean found = false;
-        for (Customer c : customers) {
-            if (c.getAccountID().equals(accountIDString)) {
-                found = true;
-                //new CustomerDetails(c);
-                frame.dispose();
-            }
-        }
-
-        if (!found) {
-            JOptionPane.showMessageDialog(null, "Customer not found!");
-            return;
-        }
-
-        for (Customer c : customers) {
-            if (c.getAccountID().equals(accountIDString)) {
-                c.setLocked();
-                JOptionPane.showMessageDialog(null, "Account unlocked!");
-                frame.dispose();
-                //new AdminMenu();
-                return;
-            }
-        }
     }
 }

@@ -17,7 +17,6 @@ import javax.swing.JTextField;
  * @author maikaordonez
  */
 public class WithdrawFPage {
-    
     JFrame frame = new JFrame();
     JLabel label1 = new JLabel();
     JLabel label2 = new JLabel();
@@ -39,7 +38,6 @@ public class WithdrawFPage {
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
     WithdrawFPage() {
-        
         label1.setBounds(110, 60, 380, 100);
         label1.setText("WITHDRAW");
         label1.setFont(new Font(null, Font.BOLD, 60));

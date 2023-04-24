@@ -9,15 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FrontPage {
-    public static IDAndPassword idAndPassword;
     JFrame frame = new JFrame();
     JButton tellerButton = new JButton();
     JButton customerButton = new JButton();
     ImageIcon image = new ImageIcon("FrontPage.jpg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
-    FrontPage(IDAndPassword idAndPassword) {
-        FrontPage.idAndPassword = idAndPassword;
+    FrontPage() {
         tellerButton.setBounds(90, 350, 120, 40);
         tellerButton.setFocusable(false);
         tellerButton.setText("ADMIN");
@@ -43,7 +41,7 @@ public class FrontPage {
         tellerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new TellerLogin(idAndPassword.getTellerLoginInfo());
+                new TellerLogin();
                 frame.dispose();
             }
         });
@@ -51,7 +49,7 @@ public class FrontPage {
         customerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CustomerLogin(idAndPassword.getCustomerLoginInfo());
+                new CustomerLogin();
                 frame.dispose();
             }
         });

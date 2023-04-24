@@ -5,6 +5,8 @@
 
 package finalproject;
 
+import finalproject.db.User;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
@@ -27,10 +29,7 @@ public class DeleteAccount {
     JButton cancel = new JButton("CANCEL");
     JButton confirm = new JButton("CONFIRM");
 
-    DeleteAccount(Customer customer) {
-       
-        
-
+    DeleteAccount(User user) {
         //frame
         frame.setSize(400, 230);
         frame.setTitle("Delete Account");
@@ -47,36 +46,28 @@ public class DeleteAccount {
         frame.add(tfPass);
         frame.add(cancel);
         frame.add(confirm);
-        
-        
-        
-        
-        
+
         //label
         CreateAccountLabel.setBounds(110, 10, 200, 30);
         CreateAccountLabel.setFont(new Font(null, Font.BOLD, 20));
         CreateAccountLabel.setForeground(Color.WHITE);
-        
+
         name.setBounds(40, 50, 100, 30);
         name.setFont(new Font(null, Font.BOLD, 15));
         name.setForeground(Color.WHITE);
-        
-        
+
         tfname.setBounds(160, 50, 200, 30);
-        tfname.setText(customer.getName());
+        tfname.setText(user.name);
         tfname.setEditable(false);
-        
+
         AccountID.setBounds(40, 100, 200, 30);
         AccountID.setFont(new Font(null, Font.BOLD, 15));
         AccountID.setForeground(Color.WHITE);
-        
-        
+
         tfID.setBounds(160, 100, 200, 30);
-        tfID.setText(customer.getAccountID());
+        tfID.setText(user.id);
         tfID.setEditable(false);
-        
-        
-        
+
         label.add(name);
         label.add(tfname);
         label.add(AccountID);
@@ -84,64 +75,13 @@ public class DeleteAccount {
         label.add(CreateAccountLabel);
         label.add(cancel);
         label.add(confirm);
-        label.setBounds(0, 0,400, 230);
-
+        label.setBounds(0, 0, 400, 230);
 
         //button
         cancel.setBounds(100, 150, 100, 30);
         confirm.setBounds(200, 150, 100, 30);
 
         //action listener
-        confirm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new AdminMenu();
-            }
-        });
-    }
-    
-
-    private void enterPressed(Customer c) {
-        HashMap<String, String> admins = BankSystem.idAndPassword.getTellerLoginInfo();
-        JPasswordField passwordField = new JPasswordField();
-        int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
-        
-        if (!(result == JOptionPane.OK_OPTION)) {
-            JOptionPane.showMessageDialog(null, "Cancelled");
-            return;
-        }
-
-        String adminPass = String.valueOf(passwordField.getPassword());
-
-        if (!admins.get(BankSystem.tellerLoginInfo).equals(adminPass)) {
-            JOptionPane.showMessageDialog(null, "Wrong password");
-            return;
-        }
-              
-
-//        if (!String.valueOf(tfPass.getPassword()).equals(c.getPin())) {
-//            JOptionPane.showMessageDialog(null, "Incorrect Pin");
-//            tfPass.setText("");
-//            return;
-//        }
-        
-            int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?",
-                    "CONFIRM" ,JOptionPane.YES_NO_OPTION);
-
-        if (response == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, "Account Deleted");
-            BankSystem.idAndPassword.delete(c.getAccountID());
-            frame.dispose();
-            new AdminMenu();
-        }
     }
 }
 

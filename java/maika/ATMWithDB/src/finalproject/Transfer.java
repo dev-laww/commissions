@@ -25,9 +25,8 @@ public class Transfer {
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
     Transfer(Customer customer, boolean isAdmin) {
-        
         this.customer = customer;
-        
+
         label1.setBounds(200, 50, 550, 40);
         label1.setText("Transfer Amount");
         label1.setFont(new Font(null, Font.BOLD, 35));
@@ -70,10 +69,10 @@ public class Transfer {
         label.add(amountTF);
         label.add(exit);
         label.add(enter);
-        label.setBounds(0, 0,680, 680); 
-        
+        label.setBounds(0, 0, 680, 680);
+
         frame.add(label);
-        
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Transfer");
         frame.setSize(680, 680);
@@ -82,97 +81,5 @@ public class Transfer {
         frame.setVisible(true);
 
         // action listeners
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer, isAdmin);
-            }
-        });
-
-        accountNoTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer, isAdmin);
-            }
-        });
-
-        amountTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer, isAdmin);
-            }
-        });
-
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                if (isAdmin) {
-                    new AdminMenu();
-                    return;
-                }
-                new CustomerMenu(customer);
-            }
-        });
-    }
-
-    private void enterPressed(Customer customer, boolean isAdmin) {
-        String accountNo = accountNoTF.getText();
-        String amount = amountTF.getText();
-
-        if (accountNo.isEmpty() || amount.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill all the fields");
-            return;
-        }
-
-        if (accountNo.equals(customer.getAccountID())) {
-            JOptionPane.showMessageDialog(null, "You can't transfer to your own account");
-            accountNoTF.setText("");
-            return;
-        }
-
-        try {
-            Double.parseDouble(amount);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid amount");
-            amountTF.setText("");
-            return;
-        }
-        double amountToTransfer = Double.parseDouble(amount);
-        if (amountToTransfer > customer.getBalance()) {
-            JOptionPane.showMessageDialog(null, "You don't have enough balance\nCurrent balance: " + customer.getBalance());
-            amountTF.setText("");
-            return;
-        }
-
-        if (amountToTransfer <= 0) {
-            JOptionPane.showMessageDialog(null, "Amount should be greater than 0");
-            amountTF.setText("");
-            return;
-        }else if (amountToTransfer >= 50001) {
-            JOptionPane.showMessageDialog(null, "Amount must be less than 50,000");
-            amountTF.setText("");
-            return;
-        }
-
-        try {
-            this.customer.transfer(accountNo, amountToTransfer);
-            JOptionPane.showMessageDialog(null, "Amount transferred successfully");
-            //edit
-            JOptionPane.showMessageDialog(null, "Current balance: " + customer.getBalance());
-            amountTF.setText("");
-            //
-            frame.dispose();
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            return;
-        }
-
-        if (isAdmin) {
-            new AdminMenu();
-            return;
-        }
-        new CustomerMenu(customer);
     }
 }

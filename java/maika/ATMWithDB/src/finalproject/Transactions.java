@@ -21,26 +21,11 @@ public class Transactions {
     Transactions() {
         Font font = new Font("JetBrains Mono NL", Font.PLAIN, 15);
 
-        StringBuilder sb = new StringBuilder();
-        for (Customer c : BankSystem.idAndPassword.getCustomerLoginInfo()) {
-            sb.append(String.format("%-25s%25s%n", "Account Number:", c.getAccountID()))
-                    .append(String.format("%-25s%25s%n", "Name:", c.getName()))
-                    .append(String.format("%-25s%25s%n", "Address:", c.getAddress()))
-                    .append(String.format("%-25s%25s%n", "Email Address:", c.getEmail()))
-                    .append(String.format("%-25s%25s%n", "Contact Number:", c.getContactNo()))
-                    .append(String.format("%-25s%25s%n%n", "Balance:", c.getBalance()))
-                    .append("Transaction History:\n")
-                    .append("-------------------------------------------------------------------\n")
-                    .append(c.getTransactions(false))
-                    .append("\n");
-        }
-
-
         textArea.setFont(font);
         textArea.setEditable(false);
         textArea.setBackground(Color.LIGHT_GRAY);
         textArea.setBounds(20, 80, 560, 470);
-        textArea.setText(sb.toString());
+        textArea.setText("");
 
         backButton.setBounds(30, 510, 70, 30);
         backButton.setFocusable(false);

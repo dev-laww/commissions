@@ -30,7 +30,6 @@ public class UpdateAccount {
     JLabel Label1 = new JLabel("UPDATE ACCOUNT");
 
     UpdateAccount(Customer customer) {
-        
         Label1.setFont(new Font(null, Font.BOLD, 40));
         Label1.setBounds(110, 18, 400, 50);
         Label1.setForeground(Color.WHITE);
@@ -98,68 +97,7 @@ public class UpdateAccount {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        tfAddress.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        tfEmailAddress.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        tfPhone.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new AdminMenu();
-            }
-        });
-    }
-
-    private void enterPressed(Customer c) {
-        String address = tfAddress.getText();
-        String email = tfEmailAddress.getText();
-        String phone = tfPhone.getText();
-       
-        if (c.getAddress().equals(address) && c.getEmail().equals(email) && c.getContactNo().equals(phone)) {
-            JOptionPane.showMessageDialog(null, "Change at least one field");
-            return;
-        }
-
-       
-
-        if (address.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill up all fields");
-            return;
-        }
-
-        c.setAddress(address);
-        c.setEmail(email);
-        c.setContactNo(phone);
-
-        JOptionPane.showMessageDialog(null, "Account updated successfully");
-        frame.dispose();
-        new AdminMenu();
+        // Action Listeners
     }
 }
 

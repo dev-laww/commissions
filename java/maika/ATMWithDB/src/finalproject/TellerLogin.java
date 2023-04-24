@@ -5,6 +5,8 @@
 
 package finalproject;
 
+import finalproject.db.Database;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +16,6 @@ import java.util.HashMap;
 //CUSTOMER LOGIN
 
 public class TellerLogin {
-
     JFrame frame = new JFrame();
     JButton enter = new JButton();
     JButton cancel = new JButton();
@@ -24,10 +25,10 @@ public class TellerLogin {
     JPasswordField pinCodeTF = new JPasswordField();
     ImageIcon image = new ImageIcon("Login.jpg");
     JLabel background = new JLabel("", image, JLabel.CENTER);
-    HashMap<String, String> logininfo;
+    private final HashMap<String, String> logininfo;
 
-    TellerLogin(HashMap<String, String> loginInfoOriginal) {
-        logininfo = loginInfoOriginal;
+    TellerLogin() {
+        this.logininfo = Database.admin;
 
         accIDLabel.setForeground(Color.WHITE);
         pinCodeLabel.setForeground(Color.WHITE);
@@ -85,7 +86,7 @@ public class TellerLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new FrontPage(BankSystem.idAndPassword).start();
+                new FrontPage().start();
             }
         });
 

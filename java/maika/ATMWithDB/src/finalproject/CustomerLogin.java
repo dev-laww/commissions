@@ -22,11 +22,8 @@ public class CustomerLogin {
     JPasswordField pinCodeTF = new JPasswordField();
     ImageIcon image = new ImageIcon("Login.jpg");
     JLabel background = new JLabel("", image, JLabel.CENTER);
-    ArrayList<Customer> logininfo;
 
-    CustomerLogin(ArrayList<Customer> customerList) {
-        this.logininfo = customerList;
-
+    CustomerLogin() {
         accIDLabel.setForeground(Color.WHITE);
         pinCodeLabel.setForeground(Color.WHITE);
 
@@ -73,109 +70,5 @@ public class CustomerLogin {
         frame.setVisible(true);
 
         // action listeners
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        pinCodeTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        accIdTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new FrontPage(BankSystem.idAndPassword).start();
-            }
-        });
-
-    }
-
-    public void enterPressed() {
-        String accId = accIdTF.getText();
-        String pinCode = String.valueOf(pinCodeTF.getPassword());
-
-        if (accId.isEmpty() || pinCode.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields!");
-            return;
-        }
-
-        try {
-            Long.parseLong(accId);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Account ID must be a number!");
-            return;
-        }
-
-        try {
-            Integer.parseInt(pinCode);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Pin Code must be a number!");
-            return;
-        }
-
-        if (pinCode.length() != 4) {
-            JOptionPane.showMessageDialog(null, "Pin Code must be 4 digits!");
-            return;
-        }
-
-        if (accId.length() != 12) {
-            JOptionPane.showMessageDialog(null, "Account ID must be 12 digits!");
-            return;
-        }
-
-        boolean found = false;
-        Customer customer1 = null;
-        for (Customer customer : logininfo) {
-            if (!customer.getAccountID().equals(accId)) {
-                continue;
-            }
-
-            if (customer.isLocked()) {
-                JOptionPane.showMessageDialog(null, "Your account is locked!");
-                return;
-            }
-
-            attempts++;
-
-
-            if (attempts >= 4) {
-                customer.setLocked();
-                JOptionPane.showMessageDialog(null, "Too many attempts! Account has been blocked!");
-                return;
-            }
-
-            customer1 = customer;
-
-            if (customer.getPin().equals(pinCode)) {
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            JOptionPane.showMessageDialog(null, "Account ID or Pin Code is incorrect!");
-            accIdTF.setText("");
-            pinCodeTF.setText("");
-            return;
-        }
-
-        frame.dispose();
-        JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFULLY!");
-
-        new CustomerMenu(customer1);
     }
 }

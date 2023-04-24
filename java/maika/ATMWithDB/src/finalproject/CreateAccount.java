@@ -53,9 +53,6 @@ public class CreateAccount {
         label.add(back);
         label.add(enter);
 
-
-
-
         //frame
         frame.add(label);
         frame.setSize(600, 500);
@@ -106,7 +103,7 @@ public class CreateAccount {
         tfID.setBounds(170, 302, 380, 33);
         tfID.setFont(new Font(null, Font.BOLD, 15));
         
-        tfID.setText(generateAccountId());
+//        tfID.setText(generateAccountId());
         
         tfID.setEditable(false);
         
@@ -131,116 +128,6 @@ public class CreateAccount {
         enter.setFocusable(false);
 
         // action listeners
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tfname.setText("");
-                frame.dispose();
-                new AdminMenu();
-            }
-        });
-
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        tfID.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        tfPass.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        tfAddress.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        tfname.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        tfEmailAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-
-        tfContactNo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed();
-            }
-        });
-    }
-
-    public static String generateAccountId() {
-        Random random = new Random();
-        long randomLong = Math.abs(random.nextLong());
-        return Long.toString(randomLong).substring(0, 12);
-    }
-
-    private void enterPressed() {
-        ArrayList<Customer> customers = BankSystem.idAndPassword.getCustomerLoginInfo();
-        String name = tfname.getText();
-        String address = tfAddress.getText();
-        String email = tfEmailAdd.getText();
-        String contactNo = tfContactNo.getText();
-        String id = tfID.getText();
-        String pin = String.valueOf(tfPass.getPassword()).isEmpty() ? "0000" : String.valueOf(tfPass.getPassword());
-
-        if (name.isEmpty() || address.isEmpty() || id.isEmpty() || email.isEmpty() || contactNo.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields");
-            return;
-        }
-
-        if (pin.length() != 4) {
-            JOptionPane.showMessageDialog(null, "Pin code must be 4 digits");
-            return;
-        }
-
-        boolean exists = false;
-        for (Customer customer : customers) {
-            if (customer.getAccountID().equals(id)) {
-                exists = true;
-                break;
-            }
-        }
-
-        if (exists) {
-            this.tfID.setText(generateAccountId());
-            return;
-        }
-
-        try {
-            Integer.parseInt(pin);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Invalid pin code!");
-            return;
-        }
-
-        Customer customer = new Customer(name, address, email, contactNo, id, pin);
-        BankSystem.idAndPassword.addCustomer(customer);
-        JOptionPane.showMessageDialog(null, "Account Created!");
-        tfname.setText("");
-        new AdminMenu();
-        frame.dispose();
     }
 } 
     

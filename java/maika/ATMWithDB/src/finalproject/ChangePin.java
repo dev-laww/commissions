@@ -24,7 +24,7 @@ public class ChangePin {
     ImageIcon image = new ImageIcon("mm.jpg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
-    ChangePin(Customer customer) {
+    ChangePin() {
         label1.setBounds(70, 50, 550, 40);
         label1.setText("Old Pin");
         label1.setFont(new Font(null, Font.BOLD, 35));
@@ -87,87 +87,5 @@ public class ChangePin {
         frame.setVisible(true);
 
         // action listeners
-        oldPinTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        newPinTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        confirmPinTF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPressed(customer);
-            }
-        });
-
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new CustomerMenu(customer);
-            }
-        });
-    }
-
-    private void enterPressed(Customer c) {
-        String oldPin = String.valueOf(oldPinTF.getPassword());
-        String newPin = String.valueOf(newPinTF.getPassword());
-        String confirmPin = String.valueOf(confirmPinTF.getPassword());
-
-        try {
-            Integer.parseInt(oldPin);
-            Integer.parseInt(newPin);
-            Integer.parseInt(confirmPin);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid pin");
-            oldPinTF.setText("");
-            newPinTF.setText("");
-            confirmPinTF.setText("");
-            return;
-        }
-
-        if (oldPin.isEmpty() || newPin.isEmpty() || confirmPin.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields");
-            return;
-        }
-
-        if (!oldPin.equals(c.getPin())) {
-            JOptionPane.showMessageDialog(null, "Old pin is incorrect");
-            oldPinTF.setText("");
-            return;
-        }
-
-        if (newPin.equals(oldPin)) {
-            JOptionPane.showMessageDialog(null, "New pin cannot be the same as old pin");
-            newPinTF.setText("");
-            return;
-        }
-
-        if (!newPin.equals(confirmPin)) {
-            JOptionPane.showMessageDialog(null, "New pin and confirm pin do not match");
-            newPinTF.setText("");
-            confirmPinTF.setText("");
-            return;
-        }
-
-        c.setPin(newPin);
-        JOptionPane.showMessageDialog(null, "Pin changed successfully");
-        frame.dispose();
-        new CustomerMenu(c);
     }
 }

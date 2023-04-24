@@ -23,7 +23,7 @@ public class CustomerMenu {
     JLabel label = new JLabel("", image, JLabel.CENTER);
     JPanel panel = new JPanel();
 
-    CustomerMenu(Customer customer) {
+    CustomerMenu() {
 
         miniStatement.setBounds(60, 330, 380, 50);
         miniStatement.setText("VIEW MINISTATEMENT");
@@ -66,8 +66,6 @@ public class CustomerMenu {
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
 
-
-
         label.add(exit);
         label.add(balance);
         label.add(deposit);
@@ -91,62 +89,5 @@ public class CustomerMenu {
         frame.setVisible(true);
 
         // action listeners
-        
-        miniStatement.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MiniStatement(customer);
-                frame.dispose();
-            }
-        });
-
-        deposit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Deposit(customer, false);
-                frame.dispose();
-            }
-        });
-
-        withdraw.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Withdraw(customer, false);
-                frame.dispose();
-            }
-        });
-
-        transfer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Transfer(customer, false);
-                frame.dispose();
-            }
-        });
-
-        changePin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ChangePin(customer);
-                frame.dispose();
-            }
-        });
-
-        balance.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ViewBalance(customer);
-                frame.dispose();
-            }
-        });
-
-
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new FrontPage(BankSystem.idAndPassword).start();
-                frame.dispose();
-            }
-        });
     }
 }

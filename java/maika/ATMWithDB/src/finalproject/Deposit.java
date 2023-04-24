@@ -36,7 +36,7 @@ public class Deposit {
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
     
-    Deposit(Customer customer, boolean isAdmin) {
+    Deposit() {
         
         label1.setBounds(150, 60, 380, 100);
         label1.setText("DEPOSIT");
@@ -153,69 +153,5 @@ public class Deposit {
         frame.getContentPane().setBackground(Color.WHITE);
 
         // action listeners
-        tf.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                enterPressed(customer, isAdmin);
-            }catch (Exception ignored){
-                }
-            }
-        });
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                enterPressed(customer, isAdmin);
-            }catch (Exception ignored){
-                }
-            }
-        });
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                if (isAdmin) {
-                    new AdminMenu();
-                    return;
-                }
-                new CustomerMenu(customer);
-            }
-        });
-    }
-
-    private void enterPressed(Customer customer, boolean isAdmin) {
-        String amount = tf.getText();
-        if (amount.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter amount");
-            return;
-        }
-
-//        if (!amount.matches("[0-9]+")) {
-//            JOptionPane.showMessageDialog(null, "Please enter a valid amount");
-//        }
-
-        double amountToDeposit = Double.parseDouble(amount);
-        if (amountToDeposit <= 0) {
-            JOptionPane.showMessageDialog(null, "Amount must be greater than 0");
-            return;
-        }
-        
-        else if (amountToDeposit >= 50001) {
-            JOptionPane.showMessageDialog(null, "Amount must be less than 50,000");
-            return;
-        }
-          
-
-        customer.deposit(amountToDeposit);
-        JOptionPane.showMessageDialog(null, "Amount deposited successfully");
-        JOptionPane.showMessageDialog(null, "Current balance: " + customer.getBalance());
-        frame.dispose();
-
-        if (isAdmin) {
-            new AdminMenu();
-            return;
-        }
-        new CustomerMenu(customer);
     }
 }

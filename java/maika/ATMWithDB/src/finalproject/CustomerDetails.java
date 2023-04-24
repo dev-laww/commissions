@@ -2,7 +2,6 @@
  * @author:  tora
  * @author:  niku
  */
-
 package finalproject;
 
 import javax.swing.*;
@@ -22,43 +21,14 @@ public class CustomerDetails {
     JLabel titleLabel = new JLabel("CUSTOMER DETAILS / TRANSACTION HISTORY");
 
 
-    CustomerDetails(Customer customer) {
+    CustomerDetails() {
         Font font = new Font("JetBrains Mono NL", Font.PLAIN, 14);
-
-        // Account Number:
-        // 123456789123
-        // Name:
-        // Maika Ordonez
-        // Address:
-        // 1234 Main St.
-        // Email Address:
-        // test@mail.com
-        // Phone Number:
-        // 123-456-7890
-
-        // --------------------------------------------------
-
-        // Transaction History:
-        // 1. Withdrawal: -$100.00
-        // 2. Deposit: +$100.00
-        // 3. Withdrawal: -$100.00
-        // 4. Transfer to 32132465841323: -$100.00
-
-        String sb = String.format("%-25s%25s%n", "Account Number:", customer.getAccountID()) +
-                String.format("%-25s%25s%n", "Name:", customer.getName()) +
-                String.format("%-25s%25s%n", "Address:", customer.getAddress()) +
-                String.format("%-25s%25s%n", "Email Address:", customer.getEmail()) +
-                String.format("%-25s%25s%n", "Contact Number:", customer.getContactNo()) +
-                String.format("%-25s%25s%n%n", "Balance:", customer.getBalance()) +
-                "Transaction History:\n" +
-                "--------------------------------------------------\n" +
-                customer.getTransactions(false);
 
         textArea.setFont(font);
         textArea.setEditable(false);
         textArea.setBackground(Color.LIGHT_GRAY);
         textArea.setBounds(20, 80, 560, 470);
-        textArea.setText(sb);
+        textArea.setText("");
 
         backButton.setBounds(30, 510, 70, 30);
         backButton.setFocusable(false);
