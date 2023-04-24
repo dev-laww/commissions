@@ -10,8 +10,16 @@ public class Database {
     public static ArrayList<Transaction> transactions = new ArrayList<>();
     static {
         try {
-            users.addAll(UserHandler.getAll());
-//            transactions.addAll(TransactionHandler.getAll());
+            ArrayList<User> users = UserHandler.getAll();
+            ArrayList<Transaction> transactions = TransactionHandler.getAll();
+
+            if (users != null) {
+                Database.users = users;
+            }
+
+            if (transactions != null) {
+                Database.transactions = transactions;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
