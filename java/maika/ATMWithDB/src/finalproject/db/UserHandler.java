@@ -12,7 +12,7 @@ public class UserHandler {
 
     public void save() throws SQLException {
         User user = this.user;
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -44,7 +44,7 @@ public class UserHandler {
 
     public void delete() throws SQLException {
         User user = this.user;
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -59,7 +59,7 @@ public class UserHandler {
 
     public static User getUser(String id) throws SQLException {
         User user;
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -91,7 +91,7 @@ public class UserHandler {
     }
 
     public static ArrayList<User> getAll() throws SQLException {
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");

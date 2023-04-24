@@ -12,7 +12,7 @@ public class TransactionHandler {
 
     public void save() throws SQLException {
         Transaction transaction = this.transaction;
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -44,7 +44,7 @@ public class TransactionHandler {
 
     public void delete() throws SQLException {
         Transaction transaction = this.transaction;
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -59,7 +59,7 @@ public class TransactionHandler {
 
     public static Transaction getTransaction(String id) throws SQLException{
         Transaction transaction;
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -86,7 +86,7 @@ public class TransactionHandler {
     }
 
     public static ArrayList<Transaction> getUserTransactions(String userID) throws SQLException {
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");
@@ -120,7 +120,7 @@ public class TransactionHandler {
     }
 
     public static ArrayList<Transaction> getAll() throws SQLException {
-        Connection conn = DatabaseHandler.getConnection();
+        Connection conn = Database.getConnection();
 
         if (conn == null) {
             throw new SQLException("Connection failed");

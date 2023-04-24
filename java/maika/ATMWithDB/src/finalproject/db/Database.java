@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DatabaseHandler {
+public class Database {
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<Transaction> transactions = new ArrayList<>();
     static {
