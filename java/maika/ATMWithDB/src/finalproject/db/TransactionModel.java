@@ -1,28 +1,22 @@
 package finalproject.db;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class TransactionModel {
     private final Transaction transaction;
-    private Connection conn;
 
     TransactionModel(Transaction transaction) {
         this.transaction = transaction;
-
-        String url = "jdbc:mysql://localhost:3306/atm";
-        String username = "root";
-        String password = "tora";
-
-        try {
-            this.conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void save() throws SQLException {
         Transaction transaction = this.transaction;
-        Connection conn = this.conn;
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            return;
+        }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE id = ?");
         ps.setString(1, transaction.id);
@@ -44,32 +38,30 @@ public class TransactionModel {
 
         formatStatement(transaction, ps);
         ps.executeUpdate();
+
+        conn.close();
     }
 
     public void delete() throws SQLException {
         Transaction transaction = this.transaction;
-        Connection conn = this.conn;
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            return;
+        }
 
         PreparedStatement ps = conn.prepareStatement("DELETE FROM transactions WHRE id = ?");
         ps.setString(1, transaction.id);
         ps.executeUpdate();
-    }
 
-    public void close() throws SQLException {
-        this.conn.close();
+        conn.close();
     }
 
     public static Transaction getTransaction(String id) throws SQLException{
         Transaction transaction;
-        Connection conn;
-        String url = "jdbc:mysql://localhost:3306/atm";
-        String username = "root";
-        String password = "tora";
+        Connection conn = DatabaseHandler.getConnection();
 
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (conn == null) {
             return null;
         }
 
@@ -91,6 +83,40 @@ public class TransactionModel {
 
         conn.close();
         return transaction;
+    }
+
+    public static ArrayList<Transaction> getUserTransactions(String userID) throws SQLException {
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            return null;
+        }
+
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE user_id = ?");
+        ps.setString(1, userID);
+        ResultSet rs = ps.executeQuery();
+        int rows = rs.getFetchSize();
+
+        if (rows == 0) {
+            return null;
+        }
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        while (rs.next()) {
+            Transaction transaction = new Transaction(
+                    rs.getString("id"),
+                    rs.getString("user_id"),
+                    rs.getDouble("amount"),
+                    rs.getString("type")
+            );
+
+            transactions.add(transaction);
+        }
+
+        conn.close();
+
+        return transactions;
     }
 
     private void formatStatement(Transaction transaction, PreparedStatement ps) throws SQLException {
