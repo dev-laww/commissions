@@ -91,7 +91,7 @@ public class User {
         while (resultSet.next()) {
             String id = resultSet.getString("id");
             if (accID.equals(id)) {
-                user = UserModel.getUserFromID(accID);
+                user = UserModel.getUser(accID);
                 break;
             }
         }
