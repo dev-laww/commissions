@@ -34,8 +34,7 @@ public class Withdraw {
     ImageIcon image = new ImageIcon("pic7.jpeg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
-    Withdraw(Customer customer, boolean isAdmin) {
-        
+    Withdraw() {
         label1.setBounds(110, 60, 380, 100);
         label1.setText("WITHDRAW");
         label1.setFont(new Font(null, Font.BOLD, 60));

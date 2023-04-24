@@ -24,8 +24,8 @@ public class Transfer {
     ImageIcon image = new ImageIcon("tt.jpeg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
-    Transfer(Customer customer, boolean isAdmin) {
-        this.customer = customer;
+    Transfer() {
+//        this.customer = customer;
 
         label1.setBounds(200, 50, 550, 40);
         label1.setText("Transfer Amount");

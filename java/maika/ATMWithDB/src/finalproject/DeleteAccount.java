@@ -29,7 +29,7 @@ public class DeleteAccount {
     JButton cancel = new JButton("CANCEL");
     JButton confirm = new JButton("CONFIRM");
 
-    DeleteAccount(User user) {
+    DeleteAccount() {
         //frame
         frame.setSize(400, 230);
         frame.setTitle("Delete Account");
@@ -57,7 +57,7 @@ public class DeleteAccount {
         name.setForeground(Color.WHITE);
 
         tfname.setBounds(160, 50, 200, 30);
-        tfname.setText(user.name);
+//        tfname.setText(user.name);
         tfname.setEditable(false);
 
         AccountID.setBounds(40, 100, 200, 30);
@@ -65,7 +65,7 @@ public class DeleteAccount {
         AccountID.setForeground(Color.WHITE);
 
         tfID.setBounds(160, 100, 200, 30);
-        tfID.setText(user.id);
+//        tfID.setText(user.id);
         tfID.setEditable(false);
 
         label.add(name);

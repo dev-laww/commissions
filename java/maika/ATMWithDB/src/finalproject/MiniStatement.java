@@ -69,7 +69,7 @@ public class MiniStatement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new CustomerMenu(customer);
+                new CustomerMenu();
             }
         });
     }

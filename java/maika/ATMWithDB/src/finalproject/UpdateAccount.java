@@ -29,7 +29,7 @@ public class UpdateAccount {
     JTextField tfPhone = new JTextField();
     JLabel Label1 = new JLabel("UPDATE ACCOUNT");
 
-    UpdateAccount(Customer customer) {
+    UpdateAccount() {
         Label1.setFont(new Font(null, Font.BOLD, 40));
         Label1.setBounds(110, 18, 400, 50);
         Label1.setForeground(Color.WHITE);
@@ -41,12 +41,12 @@ public class UpdateAccount {
         updateButton.setFocusable(false);
 
         accountIDLabel.setBounds(30, 50, 300, 100);
-        accountIDLabel.setText("Account ID: " + customer.getAccountID());
+//        accountIDLabel.setText("Account ID: " + customer.getAccountID());
         accountIDLabel.setFont(new Font(null, Font.BOLD, 15));
         accountIDLabel.setForeground(Color.WHITE);
 
         accountNameLabel.setBounds(30, 80, 300, 100);
-        accountNameLabel.setText("Account Name: " + customer.getName());
+//        accountNameLabel.setText("Account Name: " + customer.getName());
         accountNameLabel.setFont(new Font(null, Font.BOLD, 15));
         accountNameLabel.setForeground(Color.WHITE);
 
@@ -57,7 +57,7 @@ public class UpdateAccount {
 
         tfAddress.setBounds(150, 153, 300, 30);
         tfAddress.setFont(new Font(null, Font.BOLD, 15));
-        tfAddress.setText(customer.getAddress());
+//        tfAddress.setText(customer.getAddress());
 
         emailAddress.setText("Email:");
         emailAddress.setBounds(30, 186, 200, 30);
@@ -66,7 +66,7 @@ public class UpdateAccount {
 
         tfEmailAddress.setBounds(150, 185, 300, 30);
         tfEmailAddress.setFont(new Font(null, Font.BOLD, 15));
-        tfEmailAddress.setText(customer.getEmail());
+//        tfEmailAddress.setText(customer.getEmail());
 
         phone.setText("Phone:");
         phone.setBounds(30,217, 100, 30);
@@ -75,7 +75,7 @@ public class UpdateAccount {
 
         tfPhone.setBounds(150, 215, 300, 30);
         tfPhone.setFont(new Font(null, Font.BOLD, 15));
-        tfPhone.setText(customer.getContactNo());
+//        tfPhone.setText(customer.getContactNo());
 
         label.add(Label1);
         label.add(accountIDLabel);
