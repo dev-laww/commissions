@@ -20,7 +20,6 @@ public class UserModel {
         }
     }
 
-
     public void save() throws SQLException {
         User user = this.user;
         Connection conn = this.conn;
@@ -56,6 +55,49 @@ public class UserModel {
         ps.executeUpdate();
     }
 
+    public void close() throws SQLException {
+        this.conn.close();
+    }
+
+    public static User getUserFromID(String id) throws SQLException {
+        User user;
+        Connection conn;
+        String url = "jdbc:mysql://localhost:3306/atm";
+        String username = "root";
+        String password = "tora";
+
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
+        ps.setString(1, id);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.wasNull()) {
+            throw new SQLException("User not found");
+        }
+
+        user = new User(
+                rs.getString("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("contact"),
+                rs.getString("address"),
+                rs.getString("pin"),
+                rs.getDouble("balance"),
+                rs.getString("status")
+        );
+
+        conn.close();
+
+        return user;
+    }
+
     private void formatStatement(User user, PreparedStatement ps) throws SQLException {
         ps.setString(1, user.name);
         ps.setString(2, user.address());
@@ -65,5 +107,4 @@ public class UserModel {
         ps.setString(6, user.status);
         ps.setDouble(7, user.balance);
     }
-
 }
