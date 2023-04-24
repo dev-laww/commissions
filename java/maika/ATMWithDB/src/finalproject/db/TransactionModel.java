@@ -15,7 +15,7 @@ public class TransactionModel {
         Connection conn = DatabaseHandler.getConnection();
 
         if (conn == null) {
-            return;
+            throw new SQLException("Connection failed");
         }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE id = ?");
@@ -47,7 +47,7 @@ public class TransactionModel {
         Connection conn = DatabaseHandler.getConnection();
 
         if (conn == null) {
-            return;
+            throw new SQLException("Connection failed");
         }
 
         PreparedStatement ps = conn.prepareStatement("DELETE FROM transactions WHRE id = ?");
@@ -62,7 +62,7 @@ public class TransactionModel {
         Connection conn = DatabaseHandler.getConnection();
 
         if (conn == null) {
-            return null;
+            throw new SQLException("Connection failed");
         }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
@@ -89,7 +89,7 @@ public class TransactionModel {
         Connection conn = DatabaseHandler.getConnection();
 
         if (conn == null) {
-            return null;
+            throw new SQLException("Connection failed");
         }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE user_id = ?");
