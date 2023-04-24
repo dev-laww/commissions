@@ -59,6 +59,40 @@ public class TransactionModel {
         this.conn.close();
     }
 
+    public static Transaction getTransaction(String id) throws SQLException{
+        Transaction transaction;
+        Connection conn;
+        String url = "jdbc:mysql://localhost:3306/atm";
+        String username = "root";
+        String password = "tora";
+
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
+        ps.setString(1, id);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.wasNull()) {
+            throw new SQLException("User not found");
+        }
+
+        transaction = new Transaction(
+                rs.getString("id"),
+                rs.getString("user_id"),
+                rs.getDouble("amount"),
+                rs.getString("type")
+        );
+
+        conn.close();
+        return transaction;
+    }
+
     private void formatStatement(Transaction transaction, PreparedStatement ps) throws SQLException {
         ps.setString(1, transaction.userID());
         ps.setDouble(2, transaction.amount);
