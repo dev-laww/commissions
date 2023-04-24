@@ -104,7 +104,6 @@ public class CreateAccount {
         tfID.setFont(new Font(null, Font.BOLD, 15));
         
 //        tfID.setText(generateAccountId());
-        
         tfID.setEditable(false);
         
         pin.setFont(new Font(null, Font.PLAIN, 20));
@@ -115,14 +114,11 @@ public class CreateAccount {
         tfPass.setFont(new Font(null, Font.BOLD, 15));
         
         tfPass.setColumns(4);
-        
         tfPass.setText("0000");
-        
         
         //button
         back.setBounds(380, 410, 120, 30);
         back.setFocusable(false);
-        
         
          enter.setBounds(240, 410, 120, 30);
         enter.setFocusable(false);
