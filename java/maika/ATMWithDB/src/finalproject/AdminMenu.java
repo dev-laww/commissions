@@ -31,7 +31,6 @@ public class AdminMenu {
 
 
     AdminMenu() {
-
         createAcc.setBounds(130, 50, 250, 50);
         createAcc.setText("CREATE ACCOUNT");
         createAcc.setFocusable(false);
@@ -92,5 +91,92 @@ public class AdminMenu {
         frame.setVisible(true);
 
         // action listeners
+        createAcc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new CreateAccount();
+            }
+        });
+
+        transact.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new CustomerDetails();
+            }
+        });
+
+        updateAcc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new UpdateAccount();
+            }
+        });
+
+        searchAcc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+//                new SearchAccount();
+            }
+        });
+
+        deleteAcc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new DeleteAccount();
+            }
+        });
+
+        transfer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Transfer();
+            }
+        });
+
+        deposit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Deposit();
+            }
+        });
+
+        withdraw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Withdraw();
+            }
+        });
+
+        transact.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new CustomerDetails();
+            }
+        });
+
+        locked.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new LockedAccounts();
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Login();
+            }
+        });
     }
 }
