@@ -119,6 +119,39 @@ public class TransactionHandler {
         return transactions;
     }
 
+    public static ArrayList<Transaction> getAll() throws SQLException {
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            throw new SQLException("Connection failed");
+        }
+
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions");
+        ResultSet rs = ps.executeQuery();
+        int rows = rs.getFetchSize();
+
+        if (rows == 0) {
+            return null;
+        }
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        while (rs.next()) {
+            Transaction transaction = new Transaction(
+                    rs.getString("id"),
+                    rs.getString("user_id"),
+                    rs.getDouble("amount"),
+                    rs.getString("type")
+            );
+
+            transactions.add(transaction);
+        }
+
+        conn.close();
+
+        return transactions;
+    }
+
     private void formatStatement(Transaction transaction, PreparedStatement ps) throws SQLException {
         ps.setString(1, transaction.userID());
         ps.setDouble(2, transaction.amount);
