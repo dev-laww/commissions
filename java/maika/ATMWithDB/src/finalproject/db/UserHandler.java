@@ -1,6 +1,7 @@
 package finalproject.db;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserHandler {
     private final User user;
@@ -87,6 +88,35 @@ public class UserHandler {
         conn.close();
 
         return user;
+    }
+
+    public static ArrayList<User> getAll() throws SQLException {
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            throw new SQLException("Connection failed");
+        }
+
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users");
+        ResultSet rs = ps.executeQuery();
+
+        ArrayList<User> users = new ArrayList<>();
+
+        while (rs.next()) {
+            users.add(new User(
+                    rs.getString("id"),
+                    rs.getString("name"),
+                    rs.getString("email"),
+                    rs.getString("contact"),
+                    rs.getString("address"),
+                    rs.getString("pin"),
+                    rs.getDouble("balance"),
+                    rs.getString("status")
+            ));
+        }
+
+        conn.close();
+        return users;
     }
 
     private void formatStatement(User user, PreparedStatement ps) throws SQLException {
