@@ -4,25 +4,18 @@ import java.sql.*;
 
 public class UserModel {
     private final User user;
-    private Connection conn;
 
     UserModel(User user) {
         this.user = user;
-
-        String url = "jdbc:mysql://localhost:3306/atm";
-        String username = "root";
-        String password = "tora";
-
-        try {
-            this.conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void save() throws SQLException {
         User user = this.user;
-        Connection conn = this.conn;
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            throw new SQLException("Connection failed");
+        }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
         ps.setString(1, user.id);
@@ -44,33 +37,31 @@ public class UserModel {
 
         formatStatement(user, ps);
         ps.executeUpdate();
+
+        conn.close();
     }
 
     public void delete() throws SQLException {
         User user = this.user;
-        Connection conn = this.conn;
+        Connection conn = DatabaseHandler.getConnection();
+
+        if (conn == null) {
+            throw new SQLException("Connection failed");
+        }
 
         PreparedStatement ps = conn.prepareStatement("DELETE FROM users WHRE id = ?");
         ps.setString(1, user.id);
         ps.executeUpdate();
+
+        conn.close();
     }
 
-    public void close() throws SQLException {
-        this.conn.close();
-    }
-
-    public static User getUserFromID(String id) throws SQLException {
+    public static User getUser(String id) throws SQLException {
         User user;
-        Connection conn;
-        String url = "jdbc:mysql://localhost:3306/atm";
-        String username = "root";
-        String password = "tora";
+        Connection conn = DatabaseHandler.getConnection();
 
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if (conn == null) {
+            throw new SQLException("Connection failed");
         }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
