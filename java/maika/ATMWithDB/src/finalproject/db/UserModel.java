@@ -40,7 +40,7 @@ public class UserModel {
         }
 
         ps = conn.prepareStatement(
-                "UPDATE users SET name = ?, address = ?, contact = ?, email = ?, pin = ?, status = ?, balance = ?"
+                "UPDATE users SET name = ?, address = ?, contact = ?, email = ?, pin = ?, status = ?, balance = ? WHERE id = " + user.id
         );
 
         formatStatement(user, ps);
