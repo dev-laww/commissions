@@ -5,11 +5,12 @@
 
 package finalproject;
 
+import finalproject.db.Database;
+import finalproject.db.User;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -36,7 +37,6 @@ public class CreateAccount {
     JLabel label = new JLabel("", image, JLabel.CENTER);
     
     CreateAccount() {
-        
         label.add(createAccLabel);
         label.add(name);
         label.add(tfname);
@@ -103,7 +103,7 @@ public class CreateAccount {
         tfID.setBounds(170, 302, 380, 33);
         tfID.setFont(new Font(null, Font.BOLD, 15));
         
-//        tfID.setText(generateAccountId());
+        tfID.setText(generateAccountId());
         tfID.setEditable(false);
         
         pin.setFont(new Font(null, Font.PLAIN, 20));
@@ -120,10 +120,30 @@ public class CreateAccount {
         back.setBounds(380, 410, 120, 30);
         back.setFocusable(false);
         
-         enter.setBounds(240, 410, 120, 30);
+        enter.setBounds(240, 410, 120, 30);
         enter.setFocusable(false);
 
         // action listeners
+    }
+
+    private String generateAccountId() {
+        ArrayList<User> users = Database.users;
+
+        Random rand = new Random();
+        StringBuilder id = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            id.append(rand.nextInt(10));
+        }
+
+        String idString = id.toString();
+
+        for (User user : users) {
+            if (idString.equals(user.id)) {
+                return generateAccountId();
+            }
+        }
+
+        return idString;
     }
 } 
     
