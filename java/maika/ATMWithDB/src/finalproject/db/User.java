@@ -91,16 +91,7 @@ public class User {
         while (resultSet.next()) {
             String id = resultSet.getString("id");
             if (accID.equals(id)) {
-                user = new User(
-                        id,
-                        resultSet.getString("name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("contact"),
-                        resultSet.getString("address"),
-                        resultSet.getString("pin"),
-                        resultSet.getDouble("balance"),
-                        resultSet.getString("status")
-                        );
+                user = UserModel.getUserFromID(accID);
                 break;
             }
         }
