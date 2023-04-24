@@ -6,32 +6,32 @@ import java.sql.SQLException;
 
 public class DatabaseHandler {
     public static void deleteUser(String id) throws SQLException {
-        UserModel model = new UserModel(UserModel.getUser(id));
+        UserHandler model = new UserHandler(UserHandler.getUser(id));
         model.delete();
     }
 
     public static void deleteTransaction(String id) throws SQLException {
-        TransactionModel model = new TransactionModel(TransactionModel.getTransaction(id));
+        TransactionHandler model = new TransactionHandler(TransactionHandler.getTransaction(id));
         model.delete();
     }
 
     public static void addUser(User user) throws SQLException {
-        UserModel model = new UserModel(user);
+        UserHandler model = new UserHandler(user);
         model.save();
     }
 
     public static void addTransaction(Transaction transaction) throws SQLException {
-        TransactionModel model = new TransactionModel(transaction);
+        TransactionHandler model = new TransactionHandler(transaction);
         model.save();
     }
 
     public static void updateUser(User user) throws SQLException {
-        UserModel model = new UserModel(user);
+        UserHandler model = new UserHandler(user);
         model.save();
     }
 
     public static void updateTransaction(Transaction transaction) throws SQLException {
-        TransactionModel model = new TransactionModel(transaction);
+        TransactionHandler model = new TransactionHandler(transaction);
         model.save();
     }
 

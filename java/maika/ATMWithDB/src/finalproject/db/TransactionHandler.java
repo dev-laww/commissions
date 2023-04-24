@@ -3,10 +3,10 @@ package finalproject.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TransactionModel {
+public class TransactionHandler {
     private final Transaction transaction;
 
-    TransactionModel(Transaction transaction) {
+    TransactionHandler(Transaction transaction) {
         this.transaction = transaction;
     }
 

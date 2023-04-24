@@ -2,10 +2,10 @@ package finalproject.db;
 
 import java.sql.*;
 
-public class UserModel {
+public class UserHandler {
     private final User user;
 
-    UserModel(User user) {
+    UserHandler(User user) {
         this.user = user;
     }
 
