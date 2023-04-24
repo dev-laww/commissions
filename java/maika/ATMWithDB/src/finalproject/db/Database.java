@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database {
+    public static HashMap<String, String> admin = new HashMap<>();
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<Transaction> transactions = new ArrayList<>();
     static {
+        admin.put("admin", "admin");
         try {
             ArrayList<User> users = UserHandler.getAll();
             ArrayList<Transaction> transactions = TransactionHandler.getAll();
