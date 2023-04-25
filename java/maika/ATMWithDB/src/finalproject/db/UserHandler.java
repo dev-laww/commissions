@@ -22,13 +22,15 @@ public class UserHandler {
         ps.setString(1, user.id);
         ResultSet rs = ps.executeQuery();
 
-        if (rs.wasNull()) {
+        if (!rs.next()) {
             ps = conn.prepareStatement(
                     "INSERT INTO users (name, address, contact, email, pin, status, balance) VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
 
             formatStatement(user, ps);
             ps.executeUpdate();
+
+            conn.close();
             return;
         }
 
