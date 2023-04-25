@@ -8,21 +8,16 @@ import java.util.HashMap;
 
 public class Database {
     public static HashMap<String, String> admin = new HashMap<>();
-    public static ArrayList<User> users = new ArrayList<>();
-    public static ArrayList<Transaction> transactions = new ArrayList<>();
+    public static ArrayList<User> users;
+    public static ArrayList<Transaction> transactions;
     static {
         admin.put("admin", "admin");
         try {
             ArrayList<User> users = UserHandler.getAll();
             ArrayList<Transaction> transactions = TransactionHandler.getAll();
 
-            if (users != null) {
-                Database.users = users;
-            }
-
-            if (transactions != null) {
-                Database.transactions = transactions;
-            }
+            Database.users = users.size() > 0 ? users : new ArrayList<>();
+            Database.transactions = transactions.size() > 0 ? transactions : new ArrayList<>();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
