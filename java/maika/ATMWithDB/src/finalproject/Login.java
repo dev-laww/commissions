@@ -4,25 +4,25 @@
  */
 package finalproject;
 
+import finalproject.db.Database;
+import finalproject.db.User;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  *
  * @author maikaordonez
  */
 public class Login {
+    int attempts = 0;
     JFrame frame = new JFrame();
     JButton enter = new JButton();
-    JButton cancel = new JButton();
+    JButton clear = new JButton();
+    JButton exit = new JButton();
     JLabel accIDLabel = new JLabel();
     JLabel pinCodeLabel = new JLabel();
     JTextField accIdTF = new JTextField();
@@ -50,17 +50,22 @@ public class Login {
         pinCodeTF.setBounds(88, 350, 250, 35);
         pinCodeLabel.setFont(new Font(null, Font.PLAIN, 20));
 
-        enter.setBounds(110, 400, 90, 30);
+        enter.setBounds(90, 400, 90, 30);
         enter.setText("ENTER");
         enter.setFocusable(false);
 
-        cancel.setBounds(210, 400, 90, 30);
-        cancel.setText("CLEAR");
-        cancel.setFocusable(false);
+        clear.setBounds(190, 400, 90, 30);
+        clear.setText("CLEAR");
+        clear.setFocusable(false);
+
+        exit.setBounds(290, 400, 90, 30);
+        exit.setText("EXIT");
+        exit.setFocusable(false);
 
         frame.add(atm);
         frame.add(background);
-        frame.add(cancel);
+        frame.add(exit);
+        frame.add(clear);
         frame.add(enter);
         frame.add(pinCodeTF);
         frame.add(accIdTF);
@@ -76,7 +81,7 @@ public class Login {
         background.add(accIDLabel);
         background.add(pinCodeLabel);
         background.add(enter);
-        background.add(cancel);
+        background.add(clear);
         background.add(accIdTF);
         background.add(pinCodeTF);
         background.setBounds(0, 0, 1000, 575);
@@ -87,29 +92,114 @@ public class Login {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new AdminMenu();
+                enter();
             }
         });
 
-        cancel.addActionListener(new ActionListener() {
+        accIdTF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enter();
+            }
+        });
+
+        pinCodeTF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enter();
+            }
+        });
+
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                accIdTF.setText("");
+                pinCodeTF.setText("");
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new FrontPage().start();
             }
         });
-
     }
 
-    public static void main(String[] args) {
-        Login log = new Login();
-        log.start();
+    public static void start() {
+        new Login();
     }
 
-    public void start() {
-        frame.setVisible(true);
-    }
+    private void enter() {
+        String accID = accIdTF.getText();
+        String pinCode = String.valueOf(pinCodeTF.getPassword());
 
+        if (accID.isEmpty() || pinCode.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields!");
+            return;
+        }
+
+        if (Database.admin.containsKey(accID)) {
+            if (!Database.admin.get(accID).equals(pinCode)) {
+                JOptionPane.showMessageDialog(null, "Incorrect password!");
+                return;
+            }
+
+            frame.dispose();
+            new AdminMenu();
+            return;
+        }
+
+        try {
+            Long.parseLong(accID);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Account ID must be a number!");
+            return;
+        }
+
+        try {
+            Integer.parseInt(pinCode);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Pin Code must be a number!");
+            return;
+        }
+
+        if (pinCode.length() != 4) {
+            JOptionPane.showMessageDialog(null, "Pin Code must be 4 digits!");
+            return;
+        }
+
+        if (accID.length() != 8) {
+            JOptionPane.showMessageDialog(null, "Account ID must be 8 digits!");
+            return;
+        }
+
+        User user = Database.getUser(accID);
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(null, "Account ID does not exist!");
+            return;
+        }
+
+        if (user.isLocked()) {
+            JOptionPane.showMessageDialog(null, "Account is locked!");
+            return;
+        }
+
+        if (!user.checkPin(pinCode)) {
+            JOptionPane.showMessageDialog(null, "Incorrect Pin Code!");
+            attempts++;
+            if (attempts == 3) {
+                JOptionPane.showMessageDialog(null, "Too many attempts! Account locked!");
+                user.lock();
+                frame.dispose();
+                new Login();
+            }
+            return;
+        }
+
+        frame.dispose();
+        new CustomerMenu();
+    }
 }
 
