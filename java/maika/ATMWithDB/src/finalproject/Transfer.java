@@ -17,7 +17,7 @@ public class Transfer {
     JTextField accountNoTF = new JTextField();
     JLabel label3 = new JLabel("Enter amount you want to transfer");
     JTextField amountTF = new JTextField();
-    Customer customer;
+//    Customer customer;
     JButton exit = new JButton("CANCEL");
     JButton enter = new JButton("CONFIRM");
     

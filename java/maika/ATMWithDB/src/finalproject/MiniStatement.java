@@ -19,7 +19,7 @@ public class MiniStatement {
     JButton backButton = new JButton("BACK");
     JLabel label1 = new JLabel("VIEW MINISTATEMENT");
     
-    MiniStatement(Customer customer){
+    MiniStatement(){
         Font font = new Font("JetBrains Mono NL", Font.PLAIN, 14);
 
         // Account Number: XXXXXXXX9123
@@ -31,16 +31,16 @@ public class MiniStatement {
         // 3. Withdrawal: -$100.00
         // 4. Transfer to 32132465841323: -$100.00
 
-        String sb = String.format("%-25s%25s%n", "Account Number:", "XXXXXXXX" + customer.getAccountID().substring(7, 11)) +
-                String.format("%-25s%25s%n%n", "Balance:", customer.getBalance()) +
-                "Transaction History:\n" +
-                "--------------------------------------------------\n" +
-                customer.getTransactions(false);
+//        String sb = String.format("%-25s%25s%n", "Account Number:", "XXXXXXXX" + customer.getAccountID().substring(7, 11)) +
+//                String.format("%-25s%25s%n%n", "Balance:", customer.getBalance()) +
+//                "Transaction History:\n" +
+//                "--------------------------------------------------\n" +
+//                customer.getTransactions(false);
         textArea.setFont(font);
         textArea.setEditable(false);
         textArea.setBackground(Color.LIGHT_GRAY);
         textArea.setBounds(20, 80, 560, 470);
-        textArea.setText(sb);
+//        textArea.setText(sb);
         
         backButton.setBounds(30,510,70,30);
         backButton.setFocusable(false);

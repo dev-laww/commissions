@@ -37,11 +37,6 @@ public class LockedAccounts {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Locked Accounts:\n");
-        for (Customer c : BankSystem.idAndPassword.getCustomerLoginInfo()) {
-            if (c.isLocked()) {
-                sb.append(c.getAccountID()).append(" - ").append(c.getName()).append("\n");
-            }
-        }
 
         lockedAccounts.setFont(font);
         lockedAccounts.setEditable(false);

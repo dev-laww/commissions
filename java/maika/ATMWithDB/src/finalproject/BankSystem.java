@@ -6,7 +6,6 @@
 package finalproject;
 
 public class BankSystem {
-    public static final IDAndPassword idAndPassword = new IDAndPassword();
 
     public static String tellerLoginInfo;
 
