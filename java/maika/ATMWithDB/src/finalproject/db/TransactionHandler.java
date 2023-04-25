@@ -128,11 +128,6 @@ public class TransactionHandler {
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions");
         ResultSet rs = ps.executeQuery();
-        int rows = rs.getFetchSize();
-
-        if (rows == 0) {
-            return null;
-        }
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 
@@ -148,7 +143,6 @@ public class TransactionHandler {
         }
 
         conn.close();
-
         return transactions;
     }
 
