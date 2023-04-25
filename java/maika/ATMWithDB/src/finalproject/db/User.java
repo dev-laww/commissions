@@ -64,6 +64,13 @@ public class User {
 
     public void deposit(double amount) {
         this.balance += amount;
+        Transaction transaction = new Transaction(this.id, amount, "deposit");
+        TransactionHandler db = new TransactionHandler(transaction);
+        try {
+            db.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void withdraw(double amount) throws Exception {
@@ -72,36 +79,29 @@ public class User {
         }
 
         this.balance -= amount;
+        Transaction transaction = new Transaction(this.id, amount, "withdraw");
+        TransactionHandler db = new TransactionHandler(transaction);
+        db.save();
     }
 
-    public void transfer(String accID, double amount, Connection conn) throws Exception {
-        User user = null;
+    public void transfer(String accID, double amount) throws Exception {
+        User user = Database.getUser(accID);
 
-        if (accID.equals(this.id)) {
-            throw new Exception("You cannot transfer to yourself.");
+        if (user == null) {
+            throw new Exception("Account not found");
         }
 
         if (this.balance < amount) {
-            throw new Exception("Insufficient balance.");
-        }
-
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users");
-        ResultSet resultSet = ps.executeQuery();
-
-        while (resultSet.next()) {
-            String id = resultSet.getString("id");
-            if (accID.equals(id)) {
-                user = UserHandler.getUser(accID);
-                break;
-            }
-        }
-
-        if (user == null) {
-            throw new Exception("Account not found!");
+            throw new Exception("Insufficient balance");
         }
 
         this.balance -= amount;
+        Transaction transaction = new Transaction(this.id, amount, "transfer");
+        TransactionHandler db = new TransactionHandler(transaction);
+        db.save();
         user.balance += amount;
+        db = new TransactionHandler(new Transaction(user.id, amount, "receive"));
+        db.save();
     }
 
     public void lock() {
