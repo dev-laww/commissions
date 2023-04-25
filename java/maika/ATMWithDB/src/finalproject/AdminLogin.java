@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 //CUSTOMER LOGIN
 
-public class TellerLogin {
+public class AdminLogin {
     JFrame frame = new JFrame();
     JButton enter = new JButton();
     JButton cancel = new JButton();
@@ -25,10 +25,8 @@ public class TellerLogin {
     JPasswordField pinCodeTF = new JPasswordField();
     ImageIcon image = new ImageIcon("Login.jpg");
     JLabel background = new JLabel("", image, JLabel.CENTER);
-    private final HashMap<String, String> logininfo;
 
-    TellerLogin() {
-        this.logininfo = Database.admin;
+    AdminLogin() {
 
         accIDLabel.setForeground(Color.WHITE);
         pinCodeLabel.setForeground(Color.WHITE);
@@ -107,6 +105,7 @@ public class TellerLogin {
     }
 
     public void enterPressed() {
+        HashMap<String, String> admin = Database.admin;
         String userID = accIdTF.getText();
         String password = String.valueOf(pinCodeTF.getPassword());
 
@@ -115,17 +114,16 @@ public class TellerLogin {
             return;
         }
 
-        if (!logininfo.containsKey(userID)) {
+        if (!admin.containsKey(userID)) {
             JOptionPane.showMessageDialog(null, "USERNAME NOT FOUND");
             return;
         }
 
-        if (!logininfo.get(userID).equals(password)) {
+        if (!admin.get(userID).equals(password)) {
             JOptionPane.showMessageDialog(null, "WRONG USERNAME OR PASSWORD");
             return;
         }
 
-        BankSystem.tellerLoginInfo = logininfo.get(userID);
         new AdminMenu();
         frame.dispose();
     }

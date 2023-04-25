@@ -41,7 +41,7 @@ public class FrontPage {
         tellerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new TellerLogin();
+                new AdminLogin();
                 frame.dispose();
             }
         });
