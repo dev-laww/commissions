@@ -11,7 +11,6 @@ public class BankSystem {
     public static String tellerLoginInfo;
 
     public static void main(String[] args) {
-        FrontPage frontPage = new FrontPage();
-        frontPage.start();      
+        Login.start();
     }
 }
