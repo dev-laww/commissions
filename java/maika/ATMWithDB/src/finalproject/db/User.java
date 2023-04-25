@@ -104,6 +104,44 @@ public class User {
         user.balance += amount;
     }
 
+    public void lock() {
+        this.status = "locked";
+        UserHandler db = new UserHandler(this);
+        try {
+            db.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unlock() {
+        this.status = "active";
+        UserHandler db = new UserHandler(this);
+        try {
+            db.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void close() {
+        this.status = "closed";
+        UserHandler db = new UserHandler(this);
+        try {
+            db.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void open() {
+        this.status = "active";
+    }
+
+    public boolean isLocked() {
+        return this.status.equals("locked");
+    }
+
     public boolean checkPin(String pin) {
         if (pin.length() > 4)
             return false;

@@ -10,6 +10,7 @@ public class Database {
     public static HashMap<String, String> admin = new HashMap<>();
     public static ArrayList<User> users;
     public static ArrayList<Transaction> transactions;
+
     static {
         admin.put("admin", "admin");
         try {
@@ -101,22 +102,20 @@ public class Database {
     }
 
     public static User getUser(String id) {
-        for (User user : users) {
-            if (id.equals(user.id)) {
-                return user;
-            }
+        try {
+            return UserHandler.getUser(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
     public static Transaction getTransaction(String id) {
-        for (Transaction transaction : transactions) {
-            if (id.equals(transaction.id)) {
-                return transaction;
-            }
+        try {
+            return TransactionHandler.getTransaction(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 }

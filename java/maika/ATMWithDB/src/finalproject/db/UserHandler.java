@@ -64,7 +64,7 @@ public class UserHandler {
         Connection conn = Database.getConnection();
 
         if (conn == null) {
-            throw new SQLException("Connection failed");
+            return null;
         }
 
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
@@ -72,8 +72,9 @@ public class UserHandler {
 
         ResultSet rs = ps.executeQuery();
 
-        if (rs.wasNull()) {
-            throw new SQLException("User not found");
+        if (!rs.next()) {
+            conn.close();
+            return null;
         }
 
         user = new User(
@@ -88,7 +89,6 @@ public class UserHandler {
         );
 
         conn.close();
-
         return user;
     }
 
