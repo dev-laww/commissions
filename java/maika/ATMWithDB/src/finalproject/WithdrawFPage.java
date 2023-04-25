@@ -135,13 +135,4 @@ public class WithdrawFPage {
         frame.getContentPane().setBackground(Color.WHITE);
         
     }
-    
-    public static void main(String[] args) {
-        WithdrawFPage log = new WithdrawFPage();
-        log.start();
-    }
-    
-    public void start() {
-        frame.setVisible(true);
-    }
 }
