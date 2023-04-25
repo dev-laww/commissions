@@ -14,7 +14,7 @@ public class User {
     public double balance;
     public String status;
 
-    User(
+    public User(
             String id,
             String name,
             String email,
