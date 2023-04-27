@@ -77,7 +77,7 @@ public class CreateAccount {
 
         tfID.setBounds(170, 97, 380, 33);
         tfID.setFont(new Font(null, Font.BOLD, 15));
-        tfID.setText(generateAccountId());
+        tfID.setText(Database.getLastUserID());
         tfID.setEditable(false);
 
         name.setFont(new Font(null, Font.PLAIN, 20));
@@ -196,30 +196,6 @@ public class CreateAccount {
                 frame.dispose();
             }
         };
-    }
-
-    public static void main(String[] args) {
-        new CreateAccount();
-    }
-
-    private String generateAccountId() {
-        ArrayList<User> users = Database.users;
-
-        if (users.size() == 0) {
-            return "10000000";
-        }
-
-        users.sort(new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                return o1.id.compareTo(o2.id);
-            }
-        });
-
-        String lastId = users.get(users.size() - 1).id;
-        int id = Integer.parseInt(lastId) + 1;
-
-        return String.valueOf(id);
     }
 } 
     

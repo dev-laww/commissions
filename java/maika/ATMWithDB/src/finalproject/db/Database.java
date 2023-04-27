@@ -1,8 +1,6 @@
 package finalproject.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -113,6 +111,28 @@ public class Database {
     public static Transaction getTransaction(String id) {
         try {
             return TransactionHandler.getTransaction(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getLastUserID() {
+        Connection conn = Database.getConnection();
+
+        if (conn == null) {
+            return null;
+        }
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT `AUTO_INCREMENT` AS id FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'atm' AND TABLE_NAME = 'users'");
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            }
+
+            return rs.getString("id");
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
