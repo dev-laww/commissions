@@ -5,14 +5,9 @@
 
 package finalproject;
 
-import finalproject.db.Database;
-import finalproject.db.User;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class AdminMenu {
     JFrame frame = new JFrame();
@@ -119,7 +114,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-//                new SearchAccount();
+                new Search();
             }
         });
 
@@ -143,7 +138,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Deposit();
+                new Deposit(true);
             }
         });
 
