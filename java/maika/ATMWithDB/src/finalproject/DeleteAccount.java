@@ -1,81 +1,108 @@
-/**
- * @author: tora
- * @author: niku
- */
-
 package finalproject;
 
-import java.awt.Color;
-import java.awt.Font;
+import finalproject.db.Database;
+import finalproject.db.User;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DeleteAccount {
-    static JTextField tfname = new JTextField();
-    static JPasswordField tfPass = new JPasswordField();
-    ImageIcon image = new ImageIcon("pic6.jpg");
-    JLabel label = new JLabel("", image, JLabel.CENTER);
-    JFrame frame = new JFrame();
-    JLabel deleteAccountLabel = new JLabel("DELETE ACCOUNT");
-    JLabel name = new JLabel("NAME:");
-    JLabel accountID = new JLabel("ACCOUNT ID:");
-    JTextField tfID = new JTextField();
-    JButton cancel = new JButton("CANCEL");
-    JButton confirm = new JButton("CONFIRM");
+    JFrame frame = new JFrame("Delete Account");
+    static String[] col = {"Status", "Account No.", "Name", "Address", "Email", "Contact", "Balance"};
+    static DefaultTableModel model = new DefaultTableModel(null, col);
+    JLabel header2 = new JLabel("Delete Account");
+    JLabel accId = new JLabel("Account ID:");
+    JTextField txtAccId = new JTextField();
+    JButton btnCancel = new JButton("Cancel");
+    JButton btnDelete = new JButton("Delete");
+    JTable jt = new JTable(null, col);
+    JScrollPane sp = new JScrollPane(jt);
 
     DeleteAccount() {
-        //frame
-        frame.setSize(400, 230);
-        frame.setTitle("Delete Account");
+        String[][] tableData = new String[Database.users.size()][7];
+        for (User u : Database.users) {
+            tableData[Database.users.indexOf(u)] = u.toArray();
+        }
+        model.setDataVector(tableData, col);
+
+        header2.setBounds(348, 40, 390, 50);
+        header2.setFont(new Font("Times New Roman", 8, 18));
+        frame.add(header2);
+
+        accId.setBounds(460, 100, 100, 20);
+        frame.add(accId);
+        txtAccId.setBounds(550, 100, 150, 20);
+        frame.add(txtAccId);
+
+        btnDelete.setBounds(100, 380, 110, 20);
+        frame.add(btnDelete);
+
+        btnCancel.setBounds(590, 380, 110, 20);
+        frame.add(btnCancel);
+
+        sp.setBounds(100, 150, 600, 200);
+        jt.setModel(model);
+        frame.add(sp);
+
+        frame.setSize(800, 480);
+        frame.setTitle("Customer Panel");
+        frame.setLocationRelativeTo(null);//setLocationRelativeTo(frame);
+        frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(null);
-        frame.add(label);
-        frame.add(deleteAccountLabel);
-        frame.add(name);
-        frame.add(tfname);
-        frame.add(accountID);
-        frame.add(tfID);
-        frame.add(tfPass);
-        frame.add(cancel);
-        frame.add(confirm);
 
-        //label
-        deleteAccountLabel.setBounds(110, 10, 200, 30);
-        deleteAccountLabel.setFont(new Font(null, Font.BOLD, 20));
-        deleteAccountLabel.setForeground(Color.WHITE);
+        txtAccId.addActionListener(getActionListener());
+        btnDelete.addActionListener(getActionListener());
 
-        name.setBounds(40, 50, 100, 30);
-        name.setFont(new Font(null, Font.BOLD, 15));
-        name.setForeground(Color.WHITE);
+        btnCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AdminMenu();
+                frame.dispose();
+            }
+        });
+    }
 
-        tfname.setBounds(160, 50, 200, 30);
-//        tfname.setText(user.name);
-        tfname.setEditable(false);
+    private ActionListener getActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String accId = txtAccId.getText();
 
-        accountID.setBounds(40, 100, 200, 30);
-        accountID.setFont(new Font(null, Font.BOLD, 15));
-        accountID.setForeground(Color.WHITE);
+                if (accId.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please enter an account ID.");
+                    return;
+                }
 
-        tfID.setBounds(160, 100, 200, 30);
-//        tfID.setText(user.id);
-        tfID.setEditable(false);
+                if (accId.length() != 8) {
+                    JOptionPane.showMessageDialog(null, "Account ID must be 8 digits.");
+                    return;
+                }
 
-        label.add(name);
-        label.add(tfname);
-        label.add(accountID);
-        label.add(tfID);
-        label.add(deleteAccountLabel);
-        label.add(cancel);
-        label.add(confirm);
-        label.setBounds(0, 0, 400, 230);
+                User user = Database.getUser(accId);
 
-        //button
-        cancel.setBounds(100, 150, 100, 30);
-        confirm.setBounds(200, 150, 100, 30);
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Account not found.");
+                    return;
+                }
 
-        //action listener
+                try {
+                    Database.deleteUser(user.id);
+                    JOptionPane.showMessageDialog(null, "Account deleted.");
+                    frame.dispose();
+                    new AdminMenu();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error deleting account.\n" + ex.getMessage());
+                }
+            }
+        };
+    }
+
+    public static void main(String[] args) {
+        new DeleteAccount();
     }
 }
-
-
