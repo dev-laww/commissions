@@ -1,9 +1,12 @@
 /**
- * @author:  tora
- * @author:  niku
+ * @author: tora
+ * @author: niku
  */
 
 package finalproject;
+
+import finalproject.db.Database;
+import finalproject.db.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,26 +30,41 @@ public class UpdateAccount {
     JTextField tfEmailAddress = new JTextField();
     JLabel phone = new JLabel();
     JTextField tfPhone = new JTextField();
-    JLabel Label1 = new JLabel("UPDATE ACCOUNT");
+    JLabel label1 = new JLabel("UPDATE ACCOUNT");
+    JTextField tfID = new JTextField();
+    JButton btnSearch = new JButton("SEARCH");
+    private final boolean isAdmin;
 
-    UpdateAccount() {
-        Label1.setFont(new Font(null, Font.BOLD, 40));
-        Label1.setBounds(110, 18, 400, 50);
-        Label1.setForeground(Color.WHITE);
-        
+    UpdateAccount(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+
+        label1.setFont(new Font(null, Font.BOLD, 40));
+        label1.setBounds(110, 18, 400, 50);
+        label1.setForeground(Color.WHITE);
+
         backButton.setBounds(30, 270, 90, 30);
         backButton.setFocusable(false);
 
         updateButton.setBounds(470, 270, 90, 30);
         updateButton.setFocusable(false);
 
-        accountIDLabel.setBounds(30, 50, 300, 100);
-//        accountIDLabel.setText("Account ID: " + customer.getAccountID());
+        btnSearch.setBounds(350, 270, 90, 30);
+        btnSearch.setFocusable(false);
+        btnSearch.setVisible(isAdmin);
+
+        accountIDLabel.setBounds(30, 80, 150, 30);
+        accountIDLabel.setText(isAdmin ? "Account ID: " : "Customer ID: ");
         accountIDLabel.setFont(new Font(null, Font.BOLD, 15));
         accountIDLabel.setForeground(Color.WHITE);
 
-        accountNameLabel.setBounds(30, 80, 300, 100);
-//        accountNameLabel.setText("Account Name: " + customer.getName());
+        tfID.setBounds(150, 80, 300, 30);
+        tfID.setFont(new Font(null, Font.BOLD, 15));
+        tfID.setEditable(isAdmin);
+        tfID.setText(isAdmin ? "" : BankSystem.currentUser.id);
+        tfID.setForeground(Color.WHITE);
+
+        accountNameLabel.setBounds(30, 120, 300, 30);
+        accountNameLabel.setText(isAdmin ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name);
         accountNameLabel.setFont(new Font(null, Font.BOLD, 15));
         accountNameLabel.setForeground(Color.WHITE);
 
@@ -57,7 +75,7 @@ public class UpdateAccount {
 
         tfAddress.setBounds(150, 153, 300, 30);
         tfAddress.setFont(new Font(null, Font.BOLD, 15));
-//        tfAddress.setText(customer.getAddress());
+        tfAddress.setText(isAdmin ? "" : BankSystem.currentUser.address());
 
         emailAddress.setText("Email:");
         emailAddress.setBounds(30, 186, 200, 30);
@@ -66,19 +84,20 @@ public class UpdateAccount {
 
         tfEmailAddress.setBounds(150, 185, 300, 30);
         tfEmailAddress.setFont(new Font(null, Font.BOLD, 15));
-//        tfEmailAddress.setText(customer.getEmail());
+        tfEmailAddress.setText(isAdmin ? "" : BankSystem.currentUser.email());
 
         phone.setText("Phone:");
-        phone.setBounds(30,217, 100, 30);
+        phone.setBounds(30, 217, 100, 30);
         phone.setForeground(Color.WHITE);
         phone.setFont(new Font(null, Font.BOLD, 15));
 
         tfPhone.setBounds(150, 215, 300, 30);
         tfPhone.setFont(new Font(null, Font.BOLD, 15));
-//        tfPhone.setText(customer.getContactNo());
+        tfPhone.setText(isAdmin ? "" : BankSystem.currentUser.contact());
 
-        label.add(Label1);
+        label.add(label1);
         label.add(accountIDLabel);
+        label.add(tfID);
         label.add(accountNameLabel);
         label.add(address);
         label.add(tfAddress);
@@ -88,6 +107,7 @@ public class UpdateAccount {
         label.add(tfPhone);
         label.add(backButton);
         label.add(updateButton);
+        label.add(btnSearch);
         label.setBounds(0, 0, 600, 350);
 
         frame.add(label);
@@ -98,6 +118,114 @@ public class UpdateAccount {
         frame.setVisible(true);
 
         // Action Listeners
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+
+                if (!isAdmin) {
+                    new CustomerMenu();
+                    return;
+                }
+
+                new AdminMenu();
+            }
+        });
+
+        btnSearch.addActionListener(searchActionListener());
+        updateButton.addActionListener(getActionListener());
+        tfID.addActionListener(searchActionListener());
+        tfAddress.addActionListener(getActionListener());
+        tfEmailAddress.addActionListener(getActionListener());
+        tfPhone.addActionListener(getActionListener());
+    }
+
+    UpdateAccount() {
+        this(false);
+    }
+
+    public static void main(String[] args) {
+        BankSystem.currentUser = Database.users.get(0);
+        new UpdateAccount(true);
+    }
+
+    private void tryUpdate(User u) {
+        String address = tfAddress.getText();
+        String email = tfEmailAddress.getText();
+        String phone = tfPhone.getText();
+
+        if (address.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (u.address().equals(address) && u.email().equals(email) && u.contact().equals(phone)) {
+            JOptionPane.showMessageDialog(null, "No changes made", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        User user = new User(u.id, u.name, email, phone, address, u.pin(), u.balance, u.status);
+        try {
+            Database.updateUser(user);
+            JOptionPane.showMessageDialog(null, "Account updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            frame.dispose();
+
+            if (!isAdmin) {
+                new CustomerMenu();
+                return;
+            }
+
+            new AdminMenu();
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private ActionListener searchActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id = tfID.getText();
+                User user = Database.getUser(id);
+
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Account not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                tfAddress.setText(user.address());
+                tfEmailAddress.setText(user.email());
+                tfPhone.setText(user.contact());
+            }
+        };
+    }
+
+    private ActionListener getActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id = tfID.getText();
+
+                if (id.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!isAdmin) {
+                    tryUpdate(BankSystem.currentUser);
+                    return;
+                }
+
+                User user = Database.getUser(id);
+
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Account not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                tryUpdate(user);
+            }
+        };
     }
 }
 
