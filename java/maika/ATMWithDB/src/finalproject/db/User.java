@@ -171,4 +171,24 @@ public class User {
     public String contact() {
         return this.contact;
     }
+
+    public String[] toLockedArray() {
+        return new String[] {
+            this.status.substring(0, 1).toUpperCase() + this.status.substring(1),
+            this.id,
+            this.name
+        };
+    }
+
+    public String[] toArray() {
+        return new String[] {
+            this.status.substring(0, 1).toUpperCase() + this.status.substring(1),
+            this.id,
+            this.name,
+            this.address,
+            this.email,
+            this.contact,
+            String.valueOf(this.balance),
+        };
+    }
 }
