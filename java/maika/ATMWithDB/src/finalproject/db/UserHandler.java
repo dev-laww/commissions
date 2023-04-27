@@ -52,7 +52,7 @@ public class UserHandler {
             throw new SQLException("Connection failed");
         }
 
-        PreparedStatement ps = conn.prepareStatement("DELETE FROM users WHRE id = ?");
+        PreparedStatement ps = conn.prepareStatement("DELETE FROM users WHERE id = ?");
         ps.setString(1, user.id);
         ps.executeUpdate();
 
