@@ -1,6 +1,6 @@
 /**
- * @author:  tora
- * @author:  niku
+ * @author: tora
+ * @author: niku
  */
 
 package finalproject;
@@ -29,12 +29,25 @@ public class LockedAccounts {
     JScrollPane sp = new JScrollPane(jt);
 
     LockedAccounts() {
-        String[][] tableData = new String[Database.users.size()][3];
+        int count = 0;
+        for (User u : Database.users) {
+            if (u.isLocked()) count++;
+        }
+
+        if (count == 0) {
+            JOptionPane.showMessageDialog(null, "No locked accounts found.");
+            new AdminMenu();
+            frame.dispose();
+            return;
+        }
+
+        String[][] tableData = new String[count][3];
+        int j = 0;
         for (User u : Database.users) {
             if (!u.isLocked()) continue;
-
-            tableData[Database.users.indexOf(u)] = u.toLockedArray();
+            tableData[j] = u.toLockedArray();
         }
+
         model.setDataVector(tableData, col);
 
         header2.setBounds(348, 40, 390, 50);
@@ -63,19 +76,8 @@ public class LockedAccounts {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        txtAccId.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                action();
-            }
-        });
-
-        btnUnlock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                action();
-            }
-        });
+        txtAccId.addActionListener(getActionListener());
+        btnUnlock.addActionListener(getActionListener());
 
         btnCancel.addActionListener(new ActionListener() {
             @Override
@@ -86,28 +88,33 @@ public class LockedAccounts {
         });
     }
 
-    private void action() {
-        String accId = txtAccId.getText();
+    private ActionListener getActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String accId = txtAccId.getText();
 
-        if (accId.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter an account ID.");
-            return;
-        }
+                if (accId.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please enter an account ID.");
+                    return;
+                }
 
-        User user = Database.getUser(accId);
+                User user = Database.getUser(accId);
 
-        if (user == null) {
-            JOptionPane.showMessageDialog(null, "Account not found.");
-            return;
-        }
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Account not found.");
+                    return;
+                }
 
-        if (!user.isLocked()) {
-            JOptionPane.showMessageDialog(null, "Account is not locked.");
-            return;
-        }
+                if (!user.isLocked()) {
+                    JOptionPane.showMessageDialog(null, "Account is not locked.");
+                    return;
+                }
 
-        user.unlock();
-        frame.dispose();
-        JOptionPane.showMessageDialog(null, "Account unlocked.");
+                user.unlock();
+                frame.dispose();
+                JOptionPane.showMessageDialog(null, "Account unlocked.");
+            }
+        };
     }
 }
