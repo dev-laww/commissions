@@ -142,96 +142,60 @@ public class CreateAccount {
             }
         });
 
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
-
-        tfname.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
-
-        tfAddress.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
-
-        tfEmailAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
-
-        tfContactNo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
-
-        tfInitialDeposit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
-
-        tfPass.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enter();
-            }
-        });
+        enter.addActionListener(getActionListener());
+        tfname.addActionListener(getActionListener());
+        tfAddress.addActionListener(getActionListener());
+        tfEmailAdd.addActionListener(getActionListener());
+        tfContactNo.addActionListener(getActionListener());
+        tfInitialDeposit.addActionListener(getActionListener());
+        tfPass.addActionListener(getActionListener());
     }
 
-    private void enter() {
-        String initialDeposit = tfInitialDeposit.getText();
-        String name = tfname.getText();
-        String address = tfAddress.getText();
-        String email = tfEmailAdd.getText();
-        String contactNo = tfContactNo.getText();
-        String id = tfID.getText();
-        String pin = String.valueOf(tfPass.getPassword());
-        double deposit;
+    private ActionListener getActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String initialDeposit = tfInitialDeposit.getText();
+                String name = tfname.getText();
+                String address = tfAddress.getText();
+                String email = tfEmailAdd.getText();
+                String contactNo = tfContactNo.getText();
+                String id = tfID.getText();
+                String pin = String.valueOf(tfPass.getPassword());
+                double deposit;
 
-        if (name.isEmpty() || address.isEmpty() || email.isEmpty() || contactNo.isEmpty() || id.isEmpty() || pin.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill up all the fields");
-            return;
-        }
+                if (name.isEmpty() || address.isEmpty() || email.isEmpty() || contactNo.isEmpty() || id.isEmpty() || pin.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please fill up all the fields");
+                    return;
+                }
 
-        try {
-            Integer.parseInt(pin);
-            deposit = Double.parseDouble(initialDeposit);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Invalid input");
-            return;
-        }
+                try {
+                    Integer.parseInt(pin);
+                    deposit = Double.parseDouble(initialDeposit);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid input");
+                    return;
+                }
 
-        if (deposit < 5000) {
-            JOptionPane.showMessageDialog(null, "Initial deposit must be at least 5000.00");
-            return;
-        }
+                if (deposit < 5000) {
+                    JOptionPane.showMessageDialog(null, "Initial deposit must be at least 5000.00");
+                    return;
+                }
 
-        try {
-            User user = new User(id, name, email, contactNo, address, pin, deposit, "active");
-            Database.addUser(user);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error adding user: " + ex.getMessage());
-            return;
-        }
+                try {
+                    User user = new User(id, name, email, contactNo, address, pin, deposit, "active");
+                    Database.addUser(user);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error adding user: " + ex.getMessage());
+                    return;
+                }
 
-        JOptionPane.showMessageDialog(null, "Account Created!");
-        tfname.setText("");
-        new AdminMenu();
-        frame.dispose();
+                JOptionPane.showMessageDialog(null, "Account Created!");
+                tfname.setText("");
+                new AdminMenu();
+                frame.dispose();
+            }
+        };
     }
 
     public static void main(String[] args) {
