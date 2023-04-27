@@ -199,6 +199,7 @@ public class Login {
         }
 
         frame.dispose();
+        BankSystem.currentUser = user;
         new CustomerMenu();
     }
 }
