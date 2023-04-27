@@ -22,7 +22,7 @@ public class TransactionHandler {
         ps.setString(1, transaction.id);
         ResultSet rs = ps.executeQuery();
 
-        if (rs.wasNull()) {
+        if (!rs.next()) {
             ps = conn.prepareStatement(
                     "INSERT INTO transactions (user_id, amount, type) VALUES (?, ?, ?)"
             );
@@ -70,8 +70,8 @@ public class TransactionHandler {
 
         ResultSet rs = ps.executeQuery();
 
-        if (rs.wasNull()) {
-            throw new SQLException("User not found");
+        if (!rs.next()) {
+            return null;
         }
 
         transaction = new Transaction(

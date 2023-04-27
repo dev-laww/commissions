@@ -62,15 +62,12 @@ public class User {
         return this.balance;
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount) throws Exception {
         this.balance += amount;
         Transaction transaction = new Transaction(this.id, amount, "deposit");
-        TransactionHandler db = new TransactionHandler(transaction);
-        try {
-            db.save();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        new TransactionHandler(transaction).save();
+        new UserHandler(this).save();
     }
 
     public void withdraw(double amount) throws Exception {
@@ -80,8 +77,8 @@ public class User {
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "withdraw");
-        TransactionHandler db = new TransactionHandler(transaction);
-        db.save();
+        new TransactionHandler(transaction).save();
+        new UserHandler(this).save();
     }
 
     public void transfer(String accID, double amount) throws Exception {
@@ -97,11 +94,12 @@ public class User {
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "transfer");
-        TransactionHandler db = new TransactionHandler(transaction);
-        db.save();
+        new TransactionHandler(transaction).save();
+        new UserHandler(this).save();
         user.balance += amount;
-        db = new TransactionHandler(new Transaction(user.id, amount, "receive"));
-        db.save();
+        new UserHandler(user).save();
+        transaction = new Transaction(user.id, amount, "deposit");
+        new TransactionHandler(transaction).save();
     }
 
     public void lock() {
