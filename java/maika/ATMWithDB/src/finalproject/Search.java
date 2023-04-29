@@ -48,7 +48,6 @@ public class Search {
         frame.add(sp);
 
         frame.setSize(800, 480);
-        frame.setTitle("Customer Panel");
         frame.setLocationRelativeTo(null);//setLocationRelativeTo(frame);
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

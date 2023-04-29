@@ -13,8 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LockedAccounts {
     JFrame frame = new JFrame("Locked Accounts");
@@ -70,7 +68,6 @@ public class LockedAccounts {
         frame.add(sp);
 
         frame.setSize(800, 480);
-        frame.setTitle("Customer Panel");
         frame.setLocationRelativeTo(null);//setLocationRelativeTo(frame);
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

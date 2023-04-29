@@ -15,7 +15,6 @@ public class AdminMenu {
     JButton updateAcc = new JButton();
     JButton deleteAcc = new JButton();
     JButton searchAcc = new JButton();
-    JButton transact = new JButton();
     JButton withdraw = new JButton();
     JButton transfer = new JButton();
     JButton deposit = new JButton();
@@ -134,14 +133,6 @@ public class AdminMenu {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 new Withdraw(true);
-            }
-        });
-
-        transact.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new CustomerDetails();
             }
         });
 
