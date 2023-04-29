@@ -213,13 +213,13 @@ public class WithdrawFPage {
                         return;
                     }
 
-                    tryWithdraw(user, amount);
+                    Withdraw.tryWithdraw(user, amount);
                     frame.dispose();
                     new AdminMenu();
                     return;
                 }
 
-                tryWithdraw(BankSystem.currentUser, amount);
+                Withdraw.tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
                 new CustomerMenu();
             }
@@ -230,20 +230,5 @@ public class WithdrawFPage {
         this(false);
     }
 
-    private void tryWithdraw(User u, String amount) {
-        try {
-            u.withdraw(Double.parseDouble(amount));
-            JOptionPane.showMessageDialog(null, "Deposit successful.");
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Deposit failed.\n" + ex.getMessage());
-        }
-    }
 
-    public static void main(String[] args) {
-        BankSystem.currentUser = Database.users.get(0);
-        new WithdrawFPage();
-    }
 }

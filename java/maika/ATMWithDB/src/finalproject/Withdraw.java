@@ -296,10 +296,5 @@ public class Withdraw {
             JOptionPane.showMessageDialog(null, "Deposit failed.\n" + ex.getMessage());
         }
     }
-
-    public static void main(String[] args) {
-        BankSystem.currentUser = Database.users.get(1);
-        new Withdraw();
-    }
 }
 

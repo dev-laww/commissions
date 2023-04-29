@@ -63,27 +63,28 @@ public class Transfer {
         accountIDField.setForeground(Color.BLACK);
         accountIDField.setBackground(Color.WHITE);
 
-        receiverIDField.setBounds(75, 330, 400, 40);
+        receiverIDField.setBounds(75, isAdmin ? 330 : 280, 400, 40);
         receiverIDField.setFont(new Font(null, Font.BOLD, 25));
         receiverIDField.setForeground(Color.BLACK);
         receiverIDField.setBackground(Color.WHITE);
 
-        tf.setBounds(75, 370, 400, 40);
+        tf.setBounds(75, isAdmin ? 370 : 235, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
         tf.setForeground(Color.BLACK);
         tf.setBackground(Color.WHITE);
+        tf.setEditable(false);
 
-        if (!isAdmin && BankSystem.currentUser != null) {
-            accountIDField.setText(BankSystem.currentUser.id);
-            accountIDField.setEditable(false);
+        if (!isAdmin) {
+            accountIDField.setVisible(false);
+            accountID.setVisible(false);
         }
 
-        exit.setBounds(295, 410, 200, 40);
+        exit.setBounds(295, isAdmin ? 410 : 330, 200, 40);
         exit.setFont(new Font(null, Font.BOLD, 15));
         exit.setForeground(Color.BLACK);
         exit.setBackground(Color.WHITE);
 
-        enter.setBounds(60, 410, 200, 40);
+        enter.setBounds(60, isAdmin ? 410 : 330, 200, 40);
         enter.setFont(new Font(null, Font.BOLD, 15));
         enter.setForeground(Color.BLACK);
         enter.setBackground(Color.WHITE);
@@ -224,7 +225,6 @@ public class Transfer {
         });
 
         enter.addActionListener(getActionListener());
-        tf.addActionListener(getActionListener());
         accountIDField.addActionListener(getActionListener());
         receiverIDField.addActionListener(getActionListener());
     }
@@ -262,7 +262,7 @@ public class Transfer {
                     return;
                 }
 
-                if (accountID.isEmpty()) {
+                if (accountID.isEmpty() && isAdmin) {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
                     return;
                 }

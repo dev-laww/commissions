@@ -144,11 +144,6 @@ public class UpdateAccount {
         this(false);
     }
 
-    public static void main(String[] args) {
-        BankSystem.currentUser = Database.users.get(0);
-        new UpdateAccount(true);
-    }
-
     private void tryUpdate(User u) {
         String address = tfAddress.getText();
         String email = tfEmailAddress.getText();

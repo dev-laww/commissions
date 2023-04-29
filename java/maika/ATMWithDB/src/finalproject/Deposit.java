@@ -62,22 +62,23 @@ public class Deposit {
         accountIDField.setForeground(Color.BLACK);
         accountIDField.setBackground(Color.WHITE);
 
-        tf.setBounds(75, 330, 400, 40);
+        tf.setBounds(75, isAdmin ? 330 : 235, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
         tf.setForeground(Color.BLACK);
         tf.setBackground(Color.WHITE);
+        tf.setEditable(false);
 
-        if (!isAdmin && BankSystem.currentUser != null) {
-            accountIDField.setText(BankSystem.currentUser.id);
-            accountIDField.setEditable(false);
+        if (!isAdmin) {
+            accountID.setVisible(false);
+            accountIDField.setVisible(false);
         }
 
-        exit.setBounds(295, 390, 200, 40);
+        exit.setBounds(295, isAdmin ? 390 : 330, 200, 40);
         exit.setFont(new Font(null, Font.BOLD, 15));
         exit.setForeground(Color.BLACK);
         exit.setBackground(Color.WHITE);
 
-        enter.setBounds(60, 390, 200, 40);
+        enter.setBounds(60, isAdmin ? 390 : 330, 200, 40);
         enter.setFont(new Font(null, Font.BOLD, 15));
         enter.setForeground(Color.BLACK);
         enter.setBackground(Color.WHITE);
@@ -164,9 +165,8 @@ public class Deposit {
         label.add(enter);
 
         frame.add(label);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Withdraw");
+        frame.setTitle("Deposit");
         frame.setSize(1000, 500);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
@@ -226,11 +226,6 @@ public class Deposit {
         this(false);
     }
 
-    public static void main(String[] args) {
-        BankSystem.currentUser = Database.getUser("10000000");
-        new Deposit(true);
-    }
-
     private void tryDeposit(User u, String amount) {
         try {
             u.deposit(Double.parseDouble(amount));
@@ -255,7 +250,7 @@ public class Deposit {
                     return;
                 }
 
-                if (accountID.isEmpty()) {
+                if (accountID.isEmpty() && isAdmin) {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
                     return;
                 }

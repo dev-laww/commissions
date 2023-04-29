@@ -98,7 +98,7 @@ public class User {
         new UserHandler(this).save();
         user.balance += amount;
         new UserHandler(user).save();
-        transaction = new Transaction(user.id, amount, "deposit");
+        transaction = new Transaction(user.id, amount, "receive");
         new TransactionHandler(transaction).save();
     }
 
