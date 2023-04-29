@@ -31,8 +31,8 @@ public class Transaction {
     public String[] toArray() {
         return new String[] {
                 this.timestamp.toString(),
-                String.valueOf(this.amount),
-                this.type.substring(0, 1).toUpperCase() + this.type.substring(1)
+                this.type.substring(0, 1).toUpperCase() + this.type.substring(1),
+                String.valueOf(this.amount)
         };
     }
 }
