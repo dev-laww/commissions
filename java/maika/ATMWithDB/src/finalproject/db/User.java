@@ -1,5 +1,6 @@
 package finalproject.db;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -149,7 +150,26 @@ public class User {
 
     // Getters and setters
     public void updatePin(String newPin) {
+        try {
+            Integer.parseInt(newPin);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Invalid pin");
+            return;
+        }
+
+        if (pin.length() > 4) {
+            JOptionPane.showMessageDialog(null, "Invalid pin");
+            return;
+        }
+
         this.pin = newPin;
+
+        try {
+            new UserHandler(this).save();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error saving pin");
+        }
     }
 
     public String pin() {
@@ -173,22 +193,22 @@ public class User {
     }
 
     public String[] toLockedArray() {
-        return new String[] {
-            this.status.substring(0, 1).toUpperCase() + this.status.substring(1),
-            this.id,
-            this.name
+        return new String[]{
+                this.status.substring(0, 1).toUpperCase() + this.status.substring(1),
+                this.id,
+                this.name
         };
     }
 
     public String[] toArray() {
-        return new String[] {
-            this.status.substring(0, 1).toUpperCase() + this.status.substring(1),
-            this.id,
-            this.name,
-            this.address,
-            this.email,
-            this.contact,
-            String.valueOf(this.balance),
+        return new String[]{
+                this.status.substring(0, 1).toUpperCase() + this.status.substring(1),
+                this.id,
+                this.name,
+                this.address,
+                this.email,
+                this.contact,
+                String.valueOf(this.balance),
         };
     }
 }
