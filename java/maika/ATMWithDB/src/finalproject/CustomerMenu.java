@@ -17,14 +17,12 @@ public class CustomerMenu {
     JButton withdraw = new JButton();
     JButton transfer = new JButton();
     JButton balance = new JButton();
-    JButton changePin = new JButton();
     JButton exit = new JButton();
     ImageIcon image = new ImageIcon("pic6.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
     JPanel panel = new JPanel();
 
     CustomerMenu() {
-
         miniStatement.setBounds(60, 330, 380, 50);
         miniStatement.setText("VIEW MINISTATEMENT");
         miniStatement.setFont(new Font(null, Font.PLAIN, 25));
@@ -50,11 +48,6 @@ public class CustomerMenu {
         balance.setFont(new Font(null, Font.PLAIN, 25));
         balance.setFocusable(false);
 
-//        changePin.setBounds(110, 400, 380, 50);
-//        changePin.setText("CHANGE PIN");
-//        changePin.setFont(new Font(null, Font.PLAIN, 25));
-//        changePin.setFocusable(false);
-
         exit.setBounds(60, 395, 380, 50);
         exit.setText("EXIT");
         exit.setFont(new Font(null, Font.PLAIN, 25));
@@ -71,7 +64,6 @@ public class CustomerMenu {
         label.add(deposit);
         label.add(withdraw);
         label.add(transfer);
-        //label.add(changePin);
         label.add(miniStatement);
         label.add(panel);
         label.setBounds(0, 0, 500, 500);
@@ -82,12 +74,59 @@ public class CustomerMenu {
         frame.add(deposit);
         frame.add(withdraw);
         frame.add(transfer);
-        //frame.add(changePin);
         frame.add(miniStatement);
         frame.add(panel);
         frame.add(label);
         frame.setVisible(true);
 
         // action listeners
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BankSystem.currentUser = null;
+                frame.dispose();
+                new Login();
+            }
+        });
+
+        balance.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new ViewBalance();
+            }
+        });
+
+        deposit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Deposit();
+            }
+        });
+
+        withdraw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Withdraw();
+            }
+        });
+
+        transfer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Transfer();
+            }
+        });
+
+        miniStatement.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MiniStatement();
+            }
+        });
     }
 }
