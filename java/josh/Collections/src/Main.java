@@ -1,10 +1,7 @@
 import mpfileiocollectionhealthclub.Account;
 import mpfileiocollectionhealthclub.Person;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -15,30 +12,32 @@ public class Main {
             FileInputStream fileIn = new FileInputStream("src/acct.txt");
             ObjectInputStream in = new ObjectInputStream(fileIn);
 
-            Account obj = (Account) in.readObject();
+            accounts = (List<Account>) in.readObject();
 
+//            Account obj = (Account) in.readObject();
+//            accounts.add(obj);
+//            uncomment this to generate a new acct.txt file with accounts array
+//            accounts.add(obj);
+//
+//            String[][] datas = {
+//                    {"567", "R", "Q", "1"},
+//                    {"456", "V", "C", "3"},
+//                    {"123", "V", "S", "2"},
+//                    {"890", "V", "C", "3"},
+//                    {"786", "V", "C", "1"},
+//                    {"057", "V", "S", "3"},
+//                    {"945", "R", "Q", "2"},
+//                    {"655", "R", "M", "3"},
+//                    {"897", "R", "M", "0"},
+//                    {"801", "V", "S", "2"}
+//            };
+//
+//            for (String[] data : datas) {
+//                Account a = new Account(data[0], data[1].charAt(0), data[2].charAt(0), Integer.parseInt(data[3]));
+//                accounts.add(a);
+//            }
 
             fileIn = new FileInputStream("src/mapMP3.txt");
-            accounts.add(obj);
-
-            String[][] datas = {
-                    {"567", "R", "Q", "1"},
-                    {"456", "V", "C", "3"},
-                    {"123", "V", "S", "2"},
-                    {"890", "V", "C", "3"},
-                    {"786", "V", "C", "1"},
-                    {"057", "V", "S", "3"},
-                    {"945", "R", "Q", "2"},
-                    {"655", "R", "M", "3"},
-                    {"897", "R", "M", "0"},
-                    {"801", "V", "S", "2"}
-            };
-
-            for (String[] data : datas) {
-                Account a = new Account(data[0], data[1].charAt(0), data[2].charAt(0), Integer.parseInt(data[3]));
-                accounts.add(a);
-            }
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(fileIn));
             String line;
 
@@ -58,20 +57,13 @@ public class Main {
         }
 
         Scanner scanner = new Scanner(System.in);
-        int choice;
         String id;
         Account account;
         Person person;
-        String firstName;
-        String lastName;
-        int age;
-        String address;
-        String memberTypeString;
-        String paymentTermString;
-        char memberType;
-        char paymentTerm;
-        int numParkingSpaces;
 
+        String firstName, lastName, address, memberTypeString, paymentTermString;
+        char memberType, paymentTerm;
+        int choice, age, supplementaryMembers;
 
         System.out.println("Menu:");
         System.out.println("1. Add an account");
@@ -122,9 +114,19 @@ public class Main {
                 paymentTerm = paymentTermString.toUpperCase().charAt(0);
 
                 System.out.print("Number of Parking Spaces: ");
-                numParkingSpaces = scanner.nextInt();
+                supplementaryMembers = scanner.nextInt();
 
-                Account acc = new Account(id, memberType, paymentTerm, numParkingSpaces);
+                if (supplementaryMembers < 0) {
+                    System.out.println("Invalid number of supplementary members.");
+                    return;
+                }
+
+                if (supplementaryMembers > 3 && memberType == 'R' || supplementaryMembers > 5 && memberType == 'V') {
+                    System.out.println("Invalid number of supplementary members.");
+                    return;
+                }
+
+                Account acc = new Account(id, memberType, paymentTerm, supplementaryMembers);
                 Person p = new Person(firstName, lastName, String.valueOf(age), address);
                 accounts.add(acc);
                 personMap.put(id, p);
@@ -235,9 +237,9 @@ public class Main {
                         break;
                     case 7:
                         System.out.print("Enter new number of parking spaces: ");
-                        numParkingSpaces = scanner.nextInt();
+                        supplementaryMembers = scanner.nextInt();
                         scanner.nextLine();
-                        account.setSupMember(numParkingSpaces);
+                        account.setSupMember(supplementaryMembers);
                         break;
                     case 8:
                         break;
@@ -287,15 +289,81 @@ public class Main {
                 }
                 break;
             case 6:
+                double totalCash = 0.0;
+                double totalMonthly = 0.0;
+                double totalQuarterly = 0.0;
+                double totalSemiAnnually = 0.0;
 
+                for (Account acc1 : accounts) {
+                    double membershipFee = acc1.calculateMembershipFee();
+
+                    switch(acc1.payTerm()) {
+                        case 'C':
+                            totalCash += membershipFee;
+                            break;
+                        case 'M':
+                            totalMonthly += membershipFee;
+                            break;
+                        case 'Q':
+                            totalQuarterly += membershipFee;
+                            break;
+                        case 'S':
+                            totalSemiAnnually += membershipFee;
+                            break;
+                        default:
+                            System.out.println("Invalid payment term.");
+                            return;
+                    }
+                }
+
+                System.out.println("Total cash payments: " + totalCash);
+                System.out.println("Total monthly payments: " + totalMonthly);
+                System.out.println("Total quarterly payments: " + totalQuarterly);
+                System.out.println("Total semi-annually payments: " + totalSemiAnnually);
                 break;
             case 7:
+                accounts.sort(new Comparator<Account>() {
+                    @Override
+                    public int compare(Account a1, Account a2) {
+                        return a1.id().compareTo(a2.id());
+                    }
+                });
+
+                System.out.println("ID\tType\tTerm\tSup Members\tMF");
+                for (Account a : accounts) {
+                    System.out.printf("%s\t%c\t%c\t%d\t%.2f\n", a.id(), a.memberType(), a.payTerm(), a.supMember(), a.calculateMembershipFee());
+                }
                 break;
             case 8:
+                System.out.println("Exiting...");
 
+                try {
+                    FileOutputStream fos = new FileOutputStream("src/acct.txt");
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+                    oos.writeObject(accounts);
+
+                    fos.close();
+                    oos.close();
+
+                    FileWriter fw = new FileWriter("src/mapMP3.txt");
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                    for (String key : personMap.keySet()) {
+                        bw.write(key + " " + personMap.get(key).toString());
+                        bw.newLine();
+                    }
+
+                    bw.close();
+                    fw.close();
+                }
+                catch (Exception e) {
+                    System.out.println("Error writing to file.");
+                }
                 break;
             default:
                 System.out.println("Invalid choice");
         }
     }
+
 }
