@@ -4,13 +4,14 @@
  */
 package finalproject;
 
+import finalproject.db.Database;
+import finalproject.db.User;
+
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 /**
  *
@@ -33,11 +34,16 @@ public class WithdrawFPage {
     JButton fiveK = new JButton("5000");
     JButton tenK = new JButton("10,000");
     JButton amount = new JButton("ANOTHER AMOUNT");
-    
     ImageIcon image = new ImageIcon("pic7.jpeg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
+    JLabel accountID = new JLabel("Account ID:");
+    JTextField accountIDField = new JTextField();
+    JButton[] buttons = {twenty, fifty, oneH, twoH, fiveH, oneK, fiveK, tenK};
+    private boolean isAdmin;
 
-    WithdrawFPage() {
+    WithdrawFPage(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+
         label1.setBounds(110, 60, 380, 100);
         label1.setText("WITHDRAW");
         label1.setFont(new Font(null, Font.BOLD, 60));
@@ -48,17 +54,33 @@ public class WithdrawFPage {
         label2.setFont(new Font(null, Font.BOLD, 20));
         label2.setForeground(Color.WHITE);
 
-        tf.setBounds(75, 235, 400, 40);
+        accountID.setBounds(75, 235, 400, 40);
+        accountID.setFont(new Font(null, Font.BOLD, 25));
+        accountID.setForeground(Color.BLACK);
+        accountID.setBackground(Color.WHITE);
+
+        accountIDField.setBounds(75, 275, 400, 40);
+        accountIDField.setFont(new Font(null, Font.BOLD, 25));
+        accountIDField.setForeground(Color.BLACK);
+        accountIDField.setBackground(Color.WHITE);
+
+        if (!isAdmin) {
+            accountID.setVisible(false);
+            accountIDField.setVisible(false);
+        }
+
+        tf.setBounds(75, isAdmin ? 330 : 235, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
+        tf.setEditable(false);
         tf.setForeground(Color.BLACK);
         tf.setBackground(Color.WHITE);
 
-        exit.setBounds(295, 330, 200, 40);
+        exit.setBounds(295, isAdmin ? 390 : 330, 200, 40);
         exit.setFont(new Font(null, Font.BOLD, 15));
         exit.setForeground(Color.BLACK);
         exit.setBackground(Color.WHITE);
 
-        enter.setBounds(60, 330, 200, 40);
+        enter.setBounds(60, isAdmin ? 390 : 330, 200, 40);
         enter.setFont(new Font(null, Font.BOLD, 15));
         enter.setForeground(Color.BLACK);
         enter.setBackground(Color.WHITE);
@@ -108,7 +130,10 @@ public class WithdrawFPage {
         amount.setForeground(Color.BLACK);
         amount.setBackground(Color.WHITE);
         
-        label.setBounds(0, 0,1000, 500); 
+        label.setBounds(0, 0,1000, 500);
+        label.add(accountID);
+        label.add(accountIDField);
+        label.add(accountIDField);
         label.add(oneK);
         label.add(twoH);
         label.add(twenty);
@@ -125,7 +150,6 @@ public class WithdrawFPage {
         label.add(enter);
         
         frame.add(label);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Withdraw");
         frame.setSize(1000, 500);
@@ -133,6 +157,93 @@ public class WithdrawFPage {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.getContentPane().setBackground(Color.WHITE);
-        
+
+        // action listeners
+        amount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Withdraw();
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+
+                if (!isAdmin) {
+                    new CustomerMenu();
+                    return;
+                }
+                new AdminMenu();
+            }
+        });
+
+        for (JButton button: buttons) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    tf.setText(button.getText());
+                }
+            });
+        }
+
+        enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String amount = tf.getText();
+                String accountID = accountIDField.getText();
+
+                if (amount.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please enter amount");
+                    return;
+                }
+
+                if (accountID.isEmpty() && isAdmin) {
+                    JOptionPane.showMessageDialog(null, "Please enter an account ID.");
+                    return;
+                }
+
+                if (isAdmin) {
+                    User user = Database.getUser(accountID);
+
+                    if (user == null) {
+                        JOptionPane.showMessageDialog(null, "Account does not exist.");
+                        return;
+                    }
+
+                    tryWithdraw(user, amount);
+                    frame.dispose();
+                    new AdminMenu();
+                    return;
+                }
+
+                tryWithdraw(BankSystem.currentUser, amount);
+                frame.dispose();
+                new CustomerMenu();
+            }
+        });
+    }
+
+    WithdrawFPage() {
+        this(false);
+    }
+
+    private void tryWithdraw(User u, String amount) {
+        try {
+            u.withdraw(Double.parseDouble(amount));
+            JOptionPane.showMessageDialog(null, "Deposit successful.");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Deposit failed.\n" + ex.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        BankSystem.currentUser = Database.users.get(0);
+        new WithdrawFPage();
     }
 }
