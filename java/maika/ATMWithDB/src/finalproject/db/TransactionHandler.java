@@ -2,6 +2,7 @@ package finalproject.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class TransactionHandler {
     private final Transaction transaction;
@@ -78,7 +79,8 @@ public class TransactionHandler {
                 rs.getString("id"),
                 rs.getString("user_id"),
                 rs.getDouble("amount"),
-                rs.getString("type")
+                rs.getString("type"),
+                rs.getTimestamp("timestamp")
         );
 
         conn.close();
@@ -92,12 +94,11 @@ public class TransactionHandler {
             throw new SQLException("Connection failed");
         }
 
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE user_id = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE user_id = ? ORDER BY STR_TO_DATE(datetime,'%m/%d/%Y%h:%i:%s %p')");
         ps.setString(1, userID);
         ResultSet rs = ps.executeQuery();
-        int rows = rs.getFetchSize();
 
-        if (rows == 0) {
+        if (!rs.next()) {
             return null;
         }
 
@@ -108,7 +109,8 @@ public class TransactionHandler {
                     rs.getString("id"),
                     rs.getString("user_id"),
                     rs.getDouble("amount"),
-                    rs.getString("type")
+                    rs.getString("type"),
+                    rs.getTimestamp("datetime")
             );
 
             transactions.add(transaction);
@@ -136,7 +138,8 @@ public class TransactionHandler {
                     rs.getString("id"),
                     rs.getString("user_id"),
                     rs.getDouble("amount"),
-                    rs.getString("type")
+                    rs.getString("type"),
+                    rs.getTimestamp("datetime")
             );
 
             transactions.add(transaction);

@@ -35,18 +35,6 @@ public class Database {
         }
     }
 
-    public static void deleteTransaction(String id) throws SQLException {
-        TransactionHandler model = new TransactionHandler(TransactionHandler.getTransaction(id));
-        model.delete();
-
-        for (Transaction it : transactions) {
-            if (id.equals(it.id)) {
-                transactions.remove(it);
-                break;
-            }
-        }
-    }
-
     public static void addUser(User user) throws SQLException {
         UserHandler model = new UserHandler(user);
         model.save();
@@ -66,18 +54,6 @@ public class Database {
         for (int i = 0; i < users.size(); i++) {
             if (user.id.equals(users.get(i).id)) {
                 users.set(i, user);
-                break;
-            }
-        }
-    }
-
-    public static void updateTransaction(Transaction transaction) throws SQLException {
-        TransactionHandler model = new TransactionHandler(transaction);
-        model.save();
-
-        for (int i = 0; i < transactions.size(); i++) {
-            if (transaction.id.equals(transactions.get(i).id)) {
-                transactions.set(i, transaction);
                 break;
             }
         }
@@ -111,6 +87,15 @@ public class Database {
     public static Transaction getTransaction(String id) {
         try {
             return TransactionHandler.getTransaction(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Transaction> getUserTransactions(String userID) {
+        try {
+            return TransactionHandler.getUserTransactions(userID);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

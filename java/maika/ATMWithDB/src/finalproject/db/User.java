@@ -59,16 +59,12 @@ public class User {
         this.status = "Active";
     }
 
-    public double checkBalance() {
-        return this.balance;
-    }
-
     public void deposit(double amount) throws Exception {
         this.balance += amount;
         Transaction transaction = new Transaction(this.id, amount, "deposit");
 
-        new TransactionHandler(transaction).save();
-        new UserHandler(this).save();
+        Database.addTransaction(transaction);
+        Database.updateUser(this);
     }
 
     public void withdraw(double amount) throws Exception {
@@ -78,8 +74,8 @@ public class User {
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "withdraw");
-        new TransactionHandler(transaction).save();
-        new UserHandler(this).save();
+        Database.addTransaction(transaction);
+        Database.updateUser(this);
     }
 
     public void transfer(String accID, double amount) throws Exception {
@@ -95,12 +91,12 @@ public class User {
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "transfer");
-        new TransactionHandler(transaction).save();
-        new UserHandler(this).save();
+        Database.updateUser(this);
+        Database.addTransaction(transaction);
         user.balance += amount;
-        new UserHandler(user).save();
         transaction = new Transaction(user.id, amount, "receive");
-        new TransactionHandler(transaction).save();
+        Database.updateUser(user);
+        Database.addTransaction(transaction);
     }
 
     public void lock() {
@@ -165,10 +161,9 @@ public class User {
         this.pin = newPin;
 
         try {
-            new UserHandler(this).save();
+            Database.updateUser(this);
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error saving pin");
         }
     }
 
