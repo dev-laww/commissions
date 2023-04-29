@@ -37,7 +37,7 @@ public class Deposit {
     JLabel accountID = new JLabel("Account ID:");
     JTextField accountIDField = new JTextField();
     private final boolean isAdmin;
-    JButton buttons[] = {zero, one, two, three, four, five, six, seven, eight, nine};
+    JButton[] buttons = {zero, one, two, three, four, five, six, seven, eight, nine};
 
     public Deposit(boolean isAdmin) {
         this.isAdmin = isAdmin;
