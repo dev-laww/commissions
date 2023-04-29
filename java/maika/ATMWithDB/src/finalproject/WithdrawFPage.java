@@ -163,7 +163,7 @@ public class WithdrawFPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Withdraw();
+                new Withdraw(isAdmin);
             }
         });
 
