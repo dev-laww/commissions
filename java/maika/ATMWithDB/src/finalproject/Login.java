@@ -189,7 +189,16 @@ public class Login {
         if (user.pin().equals("0000")) {
             JOptionPane.showMessageDialog(null, "Please change your pin code!");
             frame.dispose();
-            String newPin = JOptionPane.showInputDialog(null, "Enter new pin code: ");
+            JPasswordField passwordField = new JPasswordField();
+            int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
+
+            if (!(result == JOptionPane.OK_OPTION)) {
+                JOptionPane.showMessageDialog(null, "Cancelled");
+                return;
+            }
+
+            String newPin = String.valueOf(passwordField.getPassword());
+
             user.updatePin(newPin);
 
             frame.dispose();

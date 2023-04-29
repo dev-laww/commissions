@@ -107,6 +107,21 @@ public class LockedAccounts {
                     return;
                 }
 
+                JPasswordField passwordField = new JPasswordField();
+                int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
+
+                if (!(result == JOptionPane.OK_OPTION)) {
+                    JOptionPane.showMessageDialog(null, "Cancelled");
+                    return;
+                }
+
+                String adminPass = String.valueOf(passwordField.getPassword());
+
+                if (!Database.admin.get("admin").equals(adminPass)) {
+                    JOptionPane.showMessageDialog(null, "Wrong password");
+                    return;
+                }
+
                 user.unlock();
                 frame.dispose();
                 JOptionPane.showMessageDialog(null, "Account unlocked.");
