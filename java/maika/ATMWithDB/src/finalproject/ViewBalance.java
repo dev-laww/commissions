@@ -22,7 +22,7 @@ public class ViewBalance {
     ImageIcon image = new ImageIcon("pic7.jpeg");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
-    ViewBalance(User user) {
+    ViewBalance() {
         label1.setBounds(155, 50, 550, 40);
         label1.setText("VIEW BALANCE");
         label1.setFont(new Font(null, Font.BOLD, 40));
@@ -34,7 +34,7 @@ public class ViewBalance {
         label2.setForeground(Color.WHITE);
 
         balance.setBounds(350, 120, 225, 40);
-        balance.setText(String.format("%.2f", user.balance));
+        balance.setText(String.format("%.2f", BankSystem.currentUser.balance));
         balance.setFont(new Font(null, Font.BOLD, 25));
         balance.setForeground(Color.WHITE);
         
