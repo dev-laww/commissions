@@ -176,6 +176,18 @@ public class Main {
         System.out.print("Enter ID number: ");
         id = scanner.nextLine();
 
+        if (personMap.containsKey(id)) {
+            System.out.println("ID already exists.");
+            addAccount(accounts, personMap);
+            return;
+        }
+
+        if (id.length() != 3) {
+            System.out.println("ID must be 3 digits.");
+            addAccount(accounts, personMap);
+            return;
+        }
+
         System.out.print("Enter first name: ");
         firstName = scanner.nextLine();
 
