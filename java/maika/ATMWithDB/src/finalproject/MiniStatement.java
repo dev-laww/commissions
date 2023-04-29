@@ -5,67 +5,84 @@
 
 package finalproject;
 
-import java.awt.Color;
+import finalproject.db.Database;
+import finalproject.db.Transaction;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class MiniStatement {
-    JFrame frame = new JFrame();
-    JTextArea textArea = new JTextArea();
-    ImageIcon image =  new ImageIcon("pic4.jpg");
-    JLabel label = new JLabel("",image,JLabel.CENTER);
-    JButton backButton = new JButton("BACK");
-    JLabel label1 = new JLabel("VIEW MINISTATEMENT");
+    JFrame frame = new JFrame("Locked Accounts");
+    static String[] col = {"Date and Time", "Type", "Amount"};
+    static DefaultTableModel model = new DefaultTableModel(null, col);
+    JLabel header1 = new JLabel("Mini Statement");
+    JLabel accId = new JLabel();
+    JLabel balance = new JLabel();
+    JLabel header2 = new JLabel("Transactions");
+    JButton btnBack = new JButton("Back");
+    JTable jt = new JTable(null, col);
+    JScrollPane sp = new JScrollPane(jt);
     
     MiniStatement(){
-        Font font = new Font("JetBrains Mono NL", Font.PLAIN, 14);
+        ArrayList<Transaction> userTransactions = Database.getUserTransactions(BankSystem.currentUser.id);
 
-        // Account Number: XXXXXXXX9123
-        // Balance: $100.00
-        // Transaction History:
-        // --------------------------------------------------
-        // 1. Withdrawal: -$100.00
-        // 2. Deposit: +$100.00
-        // 3. Withdrawal: -$100.00
-        // 4. Transfer to 32132465841323: -$100.00
+        if (userTransactions == null) {
+            JOptionPane.showMessageDialog(null, "No transactions found.");
+            frame.dispose();
+            new CustomerMenu();
+            return;
+        }
 
-//        String sb = String.format("%-25s%25s%n", "Account Number:", "XXXXXXXX" + customer.getAccountID().substring(7, 11)) +
-//                String.format("%-25s%25s%n%n", "Balance:", customer.getBalance()) +
-//                "Transaction History:\n" +
-//                "--------------------------------------------------\n" +
-//                customer.getTransactions(false);
-        textArea.setFont(font);
-        textArea.setEditable(false);
-        textArea.setBackground(Color.LIGHT_GRAY);
-        textArea.setBounds(20, 80, 560, 470);
-//        textArea.setText(sb);
-        
-        backButton.setBounds(30,510,70,30);
-        backButton.setFocusable(false);
-        
-        label1.setBounds(200,20,500,40);
-        label1.setForeground(Color.WHITE);
-        label1.setFont(new Font(null,Font.BOLD,19));
-        
-        frame.add(label1);
-        frame.add(backButton);
-        frame.add(textArea);
-        frame.add(label);
-        frame.setSize(600,600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (userTransactions.size() == 0) {
+            JOptionPane.showMessageDialog(null, "No transactions found.");
+            frame.dispose();
+            new CustomerMenu();
+            return;
+        }
+
+        String[][] tableData = new String[userTransactions.size()][3];
+
+        for (Transaction t : userTransactions) {
+            tableData[userTransactions.indexOf(t)] = t.toArray();
+        }
+
+        model.setDataVector(tableData, col);
+
+        header1.setBounds(348, 10, 390, 50);
+        header1.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        frame.add(header1);
+
+        accId.setBounds(100, 100, 600, 40);
+        accId.setText("Account ID: " + BankSystem.currentUser.id);
+        frame.add(accId);
+
+        balance.setBounds(100, 120, 600, 40);
+        balance.setText("Balance: " + String.format("%.2f", BankSystem.currentUser.balance));
+        frame.add(balance);
+
+        header2.setBounds(348, 40, 390, 50);
+        header2.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        frame.add(header2);
+
+        btnBack.setBounds(590, 380, 110, 20);
+        frame.add(btnBack);
+
+        sp.setBounds(100, 150, 600, 200);
+        jt.setModel(model);
+        frame.add(sp);
+
+        frame.setSize(800, 480);
+        frame.setLocationRelativeTo(null);//setLocationRelativeTo(frame);
         frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        
-        label.add(label1);
-        label.add(textArea);
-        label.setBounds(0,0,600,600);
-        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
         // action listeners
-        backButton.addActionListener(new ActionListener(){
+        btnBack.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
