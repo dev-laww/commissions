@@ -33,14 +33,14 @@ public class MiniStatement {
         if (userTransactions == null) {
             JOptionPane.showMessageDialog(null, "No transactions found.");
             frame.dispose();
-            new CustomerMenu();
+            new UserMenu();
             return;
         }
 
         if (userTransactions.size() == 0) {
             JOptionPane.showMessageDialog(null, "No transactions found.");
             frame.dispose();
-            new CustomerMenu();
+            new UserMenu();
             return;
         }
 
@@ -86,7 +86,7 @@ public class MiniStatement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new CustomerMenu();
+                new UserMenu();
             }
         });
     }

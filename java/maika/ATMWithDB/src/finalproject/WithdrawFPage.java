@@ -173,7 +173,7 @@ public class WithdrawFPage {
                 frame.dispose();
 
                 if (!isAdmin) {
-                    new CustomerMenu();
+                    new UserMenu();
                     return;
                 }
                 new AdminMenu();
@@ -221,7 +221,7 @@ public class WithdrawFPage {
 
                 Withdraw.tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new CustomerMenu();
+                new UserMenu();
             }
         });
     }

@@ -180,7 +180,7 @@ public class Deposit {
                 frame.dispose();
 
                 if (!isAdmin) {
-                    new CustomerMenu();
+                    new UserMenu();
                     return;
                 }
                 new AdminMenu();
@@ -271,7 +271,7 @@ public class Deposit {
 
                 tryDeposit(BankSystem.currentUser, amount);
                 frame.dispose();
-                new CustomerMenu();
+                new UserMenu();
             }
         };
     }

@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CustomerMenu {
+public class UserMenu {
     JFrame frame = new JFrame();
     JButton miniStatement = new JButton();
     JButton deposit = new JButton();
@@ -22,7 +22,7 @@ public class CustomerMenu {
     JLabel label = new JLabel("", image, JLabel.CENTER);
     JPanel panel = new JPanel();
 
-    CustomerMenu() {
+    UserMenu() {
         miniStatement.setBounds(60, 330, 380, 50);
         miniStatement.setText("VIEW MINISTATEMENT");
         miniStatement.setFont(new Font(null, Font.PLAIN, 25));

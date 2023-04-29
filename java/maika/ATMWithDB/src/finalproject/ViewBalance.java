@@ -5,8 +5,6 @@
 
 package finalproject;
 
-import finalproject.db.User;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +59,7 @@ public class ViewBalance {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new CustomerMenu();
+                new UserMenu();
             }
         });
     }

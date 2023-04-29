@@ -9,7 +9,6 @@ import finalproject.db.Database;
 import finalproject.db.User;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -187,7 +186,7 @@ public class Transfer {
                 frame.dispose();
 
                 if (!isAdmin) {
-                    new CustomerMenu();
+                    new UserMenu();
                     return;
                 }
                 new AdminMenu();
@@ -295,7 +294,7 @@ public class Transfer {
                 tryTransfer(BankSystem.currentUser, receiverID, Double.parseDouble(amount));
                 JOptionPane.showMessageDialog(null, "Transfer successful.");
                 frame.dispose();
-                new CustomerMenu();
+                new UserMenu();
             }
         };
     }

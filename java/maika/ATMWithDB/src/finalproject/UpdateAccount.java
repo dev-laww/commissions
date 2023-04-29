@@ -124,7 +124,7 @@ public class UpdateAccount {
                 frame.dispose();
 
                 if (!isAdmin) {
-                    new CustomerMenu();
+                    new UserMenu();
                     return;
                 }
 
@@ -166,7 +166,7 @@ public class UpdateAccount {
             frame.dispose();
 
             if (!isAdmin) {
-                new CustomerMenu();
+                new UserMenu();
                 return;
             }
 
