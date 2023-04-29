@@ -30,10 +30,6 @@ public class AdminMenu {
         createAcc.setText("CREATE ACCOUNT");
         createAcc.setFocusable(false);
 
-        transact.setBounds(130, 130, 250, 50);
-        transact.setText("CUSTOMER DETAILS");
-        transact.setFocusable(false);
-
         transfer.setBounds(430, 210, 250, 50);
         transfer.setText("TRANSFER");
         transfer.setFocusable(false);
@@ -68,7 +64,6 @@ public class AdminMenu {
 
         label.setBounds(0, 0, 800, 500);
         label.add(createAcc);
-        label.add(transact);
         label.add(updateAcc);
         label.add(deleteAcc);
         label.add(searchAcc);
@@ -91,14 +86,6 @@ public class AdminMenu {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 new CreateAccount();
-            }
-        });
-
-        transact.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new CustomerDetails();
             }
         });
 
@@ -130,7 +117,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Transfer();
+                new Transfer(true);
             }
         });
 
@@ -146,7 +133,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Withdraw();
+                new Withdraw(true);
             }
         });
 
