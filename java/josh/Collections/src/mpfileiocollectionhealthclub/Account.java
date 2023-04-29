@@ -23,6 +23,18 @@ public class Account implements Serializable {
         return ID;
     }
 
+    public char memberType() {
+        return memberType;
+    }
+
+    public char payTerm() {
+        return payTerm;
+    }
+
+    public int supMember() {
+        return supMember;
+    }
+
     public void setMemberType(char memberType) {
         this.memberType = memberType;
     }
@@ -33,6 +45,72 @@ public class Account implements Serializable {
 
     public void setSupMember(int supMember) {
         this.supMember = supMember;
+    }
+
+    public double calculateMembershipFee() {
+        double miscFee = 0;
+        double basicFee = 0;
+        double supMemberFee = 0;
+        double ratePerSupMember = memberType == 'R' ? 900 : 1000;
+
+        switch (payTerm) {
+            case 'C':
+                basicFee = (0.85 * 12 * getMonthlyBasicFee());
+                break;
+            case 'M':
+                basicFee = getMonthlyBasicFee();
+                miscFee = 1000;
+                break;
+            case 'Q':
+                basicFee = 1200;
+                miscFee = 3890;
+                break;
+            case 'S':
+                basicFee = 1500;
+                miscFee = 4865;
+                break;
+        }
+
+        if (supMember > 0) {
+            supMemberFee = supMember * ratePerSupMember * getAdjustedMiscFee();
+        }
+
+        return miscFee + basicFee + supMemberFee;
+    }
+
+    private double getAdjustedMiscFee() {
+        double adjustedMiscFee = 1;
+
+        switch (payTerm) {
+            case 'C':
+                adjustedMiscFee = 0;
+                break;
+            case 'M':
+                break;
+            case 'Q':
+                adjustedMiscFee = 3.89;
+                break;
+            case 'S':
+                adjustedMiscFee = 4.865;
+                break;
+        }
+
+        return adjustedMiscFee;
+    }
+
+    private double getMonthlyBasicFee() {
+        double monthlyBasicFee = 0;
+
+        switch (memberType) {
+            case 'R':
+                monthlyBasicFee = 1200;
+                break;
+            case 'V':
+                monthlyBasicFee = 1500;
+                break;
+        }
+
+        return monthlyBasicFee;
     }
 
     @Override
