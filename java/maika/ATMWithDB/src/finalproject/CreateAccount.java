@@ -13,8 +13,6 @@ import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Comparator;
 
 public class CreateAccount {
     static JTextField tfname = new JTextField();
