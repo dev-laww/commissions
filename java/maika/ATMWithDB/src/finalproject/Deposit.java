@@ -254,6 +254,11 @@ public class Deposit {
                     return;
                 }
 
+                if (accountID.length() != 8 && isAdmin) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid account ID.");
+                    return;
+                }
+
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
 

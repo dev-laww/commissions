@@ -91,7 +91,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new UpdateAccount();
+                new UpdateAccount(true);
             }
         });
 
@@ -131,7 +131,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Withdraw(true);
+                new WithdrawFPage(true);
             }
         });
 

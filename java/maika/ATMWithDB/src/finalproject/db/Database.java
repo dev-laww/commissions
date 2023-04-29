@@ -41,14 +41,15 @@ public class Database {
 
     public static void addUser(User user) throws SQLException {
         UserHandler model = new UserHandler(user);
+        user.id = getLastUserID();
         model.save();
-        users.add(user);
+        users = UserHandler.getAll();
     }
 
     public static void addTransaction(Transaction transaction) throws SQLException {
         TransactionHandler model = new TransactionHandler(transaction);
         model.save();
-        transactions.add(transaction);
+        transactions = TransactionHandler.getAll();
     }
 
     public static void updateUser(User user) throws SQLException {
@@ -114,14 +115,16 @@ public class Database {
         }
 
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT `AUTO_INCREMENT` AS id FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'atm' AND TABLE_NAME = 'users'");
+            PreparedStatement ps = conn.prepareStatement("SELECT id from users ORDER BY id DESC LIMIT 1");
             ResultSet rs = ps.executeQuery();
 
             if (!rs.next()) {
-                return null;
+                return "10000000";
             }
 
-            return rs.getString("id");
+            int id = rs.getInt("id");
+
+            return String.valueOf(id + 1);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

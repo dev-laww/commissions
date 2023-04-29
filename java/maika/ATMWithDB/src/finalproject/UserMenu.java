@@ -108,7 +108,7 @@ public class UserMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Withdraw();
+                new WithdrawFPage();
             }
         });
 

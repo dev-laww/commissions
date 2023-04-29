@@ -56,11 +56,11 @@ public class UpdateAccount {
         tfID.setBounds(150, 80, 300, 30);
         tfID.setFont(new Font(null, Font.BOLD, 15));
         tfID.setEditable(isAdmin);
-        tfID.setText(isAdmin ? "" : BankSystem.currentUser.id);
+        tfID.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.id);
         tfID.setForeground(Color.WHITE);
 
         accountNameLabel.setBounds(30, 120, 300, 30);
-        accountNameLabel.setText(isAdmin ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name);
+        accountNameLabel.setText(BankSystem.currentUser == null ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name);
         accountNameLabel.setFont(new Font(null, Font.BOLD, 15));
         accountNameLabel.setForeground(Color.WHITE);
 
@@ -71,7 +71,7 @@ public class UpdateAccount {
 
         tfAddress.setBounds(150, 153, 300, 30);
         tfAddress.setFont(new Font(null, Font.BOLD, 15));
-        tfAddress.setText(isAdmin ? "" : BankSystem.currentUser.address());
+        tfAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.address());
 
         emailAddress.setText("Email:");
         emailAddress.setBounds(30, 186, 200, 30);
@@ -80,7 +80,7 @@ public class UpdateAccount {
 
         tfEmailAddress.setBounds(150, 185, 300, 30);
         tfEmailAddress.setFont(new Font(null, Font.BOLD, 15));
-        tfEmailAddress.setText(isAdmin ? "" : BankSystem.currentUser.email());
+        tfEmailAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.email());
 
         phone.setText("Phone:");
         phone.setBounds(30, 217, 100, 30);
@@ -89,7 +89,7 @@ public class UpdateAccount {
 
         tfPhone.setBounds(150, 215, 300, 30);
         tfPhone.setFont(new Font(null, Font.BOLD, 15));
-        tfPhone.setText(isAdmin ? "" : BankSystem.currentUser.contact());
+        tfPhone.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.contact());
 
         label.add(label1);
         label.add(accountIDLabel);

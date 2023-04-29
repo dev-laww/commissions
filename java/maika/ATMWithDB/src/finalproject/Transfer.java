@@ -265,6 +265,11 @@ public class Transfer {
                     return;
                 }
 
+                if (accountID.length() != 8 && isAdmin) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid account ID.");
+                    return;
+                }
+
                 if (receiverID.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please enter a receiver ID.");
                     return;

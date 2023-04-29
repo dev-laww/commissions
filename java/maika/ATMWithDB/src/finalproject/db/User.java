@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class User {
     public final String name;
-    public final String id;
+    public String id;
     private final String email;
     private final String contact;
     private final String address;
@@ -49,7 +49,37 @@ public class User {
         }
     }
 
-    User() {
+    public User(
+            String name,
+            String email,
+            String contact,
+            String address,
+            String pin,
+            double balance,
+            String status
+    ) {
+        this.name = name;
+        this.email = email;
+        this.contact = contact;
+        this.address = address;
+        this.pin = pin;
+        this.balance = balance;
+
+        String[] stats = {
+                "active",
+                "closed",
+                "locked"
+        };
+
+        for (String stat : stats) {
+            if (stat.equals(status)) {
+                this.status = status;
+                break;
+            }
+        }
+    }
+
+    public User() {
         this.id = "0";
         this.name = "Default User";
         this.email = "email@mail.com";

@@ -159,6 +159,8 @@ public class Withdraw {
         label.add(label1);
         label.add(label2);
         label.add(tf);
+        label.add(accountID);
+        label.add(accountIDField);
         label.add(exit);
         label.add(enter);
 
@@ -260,6 +262,11 @@ public class Withdraw {
 
                 if (accountID.isEmpty() && isAdmin) {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
+                    return;
+                }
+
+                if (accountID.length() != 8 && isAdmin) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid account ID.");
                     return;
                 }
 

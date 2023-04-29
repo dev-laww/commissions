@@ -24,11 +24,11 @@ public class CreateAccount {
     JTextField tfEmailAdd = new JTextField();
     JLabel contactNo = new JLabel("CONTACT NO:");
     JTextField tfContactNo = new JTextField();
-    JLabel accountID = new JLabel("ACCOUNT ID:");
+//    JLabel accountID = new JLabel("ACCOUNT ID:");
     JLabel initialDeposit = new JLabel("INITIAL DEPOSIT:");
     JTextField tfInitialDeposit = new JTextField();
     JTextField tfAddress = new JTextField();
-    JTextField tfID = new JTextField();
+//    JTextField tfID = new JTextField();
     JLabel pin = new JLabel("PINCODE:");
     JButton back = new JButton("BACK");
     JButton enter = new JButton("ENTER");
@@ -36,7 +36,7 @@ public class CreateAccount {
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
     CreateAccount() {
-        label.add(accountID);
+//        label.add(accountID);
         label.add(createAccLabel);
         label.add(name);
         label.add(tfname);
@@ -46,7 +46,7 @@ public class CreateAccount {
         label.add(tfEmailAdd);
         label.add(contactNo);
         label.add(tfContactNo);
-        label.add(tfID);
+//        label.add(tfID);
         label.add(initialDeposit);
         label.add(tfInitialDeposit);
         label.add(pin);
@@ -68,14 +68,14 @@ public class CreateAccount {
         createAccLabel.setBounds(110, 18, 400, 50);
         createAccLabel.setForeground(Color.WHITE);
 
-        accountID.setFont(new Font(null, Font.PLAIN, 20));
-        accountID.setBounds(15, 95, 300, 40);
-        accountID.setForeground(Color.WHITE);
+//        accountID.setFont(new Font(null, Font.PLAIN, 20));
+//        accountID.setBounds(15, 95, 300, 40);
+//        accountID.setForeground(Color.WHITE);
 
-        tfID.setBounds(170, 97, 380, 33);
-        tfID.setFont(new Font(null, Font.BOLD, 15));
-        tfID.setText(Database.getLastUserID());
-        tfID.setEditable(false);
+//        tfID.setBounds(170, 97, 380, 33);
+//        tfID.setFont(new Font(null, Font.BOLD, 15));
+//        tfID.setText(Database.getLastUserID());
+//        tfID.setEditable(false);
 
         name.setFont(new Font(null, Font.PLAIN, 20));
         name.setBounds(15, 145, 300, 40);
@@ -157,11 +157,12 @@ public class CreateAccount {
                 String address = tfAddress.getText();
                 String email = tfEmailAdd.getText();
                 String contactNo = tfContactNo.getText();
-                String id = tfID.getText();
+//                String id = tfID.getText();
                 String pin = String.valueOf(tfPass.getPassword());
                 double deposit;
 
-                if (name.isEmpty() || address.isEmpty() || email.isEmpty() || contactNo.isEmpty() || id.isEmpty() || pin.isEmpty()) {
+//                if (name.isEmpty() || address.isEmpty() || email.isEmpty() || contactNo.isEmpty() || id.isEmpty() || pin.isEmpty()) {
+                if (name.isEmpty() || address.isEmpty() || email.isEmpty() || contactNo.isEmpty() || pin.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill up all the fields");
                     return;
                 }
@@ -180,7 +181,7 @@ public class CreateAccount {
                 }
 
                 try {
-                    User user = new User(id, name, email, contactNo, address, pin, deposit, "active");
+                    User user = new User(name, email, contactNo, address, pin, deposit, "active");
                     Database.addUser(user);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error adding user: " + ex.getMessage());
