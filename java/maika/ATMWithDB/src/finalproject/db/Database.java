@@ -41,7 +41,6 @@ public class Database {
 
     public static void addUser(User user) throws SQLException {
         UserHandler model = new UserHandler(user);
-        user.id = getLastUserID();
         model.save();
         users = UserHandler.getAll();
     }
