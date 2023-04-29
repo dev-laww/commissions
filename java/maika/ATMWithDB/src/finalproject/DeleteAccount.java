@@ -1,3 +1,7 @@
+/**
+ * @author: tora
+ */
+
 package finalproject;
 
 import finalproject.db.Database;

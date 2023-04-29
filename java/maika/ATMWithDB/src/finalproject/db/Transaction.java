@@ -1,7 +1,10 @@
+/**
+ * @author: tora
+ */
+
 package finalproject.db;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Transaction {
     public String id;

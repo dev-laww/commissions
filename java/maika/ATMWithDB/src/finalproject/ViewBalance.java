@@ -1,6 +1,5 @@
 /**
- * @author:  tora
- * @author:  niku
+ * @author: tora
  */
 
 package finalproject;

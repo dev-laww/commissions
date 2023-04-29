@@ -1,8 +1,11 @@
+/**
+ * @author: tora
+ */
+
 package finalproject.db;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class TransactionHandler {
     private final Transaction transaction;

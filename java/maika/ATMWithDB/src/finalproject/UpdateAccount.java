@@ -1,6 +1,5 @@
 /**
  * @author: tora
- * @author: niku
  */
 
 package finalproject;
@@ -13,9 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * @author maikaordonez
- */
 public class UpdateAccount {
     JFrame frame = new JFrame();
     ImageIcon image = new ImageIcon("pic6.jpg");

@@ -1,9 +1,10 @@
+/**
+ * @author: tora
+ */
+
 package finalproject.db;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class User {
     public final String name;
