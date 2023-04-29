@@ -186,14 +186,23 @@ public class Login {
             return;
         }
 
+        if (user.pin().equals("0000")) {
+            JOptionPane.showMessageDialog(null, "Please change your pin code!");
+            frame.dispose();
+            String newPin = JOptionPane.showInputDialog(null, "Enter new pin code: ");
+            user.updatePin(newPin);
+
+            frame.dispose();
+            new Login();
+            return;
+        }
+
         if (!user.checkPin(pinCode)) {
             JOptionPane.showMessageDialog(null, "Incorrect Pin Code!");
             attempts++;
             if (attempts == 3) {
                 JOptionPane.showMessageDialog(null, "Too many attempts! Account locked!");
                 user.lock();
-                frame.dispose();
-                new Login();
             }
             return;
         }
