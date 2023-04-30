@@ -61,8 +61,4 @@ public class Receipt {
 
         tf.setText(sb);
     }
-
-    public static void main(String[] args) {
-        new Receipt(false);
-    }
 }
