@@ -4,13 +4,16 @@ import mpfileiocollectionhealthclub.Person;
 import java.io.*;
 import java.util.*;
 
-public class Main { 
+public class Main {
+    //        Comment the next 2 lines if you want to start fresh
+    static  List<Account> accounts = readAccounts();  // read accounts from acct.txt
+    static Map<String, Person> personMap = readPersonMap();  // read personMap from mapMP3.txt
 
     public static void main(String[] args) {
 //        Uncomment this to generate a new acct.txt file with accounts array if you want to start fresh
 //        NOTE: Exit the program after running this and comment it again, eto yung part na di ko mafigure out kaya di ako nag proceed agad
 
-//        List<Account> accounts = new ArrayList<>();
+//         = new ArrayList<>();
 //        Map<String, Person> personMap = new HashMap<>();
 //        try {
 //            FileInputStream fileIn = new FileInputStream("src/acct.txt");
@@ -46,10 +49,6 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-//        Comment the next 2 lines if you want to start fresh
-        List<Account> accounts = readAccounts();  // read accounts from acct.txt
-        Map<String, Person> personMap = readPersonMap();  // read personMap from mapMP3.txt
-
         Scanner scanner = new Scanner(System.in);
 
         int choice;
@@ -69,25 +68,25 @@ public class Main {
         scanner.nextLine();
         switch (choice) {
             case 1:
-                addAccount(accounts, personMap);
+                addAccount();
                 break;
             case 2:
-                deleteAccount(accounts, personMap);
+                deleteAccount();
                 break;
             case 3:
-                displayAccount(accounts, personMap);
+                displayAccount();
                 break;
             case 4:
-                editAccount(accounts, personMap);
+                editAccount();
                 break;
             case 5:
-                searchAccount(accounts, personMap);
+                searchAccount();
                 break;
             case 6:
-                displayTotal(accounts);
+                displayTotal();
                 break;
             case 7:
-                displayAll(accounts);
+                displayAll();
                 break;
             case 8:
                 System.out.println("Exiting...");
@@ -123,13 +122,13 @@ public class Main {
     }
 
     private static List<Account> readAccounts() {
-        List<Account> accounts = new ArrayList<>();
+        List<Account> list = new ArrayList<>();
 
         try {
             FileInputStream fis = new FileInputStream("src/acct.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            accounts = (List<Account>) ois.readObject(); // type cast the object to a list of accounts (unchecked cast)
+            list = (List<Account>) ois.readObject(); // type cast the object to a list of accounts (unchecked cast)
 
             fis.close();
             ois.close();
@@ -137,7 +136,7 @@ public class Main {
             System.out.println("Error reading from file.");
         }
 
-        return accounts;
+        return list;
     }
 
     private static Map<String, Person> readPersonMap() {
@@ -172,10 +171,8 @@ public class Main {
     /**
      * Displays all accounts
      *
-     * @param accounts List of accounts
-     * @param personMap Map of persons
      */
-    private static void addAccount(List<Account> accounts, Map<String, Person> personMap) {
+    private static void addAccount() {
         Scanner scanner = new Scanner(System.in);
 
         String id, firstName, lastName, address, memberTypeString, paymentTermString;
@@ -187,13 +184,13 @@ public class Main {
 
         if (personMap.containsKey(id)) {
             System.out.println("ID already exists.");
-            addAccount(accounts, personMap);
+            addAccount();
             return;
         }
 
         if (id.length() != 3 || !id.matches("[0-9]+")) {
             System.out.println("ID must be 3 digits.");
-            addAccount(accounts, personMap);
+            addAccount();
             return;
         }
 
@@ -250,16 +247,16 @@ public class Main {
         Person p = new Person(firstName, lastName, String.valueOf(age), address);
         accounts.add(acc);
         personMap.put(id, p);
+        System.out.println(p);
+        System.out.println(acc);
         System.out.println("Account added successfully.");
     }
 
     /**
      * Deletes an account
      *
-     * @param accounts List of accounts
-     * @param personMap Map of persons
      */
-    private static void deleteAccount(List<Account> accounts, Map<String, Person> personMap) {
+    private static void deleteAccount() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter ID number: ");
@@ -286,10 +283,8 @@ public class Main {
     /**
      * Displays an account
      *
-     * @param accounts List of accounts
-     * @param personMap Map of persons
      */
-    private static void displayAccount(List<Account> accounts, Map<String, Person> personMap) {
+    private static void displayAccount() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter ID number: ");
@@ -310,10 +305,8 @@ public class Main {
     /**
      * Edits an account
      *
-     * @param accounts List of accounts
-     * @param personMap Map of persons
      */
-    private static void editAccount(List<Account> accounts, Map<String, Person> personMap) {
+    private static void editAccount() {
         Scanner scanner = new Scanner(System.in);
 
         String id, firstName, lastName, address, memberTypeString, paymentTermString;
@@ -416,16 +409,14 @@ public class Main {
         }
 
         System.out.println("Account edited successfully.");
-        editAccount(accounts, personMap);
+        editAccount();
     }
 
     /**
      * Searches an account
      *
-     * @param accounts List of accounts
-     * @param personMap Map of persons
      */
-    private static void searchAccount(List<Account> accounts, Map<String, Person> personMap) {
+    private static void searchAccount() {
         Scanner scanner = new Scanner(System.in);
 
         String id, lastName;
@@ -474,15 +465,14 @@ public class Main {
                 System.out.println("Invalid choice.");
         }
 
-        searchAccount(accounts, personMap);
+        searchAccount();
     }
 
     /**
      * Displays the total membership fees
      *
-     * @param accounts List of accounts
      */
-    private static void displayTotal(List<Account> accounts) {
+    private static void displayTotal() {
         double totalCash = 0.0;
         double totalMonthly = 0.0;
         double totalQuarterly = 0.0;
@@ -519,9 +509,8 @@ public class Main {
     /**
      * Displays all accounts
      *
-     * @param accounts List of accounts
      */
-    private static void displayAll(List<Account> accounts) {
+    private static void displayAll() {
         accounts.sort(new Comparator<Account>() {
             @Override
             public int compare(Account a1, Account a2) {
