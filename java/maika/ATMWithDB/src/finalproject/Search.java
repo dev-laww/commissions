@@ -27,8 +27,8 @@ public class Search {
 
     Search() {
         String[][] tableData = new String[Database.users().size()][7];
-        for (User u : Database.users()) {
-            tableData[Database.users().indexOf(u)] = u.toArray();
+        for (int i = 0; i < Database.users().size(); i++) {
+            tableData[i] = Database.users().get(i).toArray();
         }
         model.setDataVector(tableData, col);
 

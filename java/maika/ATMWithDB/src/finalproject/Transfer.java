@@ -5,7 +5,6 @@
 package finalproject;
 
 import finalproject.db.Database;
-import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import javax.swing.*;
@@ -242,6 +241,8 @@ public class Transfer {
 
         try{
             u.transfer(receiverID, amount);
+            JOptionPane.showMessageDialog(null, "Transfer successful.");
+            new Receipt();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -290,16 +291,14 @@ public class Transfer {
                     }
 
                     tryTransfer(user, receiverID, Double.parseDouble(amount));
-                    JOptionPane.showMessageDialog(null, "Transfer successful.");
                     frame.dispose();
-                    new Receipt(true);
+                    new AdminMenu();
                     return;
                 }
 
                 tryTransfer(BankSystem.currentUser, receiverID, Double.parseDouble(amount));
-                JOptionPane.showMessageDialog(null, "Transfer successful.");
                 frame.dispose();
-                new Receipt(false);
+                new UserMenu();
             }
         };
     }

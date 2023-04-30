@@ -5,7 +5,6 @@
 package finalproject;
 
 import finalproject.db.Database;
-import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import javax.swing.*;
@@ -230,6 +229,7 @@ public class Deposit {
         try {
             u.deposit(Double.parseDouble(amount));
             JOptionPane.showMessageDialog(null, "Deposit successful.");
+            new Receipt();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
         } catch (Exception ex) {
@@ -270,13 +270,13 @@ public class Deposit {
 
                     tryDeposit(user, amount);
                     frame.dispose();
-                    new Receipt(true);
+                    new AdminMenu();
                     return;
                 }
 
                 tryDeposit(BankSystem.currentUser, amount);
                 frame.dispose();
-                new Receipt(false);
+                new UserMenu();
             }
         };
     }

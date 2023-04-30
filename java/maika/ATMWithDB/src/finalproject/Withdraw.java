@@ -5,7 +5,6 @@
 package finalproject;
 
 import finalproject.db.Database;
-import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import javax.swing.*;
@@ -281,13 +280,13 @@ public class Withdraw {
 
                     tryWithdraw(user, amount);
                     frame.dispose();
-                    new Receipt(true);
+                    new AdminMenu();
                     return;
                 }
 
                 tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new Receipt(false);
+                new UserMenu();
             }
         };
     }
@@ -296,6 +295,7 @@ public class Withdraw {
         try {
             u.withdraw(Double.parseDouble(amount));
             JOptionPane.showMessageDialog(null, "Withdraw successful.");
+            new Receipt();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
         } catch (Exception ex) {
