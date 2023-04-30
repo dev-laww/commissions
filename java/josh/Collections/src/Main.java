@@ -182,7 +182,7 @@ public class Main {
             return;
         }
 
-        if (id.length() != 3) {
+        if (id.length() != 3 || !id.matches("[0-9]+")) {
             System.out.println("ID must be 3 digits.");
             addAccount(accounts, personMap);
             return;
@@ -197,6 +197,11 @@ public class Main {
         System.out.print("Enter age: ");
         age = scanner.nextInt();
         scanner.nextLine(); // consume the newline character
+
+        if (age < 10) {
+            System.out.println("Age cannot be single digit.");
+            return;
+        }
 
         System.out.print("Enter address: ");
         address = scanner.nextLine();
@@ -316,7 +321,6 @@ public class Main {
         System.out.println("8. Exit");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine();
         scanner.nextLine(); // consume the newline character
 
         switch (choice) {
@@ -468,10 +472,10 @@ public class Main {
             }
         }
 
-        System.out.println("Total cash payments: " + totalCash);
-        System.out.println("Total monthly payments: " + totalMonthly);
-        System.out.println("Total quarterly payments: " + totalQuarterly);
-        System.out.println("Total semi-annually payments: " + totalSemiAnnually);
+        System.out.printf("Total cash payments: %.2f%n", totalCash);
+        System.out.printf("Total monthly payments: %.2f%n", totalMonthly);
+        System.out.printf("Total quarterly payments: %.2f%n", totalQuarterly);
+        System.out.printf("Total semi-annually payments: %.2f%n", totalSemiAnnually);
     }
 
     private static void displayAll(List<Account> accounts) {
@@ -482,9 +486,9 @@ public class Main {
             }
         });
 
-        System.out.println("ID\tType\tTerm\tSup Members\tMF");
+        System.out.printf("%-10s\t%-10s\t%-10s\t%-20s\t%-10s\n", "ID", "Member", "Term", "Supplementary Members", "Membership Fee");
         for (Account a : accounts) {
-            System.out.printf("%s\t%c\t%c\t%d\t%.2f\n", a.id(), a.memberType(), a.payTerm(), a.supMember(), a.calculateMembershipFee());
+            System.out.printf("%-10s\t%-10c\t%-10c\t%-20d\t%-10.2f\n", a.id(), a.memberType(), a.payTerm(), a.supMember(), a.calculateMembershipFee());
         }
     }
 }
