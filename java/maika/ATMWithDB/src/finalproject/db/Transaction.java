@@ -13,7 +13,7 @@ public class Transaction {
     public final String type;
     public Timestamp timestamp;
 
-    Transaction(String userID, double amount, String type) {
+    public Transaction(String userID, double amount, String type) {
         this.userID = userID;
         this.amount = amount;
         this.type = type;

@@ -26,9 +26,9 @@ public class DeleteAccount {
     JScrollPane sp = new JScrollPane(jt);
 
     DeleteAccount() {
-        String[][] tableData = new String[Database.users.size()][7];
-        for (User u : Database.users) {
-            tableData[Database.users.indexOf(u)] = u.toArray();
+        String[][] tableData = new String[Database.users().size()][7];
+        for (User u : Database.users()) {
+            tableData[Database.users().indexOf(u)] = u.toArray();
         }
         model.setDataVector(tableData, col);
 
