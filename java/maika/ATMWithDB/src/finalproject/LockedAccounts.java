@@ -43,6 +43,7 @@ public class LockedAccounts {
         for (User u : Database.users) {
             if (!u.isLocked()) continue;
             tableData[j] = u.toLockedArray();
+            j++;
         }
 
         model.setDataVector(tableData, col);
@@ -125,6 +126,7 @@ public class LockedAccounts {
                 user.unlock();
                 frame.dispose();
                 JOptionPane.showMessageDialog(null, "Account unlocked.");
+                new LockedAccounts();
             }
         };
     }

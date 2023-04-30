@@ -212,6 +212,8 @@ public class Login {
             if (attempts == 3) {
                 JOptionPane.showMessageDialog(null, "Too many attempts! Account locked!");
                 user.lock();
+                accIdTF.setText("");
+                pinCodeTF.setText("");
             }
             return;
         }

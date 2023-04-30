@@ -132,9 +132,9 @@ public class User {
 
     public void lock() {
         this.status = "locked";
-        UserHandler db = new UserHandler(this);
+
         try {
-            db.save();
+            Database.updateUser(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,9 +142,9 @@ public class User {
 
     public void unlock() {
         this.status = "active";
-        UserHandler db = new UserHandler(this);
+
         try {
-            db.save();
+            Database.updateUser(this);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -55,12 +55,7 @@ public class Database {
         UserHandler model = new UserHandler(user);
         model.save();
 
-        for (int i = 0; i < users.size(); i++) {
-            if (user.id.equals(users.get(i).id)) {
-                users.set(i, user);
-                break;
-            }
-        }
+        users = UserHandler.getAll();
     }
 
     public static Connection getConnection() {
