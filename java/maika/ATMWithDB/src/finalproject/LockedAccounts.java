@@ -27,7 +27,7 @@ public class LockedAccounts {
 
     LockedAccounts() {
         int count = 0;
-        for (User u : Database.users) {
+        for (User u : Database.users()) {
             if (u.isLocked()) count++;
         }
 
@@ -40,7 +40,7 @@ public class LockedAccounts {
 
         String[][] tableData = new String[count][3];
         int j = 0;
-        for (User u : Database.users) {
+        for (User u : Database.users()) {
             if (!u.isLocked()) continue;
             tableData[j] = u.toLockedArray();
             j++;
