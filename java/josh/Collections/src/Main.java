@@ -247,8 +247,6 @@ public class Main {
         Person p = new Person(firstName, lastName, String.valueOf(age), address);
         accounts.add(acc);
         personMap.put(id, p);
-        System.out.println(p);
-        System.out.println(acc);
         System.out.println("Account added successfully.");
     }
 
@@ -445,19 +443,22 @@ public class Main {
                 System.out.println("Account not found.");
                 break;
             case 2:
-                System.out.println("Enter last name: ");
+                System.out.print("Enter last name: ");
                 lastName = scanner.nextLine();
 
                 for (String key : personMap.keySet()) {
-                    if (personMap.get(key).lname().equals(lastName)) {
+                    if (personMap.get(key).lname().equalsIgnoreCase(lastName)) {
                         for (Account acc : accounts) {
                             if (key.equals(acc.id())) {
                                 System.out.println(acc);
                                 System.out.println(personMap.get(key));
+                                break;
                             }
                         }
+                        break;
                     }
                 }
+                System.out.println("Account not found.");
                 break;
             case 3:
                 return;
