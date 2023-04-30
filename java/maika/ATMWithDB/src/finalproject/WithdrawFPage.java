@@ -5,6 +5,7 @@
 package finalproject;
 
 import finalproject.db.Database;
+import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import java.awt.Color;
@@ -187,7 +188,7 @@ public class WithdrawFPage {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String amount = tf.getText().replace(",", "");
+                String amount = tf.getText();
                 String accountID = accountIDField.getText();
 
                 if (amount.isEmpty()) {
@@ -210,13 +211,13 @@ public class WithdrawFPage {
 
                     Withdraw.tryWithdraw(user, amount);
                     frame.dispose();
-                    new AdminMenu();
+                    new Receipt(true);
                     return;
                 }
 
                 Withdraw.tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new UserMenu();
+                new Receipt(false);
             }
         });
     }

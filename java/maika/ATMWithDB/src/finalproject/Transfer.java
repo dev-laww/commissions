@@ -242,7 +242,6 @@ public class Transfer {
         try{
             u.transfer(receiverID, amount);
             JOptionPane.showMessageDialog(null, "Transfer successful.");
-            new Receipt();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -292,13 +291,13 @@ public class Transfer {
 
                     tryTransfer(user, receiverID, Double.parseDouble(amount));
                     frame.dispose();
-                    new AdminMenu();
+                    new Receipt(true);
                     return;
                 }
 
                 tryTransfer(BankSystem.currentUser, receiverID, Double.parseDouble(amount));
                 frame.dispose();
-                new UserMenu();
+                new Receipt(false);
             }
         };
     }
