@@ -4,10 +4,12 @@ import mpfileiocollectionhealthclub.Person;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Main { 
 
     public static void main(String[] args) {
 //        Uncomment this to generate a new acct.txt file with accounts array if you want to start fresh
+//        NOTE: Exit the program after running this and comment it again, eto yung part na di ko mafigure out kaya di ako nag proceed agad
+
 //        List<Account> accounts = new ArrayList<>();
 //        Map<String, Person> personMap = new HashMap<>();
 //        try {
@@ -44,8 +46,9 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-        List<Account> accounts = readAccounts();
-        Map<String, Person> personMap = readPersonMap();
+//        Comment the next 2 lines if you want to start fresh
+        List<Account> accounts = readAccounts();  // read accounts from acct.txt
+        Map<String, Person> personMap = readPersonMap();  // read personMap from mapMP3.txt
 
         Scanner scanner = new Scanner(System.in);
 
@@ -126,7 +129,7 @@ public class Main {
             FileInputStream fis = new FileInputStream("src/acct.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            accounts = (List<Account>) ois.readObject();
+            accounts = (List<Account>) ois.readObject(); // type cast the object to a list of accounts (unchecked cast)
 
             fis.close();
             ois.close();
@@ -166,6 +169,12 @@ public class Main {
         return personMap;
     }
 
+    /**
+     * Displays all accounts
+     *
+     * @param accounts List of accounts
+     * @param personMap Map of persons
+     */
     private static void addAccount(List<Account> accounts, Map<String, Person> personMap) {
         Scanner scanner = new Scanner(System.in);
 
@@ -244,6 +253,12 @@ public class Main {
         System.out.println("Account added successfully.");
     }
 
+    /**
+     * Deletes an account
+     *
+     * @param accounts List of accounts
+     * @param personMap Map of persons
+     */
     private static void deleteAccount(List<Account> accounts, Map<String, Person> personMap) {
         Scanner scanner = new Scanner(System.in);
 
@@ -268,6 +283,12 @@ public class Main {
         System.out.println("Account deleted successfully.");
     }
 
+    /**
+     * Displays an account
+     *
+     * @param accounts List of accounts
+     * @param personMap Map of persons
+     */
     private static void displayAccount(List<Account> accounts, Map<String, Person> personMap) {
         Scanner scanner = new Scanner(System.in);
 
@@ -286,6 +307,12 @@ public class Main {
         System.out.println("Account not found.");
     }
 
+    /**
+     * Edits an account
+     *
+     * @param accounts List of accounts
+     * @param personMap Map of persons
+     */
     private static void editAccount(List<Account> accounts, Map<String, Person> personMap) {
         Scanner scanner = new Scanner(System.in);
 
@@ -392,6 +419,12 @@ public class Main {
         editAccount(accounts, personMap);
     }
 
+    /**
+     * Searches an account
+     *
+     * @param accounts List of accounts
+     * @param personMap Map of persons
+     */
     private static void searchAccount(List<Account> accounts, Map<String, Person> personMap) {
         Scanner scanner = new Scanner(System.in);
 
@@ -444,6 +477,11 @@ public class Main {
         searchAccount(accounts, personMap);
     }
 
+    /**
+     * Displays the total membership fees
+     *
+     * @param accounts List of accounts
+     */
     private static void displayTotal(List<Account> accounts) {
         double totalCash = 0.0;
         double totalMonthly = 0.0;
@@ -478,6 +516,11 @@ public class Main {
         System.out.printf("Total semi-annually payments: %.2f%n", totalSemiAnnually);
     }
 
+    /**
+     * Displays all accounts
+     *
+     * @param accounts List of accounts
+     */
     private static void displayAll(List<Account> accounts) {
         accounts.sort(new Comparator<Account>() {
             @Override
