@@ -5,6 +5,7 @@
 package finalproject;
 
 import finalproject.db.Database;
+import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import javax.swing.*;
@@ -269,13 +270,13 @@ public class Deposit {
 
                     tryDeposit(user, amount);
                     frame.dispose();
-                    new AdminMenu();
+                    new Receipt(true);
                     return;
                 }
 
                 tryDeposit(BankSystem.currentUser, amount);
                 frame.dispose();
-                new UserMenu();
+                new Receipt(false);
             }
         };
     }

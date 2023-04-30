@@ -5,6 +5,7 @@
 package finalproject;
 
 import finalproject.db.Database;
+import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import java.awt.Color;
@@ -20,7 +21,6 @@ public class WithdrawFPage {
     JTextField tf = new JTextField();
     JButton exit = new JButton("CANCEL");
     JButton enter = new JButton("ENTER");
-    
     JButton twenty = new JButton("20");
     JButton fifty = new JButton("50");
     JButton oneH = new JButton("100");
@@ -211,13 +211,13 @@ public class WithdrawFPage {
 
                     Withdraw.tryWithdraw(user, amount);
                     frame.dispose();
-                    new AdminMenu();
+                    new Receipt(true);
                     return;
                 }
 
                 Withdraw.tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new UserMenu();
+                new Receipt(false);
             }
         });
     }

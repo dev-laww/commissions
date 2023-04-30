@@ -5,6 +5,7 @@
 package finalproject;
 
 import finalproject.db.Database;
+import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import javax.swing.*;
@@ -280,13 +281,13 @@ public class Withdraw {
 
                     tryWithdraw(user, amount);
                     frame.dispose();
-                    new AdminMenu();
+                    new Receipt(true);
                     return;
                 }
 
                 tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new UserMenu();
+                new Receipt(false);
             }
         };
     }
