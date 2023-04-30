@@ -10,52 +10,30 @@ import java.util.HashMap;
 
 public class Database {
     public static HashMap<String, String> admin = new HashMap<>();
-    public static ArrayList<User> users;
-    public static ArrayList<Transaction> transactions;
 
     static {
         admin.put("admin", "admin");
-        try {
-            ArrayList<User> users = UserHandler.getAll();
-            ArrayList<Transaction> transactions = TransactionHandler.getAll();
-
-            Database.users = users.size() > 0 ? users : new ArrayList<>();
-            Database.transactions = transactions.size() > 0 ? transactions : new ArrayList<>();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static void deleteUser(String id) throws SQLException {
         User user = UserHandler.getUser(id);
         UserHandler model = new UserHandler(user);
         model.delete();
-
-        for (User it : users) {
-            if (id.equals(it.id)) {
-                users.remove(it);
-                break;
-            }
-        }
     }
 
     public static void addUser(User user) throws SQLException {
         UserHandler model = new UserHandler(user);
         model.save();
-        users = UserHandler.getAll();
     }
 
     public static void addTransaction(Transaction transaction) throws SQLException {
         TransactionHandler model = new TransactionHandler(transaction);
         model.save();
-        transactions = TransactionHandler.getAll();
     }
 
     public static void updateUser(User user) throws SQLException {
         UserHandler model = new UserHandler(user);
         model.save();
-
-        users = UserHandler.getAll();
     }
 
     public static Connection getConnection() {
@@ -119,6 +97,52 @@ public class Database {
             int id = rs.getInt("id");
 
             return String.valueOf(id + 1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<User> users() {
+        try {
+            return UserHandler.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static ArrayList<Transaction> transactions() {
+        try {
+            return TransactionHandler.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static Transaction getLastTransaction() {
+        Connection conn = Database.getConnection();
+
+        if (conn == null)
+            return null;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * from transactions ORDER BY datetime DESC LIMIT 1");
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            }
+
+            return new Transaction(
+                    rs.getString("id"),
+                    rs.getString("user_id"),
+                    rs.getDouble("amount"),
+                    rs.getString("type"),
+                    rs.getTimestamp("datetime")
+            );
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
