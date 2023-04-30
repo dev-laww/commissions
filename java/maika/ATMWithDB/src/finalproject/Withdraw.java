@@ -37,7 +37,7 @@ public class Withdraw {
     JLabel accountID = new JLabel("Account ID:");
     JTextField accountIDField = new JTextField();
     JButton[] buttons = {zero, one, two, three, four, five, six, seven, eight, nine};
-    private boolean isAdmin;
+    private final boolean isAdmin;
 
     Withdraw(boolean isAdmin) {
         this.isAdmin = isAdmin;
@@ -280,22 +280,21 @@ public class Withdraw {
 
                     tryWithdraw(user, amount);
                     frame.dispose();
-                    new AdminMenu();
+                    new Receipt(true);
                     return;
                 }
 
                 tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new UserMenu();
+                new Receipt(false);
             }
         };
     }
 
     public static void tryWithdraw(User u, String amount) {
         try {
-            u.withdraw(Double.parseDouble(amount));
+            u.withdraw(Double.parseDouble(amount.replace(",", "")));
             JOptionPane.showMessageDialog(null, "Withdraw successful.");
-            new Receipt();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
         } catch (Exception ex) {

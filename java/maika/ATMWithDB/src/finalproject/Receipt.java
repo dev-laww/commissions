@@ -14,7 +14,7 @@ public class Receipt {
     JTextArea tf = new JTextArea();
     JButton ok = new JButton("OK");
 
-    Receipt() {
+    Receipt(boolean isFromAdmin) {
         Font font = new Font("JetBrains Mono NL", Font.PLAIN,12);
         tf.setEditable(false);
         tf.setFont(font);
@@ -38,6 +38,12 @@ public class Receipt {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
+                if (isFromAdmin) {
+                    new AdminMenu();
+                    return;
+                }
+
+                new UserMenu();
             }
         });
 
