@@ -407,9 +407,9 @@ public class Main {
                 System.out.print("Enter ID number: ");
                 id = scanner.nextLine();
 
-                for (Account acc1 : accounts) {
-                    if (acc1.id().equals(id)) {
-                        System.out.println(acc1);
+                for (Account acc : accounts) {
+                    if (acc.id().equals(id)) {
+                        System.out.println(acc);
                         System.out.println(personMap.get(id));
                         return;
                     }
@@ -422,9 +422,9 @@ public class Main {
 
                 for (String key : personMap.keySet()) {
                     if (personMap.get(key).lname().equals(lastName)) {
-                        for (Account acc1 : accounts) {
-                            if (acc1.id().equals(key)) {
-                                System.out.println(acc1);
+                        for (Account acc : accounts) {
+                            if (key.equals(acc.id())) {
+                                System.out.println(acc);
                                 System.out.println(personMap.get(key));
                             }
                         }
@@ -446,10 +446,10 @@ public class Main {
         double totalQuarterly = 0.0;
         double totalSemiAnnually = 0.0;
 
-        for (Account acc1 : accounts) {
-            double membershipFee = acc1.calculateMembershipFee();
+        for (Account acc : accounts) {
+            double membershipFee = acc.calculateMembershipFee();
 
-            switch (acc1.payTerm()) {
+            switch (acc.payTerm()) {
                 case 'C':
                     totalCash += membershipFee;
                     break;
