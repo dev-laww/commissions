@@ -260,6 +260,12 @@ public class Withdraw {
                     return;
                 }
 
+                if (Double.parseDouble(amount.replace(",", "")) <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
+                    tf.setText("");
+                    return;
+                }
+
                 if (accountID.isEmpty() && isAdmin) {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
                     return;
@@ -278,9 +284,19 @@ public class Withdraw {
                         return;
                     }
 
+                    if (user.balance < Double.parseDouble(amount.replace(",", ""))) {
+                        JOptionPane.showMessageDialog(null, "Insufficient funds.");
+                        return;
+                    }
+
                     tryWithdraw(user, amount);
                     frame.dispose();
                     new Receipt(true);
+                    return;
+                }
+
+                if (BankSystem.currentUser.balance < Double.parseDouble(amount.replace(",", ""))) {
+                    JOptionPane.showMessageDialog(null, "Insufficient funds.");
                     return;
                 }
 
@@ -299,7 +315,7 @@ public class Withdraw {
             JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Deposit failed.\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Withdraw failed.\n" + ex.getMessage());
         }
     }
 }

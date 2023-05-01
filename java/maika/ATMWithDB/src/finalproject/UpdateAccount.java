@@ -184,6 +184,7 @@ public class UpdateAccount {
                     return;
                 }
 
+                accountNameLabel.setText("Account Name: " + user.name());
                 tfAddress.setText(user.address());
                 tfEmailAddress.setText(user.email());
                 tfPhone.setText(user.contact());

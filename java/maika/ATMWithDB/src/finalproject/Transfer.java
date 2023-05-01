@@ -231,13 +231,7 @@ public class Transfer {
         this(false);
     }
 
-    private void tryTransfer(User u,String receiverID, double amount) {
-        User receiver = Database.getUser(receiverID);
-
-        if (receiver == null) {
-            JOptionPane.showMessageDialog(null, "Receiver does not exist.");
-            return;
-        }
+    private void tryTransfer(User u, String receiverID, double amount) {
 
         try{
             u.transfer(receiverID, amount);
@@ -281,6 +275,19 @@ public class Transfer {
                     return;
                 }
 
+                if (Double.parseDouble(amount.replace(",", "")) <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
+                    tf.setText("");
+                    return;
+                }
+
+                User receiver = Database.getUser(receiverID);
+
+                if (receiver == null) {
+                    JOptionPane.showMessageDialog(null, "Receiver does not exist.");
+                    return;
+                }
+
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
 
@@ -289,9 +296,19 @@ public class Transfer {
                         return;
                     }
 
+                    if (user.balance < Double.parseDouble(amount.replace(",", ""))) {
+                        JOptionPane.showMessageDialog(null, "Insufficient funds.");
+                        return;
+                    }
+
                     tryTransfer(user, receiverID, Double.parseDouble(amount));
                     frame.dispose();
                     new Receipt(true);
+                    return;
+                }
+
+                if (BankSystem.currentUser.balance < Double.parseDouble(amount.replace(",", ""))) {
+                    JOptionPane.showMessageDialog(null, "Insufficient funds.");
                     return;
                 }
 
