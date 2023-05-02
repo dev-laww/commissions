@@ -1,3 +1,4 @@
+import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -73,6 +74,10 @@ class EmployeeForm(tk.Frame):
     def save_data(self):
         try:
             age = int(self.age_field.get())
+            name = self.name_field.get()
+
+            if not re.match(r"^[a-zA-Z ]+$", name):
+                raise Exception("Invalid Name")
 
             if age < 18:
                 raise ValueError
@@ -80,7 +85,7 @@ class EmployeeForm(tk.Frame):
             salary_rate = float(self.salary_rate_field.get())
 
             employee = models.Employee(
-                self.name_field.get(),
+                name,
                 self.number_field.get(),
                 age,
                 salary_rate,
