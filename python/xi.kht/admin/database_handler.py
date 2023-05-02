@@ -17,7 +17,8 @@ class DbHandler:
 
         cursor.execute(query)
         employee_list = []
-        for employee_id, name, number, age, salary_rate, contact in cursor:
+
+        for employee_id, name, number, age, salary_rate, contact in cursor.fetchall():
             new_employee = models.Employee(name, number, age, salary_rate, contact, employee_id)
             employee_list.append(new_employee)
 
@@ -38,9 +39,9 @@ class DbHandler:
 
     def delete_employee(self, employee_id):
         cursor = self.conn.cursor()
-        cursor.execute(f"SELECT * FROM {self.salary_table} WHERE id = ?", (employee_id,))
+        cursor.execute(f"SELECT * FROM {self.employee_table} WHERE id = ?", (employee_id,))
 
-        if len(cursor.fetchall()) < 0:
+        if len(cursor.fetchall()) < 1:
             raise Exception("Employee does not exist")
 
         delete_query = f"DELETE FROM {self.employee_table} WHERE id = ?"
