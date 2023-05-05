@@ -1,4 +1,1 @@
-﻿  Main.c
-C:\Users\roren\Documents\Projects\commissions\c\noir\StudentCRUD\StudentCRUD\Main.c(66,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\roren\Documents\Projects\commissions\c\noir\StudentCRUD\StudentCRUD\Main.c(115): warning C4715: 'search': not all control paths return a value
-  StudentCRUD.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\noir\StudentCRUD\x64\Debug\StudentCRUD.exe
+﻿  StudentCRUD.vcxproj -> C:\Users\roren\Documents\Projects\commissions\c\noir\StudentCRUD\x64\Debug\StudentCRUD.exe

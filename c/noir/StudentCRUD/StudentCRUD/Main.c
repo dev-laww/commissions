@@ -84,7 +84,8 @@ void save_students(Student students[]) {
 		return;
 	}
 
-	for (int i = 0; i < student_count; i++)
+	int i;
+	for (i = 0; i < student_count; i++)
 	{
 		Student student = students[i];
 		fprintf(fp, "%s,%d,%d,%f\n", student.name, student.age, student.id, student.gpa);
@@ -101,7 +102,8 @@ void add_student(Student student)
 
 Student search(int id)
 {
-	for (int i = 0; i < student_count; i++)
+	int i;
+	for (i = 0; i < student_count; i++)
 	{
 		Student student = students[i];
 		if (student.id == id)
@@ -135,6 +137,7 @@ int main()
 	int choice = 0, age, id, i, j;
 	char name[50];
 	float gpa;
+	Student student;
 
 	do {
 		system("cls");
@@ -153,20 +156,11 @@ int main()
 			name[strlen(name) - 1] = '\0';
 			printf("Enter age: ");
 			scanf("%d", &age);
-
-
 			printf("Enter id: ");
-			scanf("%d", &id);
-
-			while (strcmp(search(id).name, "Not Found") != 0) 
-			{
-				printf("ID already exists! Enter a new one: ");
-				scanf("%d", &id);
-			}
-			
+			scanf("%d", &id);		
 			printf("Enter gpa: ");
 			scanf("%f", &gpa);
-			Student student = create_student(name, age, id, gpa);
+			student = create_student(name, age, id, gpa);
 			add_student(student);
 			save_students(students);
 			break;
@@ -189,7 +183,7 @@ int main()
 			system("cls");
 			printf("Enter id: ");
 			scanf("%d", &id);
-			Student student = search(id);
+			student = search(id);
 
 			if (strcmp(student.name, "Not Found") == 0)
 			{
@@ -210,7 +204,7 @@ int main()
 			system("cls");
 			printf("Enter id: ");
 			scanf("%d", &id);
-			Student student = search(id);
+			student = search(id);
 
 			if (strcmp(student.name, "Not Found") == 0)
 			{
