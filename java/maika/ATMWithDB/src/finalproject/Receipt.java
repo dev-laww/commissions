@@ -2,6 +2,7 @@ package finalproject;
 
 import finalproject.db.Database;
 import finalproject.db.Transaction;
+import finalproject.db.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,15 +57,20 @@ public class Receipt {
             return;
         }
 
+        User user = Database.getUser(userID);
+        assert user != null;
+
         Transaction transaction = transactions.get(transactions.size() - 1);
         String transFerUserID = transaction.transferUserID();
         String receiver = transaction.type.equals("transfer") ? String.format("  RECEIVER ID: XXXXX%s%n", transFerUserID.substring(transFerUserID.length() - 3)) : "";
+        String serviceCharge = user.atmId.equals(Database.atmId) ? "" : String.format("  %-20s %20.2f%n", "SERVICE CHARGE:", Database.serviceCharge);
 
         String sb = "\t  JJTM MACHINE\n\n" + String.format("  DATE : TIME \n  %s%n%n", transaction.timestamp) +
                 String.format("  ATM ID: %s%n", Database.atmId) +
                 String.format("  Serial No. %s%n%n", transaction.id) +
                 String.format("  ACCOUNT ID: XXXXX%s%n", userID.substring(userID.length() - 3)) +
                 receiver +
+                serviceCharge +
                 String.format("  %-20s %20.2f%n%n%n", transaction.type.substring(0, 1).toUpperCase() + transaction.type.substring(1), transaction.amount) +
                 "        Thank you for using JJTM MACHINE";
 

@@ -83,12 +83,12 @@ public class User {
         this.balance += amount;
 
         if (!this.atmId.equals(Database.atmId))
-            amount += Database.serviceCharge;
+            this.balance -= Database.serviceCharge;
 
         Transaction transaction = new Transaction(this.id, amount, "deposit");
 
-
-        if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance -= amount;
+        Database.saveTransaction(transaction);
+        Database.saveUser(this);
     }
 
     public void withdraw(double amount) throws Exception {
@@ -97,12 +97,13 @@ public class User {
         }
 
         if (!this.atmId.equals(Database.atmId))
-            amount += Database.serviceCharge;
+            this.balance -= Database.serviceCharge;
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "withdraw");
 
-        if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance += amount;
+        Database.saveTransaction(transaction);
+        Database.saveUser(this);
     }
 
     public void transfer(String accID, double amount) throws Exception {
@@ -117,18 +118,20 @@ public class User {
         }
 
         if (!this.atmId.equals(Database.atmId))
-            amount += Database.serviceCharge;
+            this.balance -= Database.serviceCharge;
 
         this.balance -= amount;
 
         Transaction transaction = new Transaction(this.id, user.id, amount);
 
-        if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance += amount;
+        Database.saveTransaction(transaction);
+        Database.saveUser(this);
 
         transaction = new Transaction(user.id, amount, "receive");
         user.balance += amount;
 
-        if (!Database.saveTransaction(transaction) && Database.saveUser(user)) user.balance -= amount;
+        Database.saveTransaction(transaction);
+        Database.saveUser(user);
     }
 
     public void lock() {
