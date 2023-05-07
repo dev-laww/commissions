@@ -281,11 +281,17 @@ public class Withdraw {
                     return;
                 }
 
+
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
 
                     if (user == null) {
                         JOptionPane.showMessageDialog(null, "Account does not exist.");
+                        return;
+                    }
+
+                    if(user.isLocked()) {
+                        JOptionPane.showMessageDialog(null, "Account is locked.");
                         return;
                     }
 
@@ -305,6 +311,11 @@ public class Withdraw {
                     return;
                 }
 
+                if(BankSystem.currentUser.isLocked()) {
+                    JOptionPane.showMessageDialog(null, "Account is locked.");
+                    return;
+                }
+
                 tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
                 new Receipt(BankSystem.currentUser.id, false);
@@ -314,11 +325,6 @@ public class Withdraw {
 
     public static void tryWithdraw(User u, String amount) {
         try {
-            if (u.isLocked()) {
-                JOptionPane.showMessageDialog(null, "Account is locked.");
-                return;
-            }
-
             u.withdraw(Double.parseDouble(amount.replace(",", "")));
             JOptionPane.showMessageDialog(null, "Withdraw successful.");
         } catch (NumberFormatException ex) {
