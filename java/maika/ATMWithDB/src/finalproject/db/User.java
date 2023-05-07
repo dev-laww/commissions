@@ -8,7 +8,7 @@ public class User {
     public String address;
     public double balance;
     public String status;
-    public final String atmMachine;
+    public final String atmId;
     public final String firstName;
     public final String middleName;
     public final String lastName;
@@ -33,7 +33,7 @@ public class User {
             String email,
             String pin,
             double balance,
-            String atmMachine
+            String atmId
     ) {
         this.id = id;
         this.balance = balance;
@@ -47,7 +47,7 @@ public class User {
         this.province = province;
         this.email = email;
         this.contact = contact;
-        this.atmMachine = atmMachine;
+        this.atmId = atmId;
 
         this.name = String.format("%s %s %s", this.firstName, this.middleName, this.lastName);
         this.address = String.format("%s, %s, %s", this.barangay, this.municipality, this.province);
@@ -76,7 +76,7 @@ public class User {
         this.province = province;
         this.email = email;
         this.contact = contact;
-        this.atmMachine = Database.atmMachine;
+        this.atmId = Database.atmId;
     }
 
     public void deposit(double amount) {

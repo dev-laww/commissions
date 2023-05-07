@@ -41,7 +41,7 @@ public class UserHandler {
                                     email,
                                     pin,
                                     balance,
-                                    atm_machine
+                                    atm_id
                                 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
                             """
             );
@@ -67,7 +67,7 @@ public class UserHandler {
                                 email = ?,
                                 pin = ?,
                                 balance = ?,
-                                atm_machine = ?
+                                atm_id = ?
                             WHERE id =
                         """ + user.id
         );
@@ -158,7 +158,7 @@ public class UserHandler {
                 rs.getString("email"),
                 rs.getString("pin"),
                 rs.getDouble("balance"),
-                rs.getString("atm_machine")
+                rs.getString("atm_id")
         );
     }
 
@@ -174,6 +174,6 @@ public class UserHandler {
         ps.setString(9, user.email());
         ps.setString(10, user.pin());
         ps.setDouble(11, user.balance);
-        ps.setString(12, user.atmMachine);
+        ps.setString(12, user.atmId);
     }
 }
