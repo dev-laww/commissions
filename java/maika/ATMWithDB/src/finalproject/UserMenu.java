@@ -4,6 +4,8 @@
 
 package finalproject;
 
+import finalproject.db.Database;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,7 +84,7 @@ public class UserMenu {
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BankSystem.currentUser = null;
+                Database.user = null;
                 frame.dispose();
                 new Login();
             }

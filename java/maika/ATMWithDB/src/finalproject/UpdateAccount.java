@@ -60,11 +60,11 @@ public class UpdateAccount {
         tfID.setBounds(150, 80, 400, 30);
         tfID.setFont(new Font(null, Font.BOLD, 15));
         tfID.setEditable(isAdmin);
-        tfID.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.id);
+        tfID.setText(Database.user == null ? "" : Database.user.id);
         tfID.setForeground(Color.BLACK);
 
         accountNameLabel.setBounds(30, 120, 300, 30);
-        accountNameLabel.setText(BankSystem.currentUser == null ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name());
+        accountNameLabel.setText(Database.user == null ? "Account Name: " : "Customer Name: " + Database.user.name());
         accountNameLabel.setFont(new Font(null, Font.BOLD, 15));
         accountNameLabel.setForeground(Color.WHITE);
 
@@ -75,7 +75,7 @@ public class UpdateAccount {
 
         tfBarangay.setBounds(150, 153, 400, 30);
         tfBarangay.setFont(new Font(null, Font.BOLD, 15));
-        tfBarangay.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.address());
+        tfBarangay.setText(Database.user == null ? "" : Database.user.address());
 
         municipality.setText("Municipality:");
         municipality.setBounds(30, 186, 200, 30);
@@ -84,7 +84,7 @@ public class UpdateAccount {
 
         tfMunicipality.setBounds(150, 185, 400, 30);
         tfMunicipality.setFont(new Font(null, Font.BOLD, 15));
-        tfMunicipality.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.municipality());
+        tfMunicipality.setText(Database.user == null ? "" : Database.user.municipality());
 
         province.setText("Province:");
         province.setBounds(30, 217, 100, 30);
@@ -93,7 +93,7 @@ public class UpdateAccount {
 
         tfProvince.setBounds(150, 215, 400, 30);
         tfProvince.setFont(new Font(null, Font.BOLD, 15));
-        tfProvince.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.province());
+        tfProvince.setText(Database.user == null ? "" : Database.user.province());
 
         emailAddress.setText("Email:");
         emailAddress.setBounds(30, 240, 100, 30);
@@ -102,7 +102,7 @@ public class UpdateAccount {
 
         tfEmailAddress.setBounds(150, 243, 400, 30);
         tfEmailAddress.setFont(new Font(null, Font.BOLD, 15));
-        tfEmailAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.email());
+        tfEmailAddress.setText(Database.user == null ? "" : Database.user.email());
 
         contact.setText("Contact:");
         contact.setBounds(30, 270, 100, 30);
@@ -111,7 +111,7 @@ public class UpdateAccount {
 
         tfContact.setBounds(150, 273, 400, 30);
         tfContact.setFont(new Font(null, Font.BOLD, 15));
-        tfContact.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.contact());
+        tfContact.setText(Database.user == null ? "" : Database.user.contact());
 
         label.add(label1);
         label.add(accountIDLabel);
@@ -232,7 +232,7 @@ public class UpdateAccount {
                 }
 
                 if (!isAdmin) {
-                    tryUpdate(BankSystem.currentUser);
+                    tryUpdate(Database.user);
                     return;
                 }
 

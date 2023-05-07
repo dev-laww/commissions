@@ -34,7 +34,7 @@ public class ViewBalance {
         label2.setForeground(Color.WHITE);
 
         balance.setBounds(350, 120, 225, 40);
-        balance.setText(String.format("%.2f", BankSystem.currentUser.balance));
+        balance.setText(String.format("%.2f", Database.user.balance));
         balance.setFont(new Font(null, Font.BOLD, 25));
         balance.setForeground(Color.WHITE);
 
@@ -57,7 +57,7 @@ public class ViewBalance {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        Transaction transaction = new Transaction(BankSystem.currentUser.id, 0, "view ministatement");
+        Transaction transaction = new Transaction(Database.user.id, 0, "view ministatement");
         if (!Database.saveTransaction(transaction)) {
             frame.dispose();
             new UserMenu();

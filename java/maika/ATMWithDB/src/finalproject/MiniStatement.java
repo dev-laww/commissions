@@ -30,7 +30,7 @@ public class MiniStatement {
     JLabel background = new JLabel("", image, JLabel.CENTER);
     
     MiniStatement(){
-        ArrayList<Transaction> userTransactions = Database.getUserTransactions(BankSystem.currentUser.id);
+        ArrayList<Transaction> userTransactions = Database.getUserTransactions(Database.user.id);
 
         if (userTransactions == null || userTransactions.size() == 0) {
             JOptionPane.showMessageDialog(null, "No transactions found.");
@@ -39,7 +39,7 @@ public class MiniStatement {
             return;
         }
 
-        Transaction transaction = new Transaction(BankSystem.currentUser.id, 0, "view ministatement");
+        Transaction transaction = new Transaction(Database.user.id, 0, "view ministatement");
         if (!Database.saveTransaction(transaction)) {
             frame.dispose();
             new UserMenu();
@@ -60,12 +60,12 @@ public class MiniStatement {
         background.add(header1);
 
         accId.setBounds(100, 100, 600, 40);
-        accId.setText("ACCOUNT NO: " + BankSystem.currentUser.id);
+        accId.setText("ACCOUNT NO: " + Database.user.id);
         accId.setForeground(Color.WHITE);
         background.add(accId);
 
         balance.setBounds(100, 120, 600, 40);
-        balance.setText("Balance: " + String.format("%.2f", BankSystem.currentUser.balance));
+        balance.setText("Balance: " + String.format("%.2f", Database.user.balance));
         balance.setForeground(Color.WHITE);
         background.add(balance);
 

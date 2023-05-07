@@ -228,7 +228,7 @@ public class Login {
                 JOptionPane.showMessageDialog(null, "Pin code changed successfully!");
 
                 frame.dispose();
-                BankSystem.currentUser = user; // eto yung nakalimutan nyo gawin kaya may error hahaha
+                Database.user = user; // eto yung nakalimutan nyo gawin kaya may error hahaha
                 new UserMenu();
                 return;
 
@@ -239,7 +239,7 @@ public class Login {
         }
 
         frame.dispose();
-        BankSystem.currentUser = user;
+        Database.user = user;
         new UserMenu();
     }
 }

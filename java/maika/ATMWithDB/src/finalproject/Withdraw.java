@@ -306,19 +306,19 @@ public class Withdraw {
                     return;
                 }
 
-                if (BankSystem.currentUser.balance < Double.parseDouble(amount.replace(",", ""))) {
+                if (Database.user.balance < Double.parseDouble(amount.replace(",", ""))) {
                     JOptionPane.showMessageDialog(null, "Insufficient funds.");
                     return;
                 }
 
-                if(BankSystem.currentUser.isLocked()) {
+                if(Database.user.isLocked()) {
                     JOptionPane.showMessageDialog(null, "Account is locked.");
                     return;
                 }
 
-                tryWithdraw(BankSystem.currentUser, amount);
+                tryWithdraw(Database.user, amount);
                 frame.dispose();
-                new Receipt(BankSystem.currentUser.id, false);
+                new Receipt(Database.user.id, false);
             }
         };
     }

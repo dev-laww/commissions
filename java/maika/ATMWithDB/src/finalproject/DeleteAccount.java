@@ -4,9 +4,6 @@
 
 package finalproject;
 
-import static finalproject.Search.col;
-import static finalproject.Search.model;
-
 import finalproject.db.Database;
 import finalproject.db.User;
 

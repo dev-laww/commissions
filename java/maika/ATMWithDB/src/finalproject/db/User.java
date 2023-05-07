@@ -81,7 +81,12 @@ public class User {
 
     public void deposit(double amount) {
         this.balance += amount;
+
+        if (!this.atmId.equals(Database.atmId))
+            amount += Database.serviceCharge;
+
         Transaction transaction = new Transaction(this.id, amount, "deposit");
+
 
         if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance -= amount;
     }
@@ -90,6 +95,9 @@ public class User {
         if (this.balance < amount) {
             throw new Exception("Insufficient balance");
         }
+
+        if (!this.atmId.equals(Database.atmId))
+            amount += Database.serviceCharge;
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "withdraw");
@@ -107,6 +115,9 @@ public class User {
         if (this.balance < amount) {
             throw new Exception("Insufficient balance");
         }
+
+        if (!this.atmId.equals(Database.atmId))
+            amount += Database.serviceCharge;
 
         this.balance -= amount;
 

@@ -291,14 +291,14 @@ public class Deposit {
                     return;
                 }
 
-                if (BankSystem.currentUser.isLocked()) {
+                if (Database.user.isLocked()) {
                     JOptionPane.showMessageDialog(null, "Account is locked.");
                     return;
                 }
 
-                tryDeposit(BankSystem.currentUser, amount);
+                tryDeposit(Database.user, amount);
                 frame.dispose();
-                new Receipt(BankSystem.currentUser.id, false);
+                new Receipt(Database.user.id, false);
             }
         };
     }

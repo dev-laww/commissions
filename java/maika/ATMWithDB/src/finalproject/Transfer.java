@@ -337,24 +337,24 @@ public class Transfer {
                     return;
                 }
 
-                if (BankSystem.currentUser.balance < Double.parseDouble(amount.replace(",", ""))) {
+                if (Database.user.balance < Double.parseDouble(amount.replace(",", ""))) {
                     JOptionPane.showMessageDialog(null, "Insufficient funds.");
                     return;
                 }
 
-                if(BankSystem.currentUser.isLocked()) {
+                if(Database.user.isLocked()) {
                     JOptionPane.showMessageDialog(null, "Account is locked.");
                     return;
                 }
 
-                if (BankSystem.currentUser.id.equals(receiverID)) {
+                if (Database.user.id.equals(receiverID)) {
                     JOptionPane.showMessageDialog(null, "You cannot transfer money to yourself.");
                     return;
                 }
 
-                tryTransfer(BankSystem.currentUser, receiverID, Double.parseDouble(amount));
+                tryTransfer(Database.user, receiverID, Double.parseDouble(amount));
                 frame.dispose();
-                new Receipt(BankSystem.currentUser.id, false);
+                new Receipt(Database.user.id, false);
             }
         };
     }

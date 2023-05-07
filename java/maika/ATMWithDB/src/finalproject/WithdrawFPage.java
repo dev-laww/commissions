@@ -5,7 +5,6 @@
 package finalproject;
 
 import finalproject.db.Database;
-import finalproject.db.Transaction;
 import finalproject.db.User;
 
 import java.awt.Color;
@@ -201,9 +200,9 @@ public class WithdrawFPage {
                     return;
                 }
 
-                Withdraw.tryWithdraw(BankSystem.currentUser, amount);
+                Withdraw.tryWithdraw(Database.user, amount);
                 frame.dispose();
-                new Receipt(BankSystem.currentUser.id, false);
+                new Receipt(Database.user.id, false);
             }
         });
     }
