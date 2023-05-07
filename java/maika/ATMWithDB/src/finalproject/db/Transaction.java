@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 public class Transaction {
     public String id;
     private final String userID;
+    private String transferUserID;
     public final double amount;
     public final String type;
     public Timestamp timestamp;
@@ -19,9 +20,17 @@ public class Transaction {
         this.type = type;
     }
 
-    Transaction(String id, String userID, double amount, String type, Timestamp timestamp) {
+    public Transaction(String userID, String transferUserID, double amount) {
+        this.userID = userID;
+        this.transferUserID = transferUserID;
+        this.amount = amount;
+        this.type = "transfer";
+    }
+
+    Transaction(String id, String userID, String transferUserID, double amount, String type, Timestamp timestamp) {
         this.id = id;
         this.userID = userID;
+        this.transferUserID = transferUserID;
         this.amount = amount;
         this.type = type;
         this.timestamp = timestamp;
@@ -29,6 +38,10 @@ public class Transaction {
 
     public String userID() {
         return this.userID;
+    }
+
+    public String transferUserID() {
+        return this.transferUserID;
     }
 
     public String[] toArray() {

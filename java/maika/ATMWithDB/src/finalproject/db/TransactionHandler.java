@@ -28,7 +28,15 @@ public class TransactionHandler {
 
         if (!rs.next()) {
             ps = conn.prepareStatement(
-                    "INSERT INTO transactions (user_id, amount, type) VALUES (?, ?, ?)"
+                    """
+                            INSERT INTO transactions (
+                            user_id,
+                            transfer_user_id,
+                            type,
+                            amount
+
+                            ) VALUES (?,?,?,?)
+                            """
             );
 
             formatStatement(transaction, ps);
@@ -61,7 +69,7 @@ public class TransactionHandler {
         conn.close();
     }
 
-    public static Transaction getTransaction(String id) throws SQLException{
+    public static Transaction getTransaction(String id) throws SQLException {
         Transaction transaction;
         Connection conn = Database.getConnection();
 
@@ -78,13 +86,7 @@ public class TransactionHandler {
             return null;
         }
 
-        transaction = new Transaction(
-                rs.getString("id"),
-                rs.getString("user_id"),
-                rs.getDouble("amount"),
-                rs.getString("type"),
-                rs.getTimestamp("timestamp")
-        );
+        transaction = transactionFromRs(rs);
 
         conn.close();
         return transaction;
@@ -104,13 +106,7 @@ public class TransactionHandler {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         while (rs.next()) {
-            Transaction transaction = new Transaction(
-                    rs.getString("id"),
-                    rs.getString("user_id"),
-                    rs.getDouble("amount"),
-                    rs.getString("type"),
-                    rs.getTimestamp("datetime")
-            );
+            Transaction transaction = transactionFromRs(rs);
 
             transactions.add(transaction);
         }
@@ -137,19 +133,24 @@ public class TransactionHandler {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         while (rs.next()) {
-            Transaction transaction = new Transaction(
-                    rs.getString("id"),
-                    rs.getString("user_id"),
-                    rs.getDouble("amount"),
-                    rs.getString("type"),
-                    rs.getTimestamp("datetime")
-            );
+            Transaction transaction = transactionFromRs(rs);
 
             transactions.add(transaction);
         }
 
         conn.close();
         return transactions;
+    }
+
+    private static Transaction transactionFromRs(ResultSet rs) throws SQLException {
+        return new Transaction(
+                rs.getString("id"),
+                rs.getString("user_id"),
+                rs.getString("transfer_user_id"),
+                rs.getDouble("amount"),
+                rs.getString("type"),
+                rs.getTimestamp("datetime")
+        );
     }
 
     private void formatStatement(Transaction transaction, PreparedStatement ps) throws SQLException {

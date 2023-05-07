@@ -4,16 +4,16 @@ import javax.swing.*;
 
 public class User {
     public String id;
-    public String name;
+    private String name;
     public String address;
     public double balance;
     public String status;
     public final String atmMachine;
+    public final String firstName;
+    public final String middleName;
+    public final String lastName;
 
     private String pin;
-    private final String firstName;
-    private final String middleName;
-    private final String lastName;
     private String barangay;
     private String municipality;
     private String province;
@@ -30,8 +30,8 @@ public class User {
             String municipality,
             String province,
             String contact,
-            String pin,
             String email,
+            String pin,
             double balance,
             String atmMachine
     ) {
@@ -81,37 +81,46 @@ public class User {
         this.atmMachine = atmMachine;
     }
 
-    public void deposit(double amount) throws Exception {
+    public void deposit(double amount) {
         this.balance += amount;
-//        Transaction transaction = new Transaction(this.id, amount, "deposit");
-//
-//        Database.addTransaction(transaction);
-//        Database.updateUser(this);
+        Transaction transaction = new Transaction(this.id, amount, "deposit");
+
+        Database.saveTransaction(transaction);
+        Database.saveUser(this);
     }
 
-    public void withdraw(double amount) {
-//        if (this.balance < amount) {
-//            throw new Exception("Insufficient balance");
-//        }
+    public void withdraw(double amount) throws Exception {
+        if (this.balance < amount) {
+            throw new Exception("Insufficient balance");
+        }
 
         this.balance -= amount;
-//        Transaction transaction = new Transaction(this.id, amount, "withdraw");
-//        Database.addTransaction(transaction);
-//        Database.updateUser(this);
+        Transaction transaction = new Transaction(this.id, amount, "withdraw");
+        Database.saveTransaction(transaction);
+        Database.saveUser(this);
     }
 
-    public void transfer(String accID, double amount) {
-//        User user = Database.getUser(accID);
-//
-//        if (user == null) {
-//            throw new Exception("Account not found");
-//        }
-//
-//        if (this.balance < amount) {
-//            throw new Exception("Insufficient balance");
-//        }
+    public void transfer(String accID, double amount) throws Exception {
+        User user = Database.getUser(accID);
+
+        if (user == null) {
+            throw new Exception("Account not found");
+        }
+
+        if (this.balance < amount) {
+            throw new Exception("Insufficient balance");
+        }
 
         this.balance -= amount;
+        user.balance += amount;
+
+        Transaction transaction = new Transaction(this.id, user.id, amount);
+        Database.saveTransaction(transaction);
+        Database.saveUser(this);
+        transaction = new Transaction(user.id, amount, "receive");
+        Database.saveTransaction(transaction);
+        Database.saveUser(user);
+
     }
 
 
@@ -163,12 +172,24 @@ public class User {
         this.address = String.format("%s, %s, %s", this.barangay, this.municipality, this.province);
     }
 
+    public String name() {
+        return this.name;
+    }
+
     public String pin() {
         return this.pin;
     }
 
-    public String name() {
-        return this.name;
+    public String barangay() {
+        return this.barangay;
+    }
+
+    public String municipality() {
+        return this.municipality;
+    }
+
+    public String province() {
+        return this.province;
     }
 
     public String address() {

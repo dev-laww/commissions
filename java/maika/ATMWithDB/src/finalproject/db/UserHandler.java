@@ -28,7 +28,22 @@ public class UserHandler {
 
         if (!rs.next()) {
             ps = conn.prepareStatement(
-                    "INSERT INTO users (name, address, contact, email, pin, status, balance) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                    """
+                                INSERT INTO users (
+                                    status,
+                                    first_name,
+                                    middle_name,
+                                    last_name,
+                                    barangay,
+                                    municipality,
+                                    province,
+                                    contact,
+                                    email,
+                                    pin,
+                                    balance,
+                                    atm_machine
+                                ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+                            """
             );
 
             formatStatement(user, ps);
@@ -39,7 +54,22 @@ public class UserHandler {
         }
 
         ps = conn.prepareStatement(
-                "UPDATE users SET name = ?, address = ?, contact = ?, email = ?, pin = ?, status = ?, balance = ? WHERE id = " + user.id
+                """
+                            UPDATE users SET
+                                status = ?,
+                                first_name = ?,
+                                middle_name = ?,
+                                last_name = ?,
+                                barangay = ?,
+                                municipality = ?,
+                                province = ?,
+                                contact = ?,
+                                email = ?,
+                                pin = ?,
+                                balance = ?,
+                                atm_machine = ?
+                            WHERE id =
+                        """ + user.id
         );
 
         formatStatement(user, ps);
@@ -56,7 +86,14 @@ public class UserHandler {
             throw new SQLException("Connection failed");
         }
 
-        PreparedStatement ps = conn.prepareStatement("DELETE FROM users WHERE id = ?");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO dropped_users SELECT * FROM users WHERE id = ?");
+        ps.setString(1, user.id);
+        ps.executeUpdate();
+
+        ps = conn.prepareStatement("INSERT INTO droppped_transactions WHERE user_id = ?");
+        ps.setString(1, user.id);
+
+        ps = conn.prepareStatement("DELETE FROM users WHERE id = ?");
         ps.setString(1, user.id);
         ps.executeUpdate();
 
@@ -64,7 +101,6 @@ public class UserHandler {
     }
 
     public static User getUser(String id) throws SQLException {
-        User user;
         Connection conn = Database.getConnection();
 
         if (conn == null) {
@@ -81,16 +117,7 @@ public class UserHandler {
             return null;
         }
 
-        user = new User(
-                rs.getString("id"),
-                rs.getString("name"),
-                rs.getString("email"),
-                rs.getString("contact"),
-                rs.getString("address"),
-                rs.getString("pin"),
-                rs.getDouble("balance"),
-                rs.getString("status")
-        );
+        User user = userFromRs(rs);
 
         conn.close();
         return user;
@@ -109,29 +136,43 @@ public class UserHandler {
         ArrayList<User> users = new ArrayList<>();
 
         while (rs.next()) {
-            users.add(new User(
-                    rs.getString("id"),
-                    rs.getString("name"),
-                    rs.getString("email"),
-                    rs.getString("contact"),
-                    rs.getString("address"),
-                    rs.getString("pin"),
-                    rs.getDouble("balance"),
-                    rs.getString("status")
-            ));
+            users.add(userFromRs(rs));
         }
 
         conn.close();
         return users;
     }
 
+    private static User userFromRs(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getString("id"),
+                rs.getString("status"),
+                rs.getString("first_name"),
+                rs.getString("middle_name"),
+                rs.getString("last_name"),
+                rs.getString("barangay"),
+                rs.getString("municipality"),
+                rs.getString("province"),
+                rs.getString("contact"),
+                rs.getString("email"),
+                rs.getString("pin"),
+                rs.getDouble("balance"),
+                rs.getString("atm_machine")
+        );
+    }
+
     private void formatStatement(User user, PreparedStatement ps) throws SQLException {
-        ps.setString(1, user.name);
-        ps.setString(2, user.address());
-        ps.setString(3, user.contact());
-        ps.setString(4, user.email());
-        ps.setString(5, user.pin());
-        ps.setString(6, user.status);
-        ps.setDouble(7, user.balance);
+        ps.setString(1, user.status);
+        ps.setString(2, user.firstName);
+        ps.setString(3, user.middleName);
+        ps.setString(4, user.lastName);
+        ps.setString(5, user.barangay());
+        ps.setString(6, user.municipality());
+        ps.setString(7, user.province());
+        ps.setString(8, user.contact());
+        ps.setString(9, user.email());
+        ps.setString(10, user.pin());
+        ps.setDouble(11, user.balance);
+        ps.setString(12, user.atmMachine);
     }
 }
