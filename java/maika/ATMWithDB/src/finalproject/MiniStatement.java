@@ -33,8 +33,6 @@ public class MiniStatement {
         ArrayList<Transaction> userTransactions = Database.getUserTransactions(BankSystem.currentUser.id);
 
         if (userTransactions == null || userTransactions.size() == 0) {
-            System.out.println(userTransactions);
-            System.out.println(userTransactions.size());
             JOptionPane.showMessageDialog(null, "No transactions found.");
             frame.dispose();
             new UserMenu();
