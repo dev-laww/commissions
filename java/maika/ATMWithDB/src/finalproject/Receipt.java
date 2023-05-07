@@ -57,12 +57,16 @@ public class Receipt {
         }
 
         Transaction transaction = transactions.get(transactions.size() - 1);
+        String transFerUserID = transaction.transferUserID();
+        String receiver = transaction.type.equals("transfer") ? String.format("  RECEIVER ID: XXXXX%s%n", transFerUserID.substring(transFerUserID.length() - 3)) : "";
 
         String sb = "\t  JJTM MACHINE\n\n" + String.format("  DATE : TIME \n  %s%n%n", transaction.timestamp) +
-                String.format("  ACCOUNT ID: XXXXX%s%n", transaction.userID().substring(transaction.userID().length() - 3)) +
-                String.format("  Serial No. %s%n", transaction.id) +
-                String.format("  %-20s %20.2f", transaction.type.substring(0, 1).toUpperCase() + transaction.type.substring(1), transaction.amount) +
-                "\n\n\n        Thank you for using JJTM MACHINE";
+                String.format("  ATM ID: %s%n", Database.atmId) +
+                String.format("  Serial No. %s%n%n", transaction.id) +
+                String.format("  ACCOUNT ID: XXXXX%s%n", userID.substring(userID.length() - 3)) +
+                receiver +
+                String.format("  %-20s %20.2f%n%n%n", transaction.type.substring(0, 1).toUpperCase() + transaction.type.substring(1), transaction.amount) +
+                "        Thank you for using JJTM MACHINE";
 
         tf.setText(sb);
     }

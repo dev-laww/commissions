@@ -29,6 +29,7 @@ public class LockedAccounts {
     JScrollPane sp = new JScrollPane(jt);
     ImageIcon image = new ImageIcon("pic9.png");
     JLabel background = new JLabel("", image, JLabel.CENTER);
+    private User user;
 
     LockedAccounts() {
         int count = 0;
@@ -94,9 +95,9 @@ public class LockedAccounts {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        txtAccId.addActionListener(getActionListener());
+        txtAccId.addActionListener(searchActionListener());
         btnUnlock.addActionListener(getActionListener());
-        btnSearch.addActionListener(getActionListener());
+        btnSearch.addActionListener(searchActionListener());
 
         btnCancel.addActionListener(new ActionListener() {
             @Override
@@ -107,7 +108,7 @@ public class LockedAccounts {
         });
     }
 
-    private ActionListener getActionListener() {
+    private ActionListener searchActionListener() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,16 +118,17 @@ public class LockedAccounts {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
                     return;
                 }
-                
+
                 if (accId.length() != 8) {
                     JOptionPane.showMessageDialog(null, "Account ID must be 8 digits.");
                     return;
                 }
 
-                User user = Database.getUser(accId);
+                user = Database.getUser(accId);
 
                 if (user == null) {
                     JOptionPane.showMessageDialog(null, "Account not found.");
+                    txtAccId.setText("");
                     return;
                 }
 
@@ -134,8 +136,20 @@ public class LockedAccounts {
                     JOptionPane.showMessageDialog(null, "Account is not locked.");
                     return;
                 }
-                
+
                 model.setDataVector(new String[][]{user.toArray()}, col);
+            }
+        };
+    }
+
+    private ActionListener getActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Please search for an account first.");
+                    return;
+                }
 
                 JPasswordField passwordField = new JPasswordField();
                 int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
@@ -151,7 +165,6 @@ public class LockedAccounts {
                 JOptionPane.showMessageDialog(null, "Wrong password");
                 return;
                 }
-
 
                 user.unlock();
                 frame.dispose();

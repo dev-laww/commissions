@@ -39,6 +39,13 @@ public class MiniStatement {
             return;
         }
 
+        Transaction transaction = new Transaction(BankSystem.currentUser.id, 0, "view ministatement");
+        if (!Database.saveTransaction(transaction)) {
+            frame.dispose();
+            new UserMenu();
+            return;
+        }
+
         String[][] tableData = new String[userTransactions.size()][3];
 
         for (Transaction t : userTransactions) {

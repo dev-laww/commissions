@@ -30,6 +30,7 @@ public class DeleteAccount {
     JScrollPane sp = new JScrollPane(jt);
     ImageIcon image = new ImageIcon("pic9.png");
     JLabel background = new JLabel("", image, JLabel.CENTER);
+    private User user;
 
     DeleteAccount() {
         String[][] tableData = new String[Database.users().size()][7];
@@ -79,9 +80,9 @@ public class DeleteAccount {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        txtAccId.addActionListener(getActionListener());
+        txtAccId.addActionListener(searchActionListener());
         btnDelete.addActionListener(getActionListener());
-        btnSearch.addActionListener(getActionListener());
+        btnSearch.addActionListener(searchActionListener());
 
         btnCancel.addActionListener(new ActionListener() {
             @Override
@@ -92,7 +93,7 @@ public class DeleteAccount {
         });
     }
 
-    private ActionListener getActionListener() {
+    private ActionListener searchActionListener() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,15 +109,27 @@ public class DeleteAccount {
                     return;
                 }
 
-
-                User user = Database.getUser(accId);
+                user = Database.getUser(accId);
 
                 if (user == null) {
                     JOptionPane.showMessageDialog(null, "Account not found.");
+                    txtAccId.setText("");
                     return;
                 }
 
                 model.setDataVector(new String[][]{user.toArray()}, col);
+            }
+        };
+    }
+
+    private ActionListener getActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (user == null) {
+                    JOptionPane.showMessageDialog(null, "Please search for an account first.");
+                    return;
+                }
 
                 JPasswordField passwordField = new JPasswordField();
                 int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
@@ -133,14 +146,13 @@ public class DeleteAccount {
                     return;
                 }
 
-
                 try {
                     if (user.isLocked()) {
                         JOptionPane.showMessageDialog(null, "Account is locked.");
                         return;
                     }
 
-                    if(!user.close()) return;
+                    if (!user.close()) return;
 
                     JOptionPane.showMessageDialog(null, "Account deleted.");
                     frame.dispose();

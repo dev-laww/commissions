@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
-    static String atmMachine = "ATM-3001";
+    public static String atmMachine = "ATM-3001";
     public static HashMap<String, String> admin = new HashMap<>();
     static {
         admin.put("1001", "1234");
