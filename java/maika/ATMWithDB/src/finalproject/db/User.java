@@ -83,8 +83,7 @@ public class User {
         this.balance += amount;
         Transaction transaction = new Transaction(this.id, amount, "deposit");
 
-        Database.saveTransaction(transaction);
-        Database.saveUser(this);
+        if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance -= amount;
     }
 
     public void withdraw(double amount) throws Exception {
@@ -94,8 +93,8 @@ public class User {
 
         this.balance -= amount;
         Transaction transaction = new Transaction(this.id, amount, "withdraw");
-        Database.saveTransaction(transaction);
-        Database.saveUser(this);
+
+        if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance += amount;
     }
 
     public void transfer(String accID, double amount) throws Exception {
@@ -110,15 +109,15 @@ public class User {
         }
 
         this.balance -= amount;
-        user.balance += amount;
 
         Transaction transaction = new Transaction(this.id, user.id, amount);
-        Database.saveTransaction(transaction);
-        Database.saveUser(this);
-        transaction = new Transaction(user.id, amount, "receive");
-        Database.saveTransaction(transaction);
-        Database.saveUser(user);
 
+        if (!Database.saveTransaction(transaction) && Database.saveUser(this)) this.balance += amount;
+
+        transaction = new Transaction(user.id, amount, "receive");
+        user.balance += amount;
+
+        if (!Database.saveTransaction(transaction) && Database.saveUser(user)) user.balance -= amount;
     }
 
     public void lock() {
