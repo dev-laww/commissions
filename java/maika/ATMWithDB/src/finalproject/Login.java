@@ -222,6 +222,9 @@ public class Login {
 
             if (choice == JOptionPane.YES_OPTION) {
                 user.updatePin(newPin);
+
+                if (!Database.saveUser(user)) return;
+
                 JOptionPane.showMessageDialog(null, "Pin code changed successfully!");
 
                 frame.dispose();
