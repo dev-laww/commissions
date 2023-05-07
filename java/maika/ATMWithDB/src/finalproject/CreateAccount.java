@@ -25,7 +25,7 @@ public class CreateAccount {
     JLabel mname = new JLabel("MIDDLE NAME:");
     JLabel lname = new JLabel("LAST NAME:");
     
-    JLabel address = new JLabel("BARANGAY:"); //barangay
+    JLabel barangay = new JLabel("BARANGAY:"); //barangay
     JLabel municipality = new JLabel("MUNICIPALITY:");
     JLabel province = new JLabel("PROVINCE:");
     
@@ -37,7 +37,7 @@ public class CreateAccount {
     JLabel initialDeposit = new JLabel("INITIAL DEPOSIT:");
     JTextField tfInitialDeposit = new JTextField();
     
-    JTextField tfAddress = new JTextField();//barangay
+    JTextField tfBarangay = new JTextField();//barangay
     JTextField tfmunicipality = new JTextField();
     JTextField tfprovince = new JTextField();
     
@@ -60,11 +60,11 @@ public class CreateAccount {
         label.add(tflname);
         label.add(tfmname);
         
-        label.add(address);
+        label.add(barangay);
         label.add(municipality);
         label.add(province);       
         
-        label.add(tfAddress);
+        label.add(tfBarangay);
         label.add(tfmunicipality);
         label.add(tfprovince);
         
@@ -124,12 +124,12 @@ public class CreateAccount {
         tflname.setBounds(195, 247, 365, 33);
         tflname.setFont(new Font(null, Font.BOLD, 15));
 
-        address.setFont(new Font(null, Font.PLAIN, 20));
-        address.setBounds(15, 300, 300, 40);
-        address.setForeground(Color.WHITE);
+        barangay.setFont(new Font(null, Font.PLAIN, 20));
+        barangay.setBounds(15, 300, 300, 40);
+        barangay.setForeground(Color.WHITE);
 
-        tfAddress.setBounds(195, 302, 365, 33);
-        tfAddress.setFont(new Font(null, Font.BOLD, 15));
+        tfBarangay.setBounds(195, 302, 365, 33);
+        tfBarangay.setFont(new Font(null, Font.BOLD, 15));
         
         municipality.setFont(new Font(null, Font.PLAIN, 20));
         municipality.setBounds(15, 355, 300, 40);
@@ -196,7 +196,7 @@ public class CreateAccount {
 
         enter.addActionListener(getActionListener());
         tfname.addActionListener(getActionListener());
-        tfAddress.addActionListener(getActionListener());
+        tfBarangay.addActionListener(getActionListener());
         tfEmailAdd.addActionListener(getActionListener());
         tfContactNo.addActionListener(getActionListener());
         tfInitialDeposit.addActionListener(getActionListener());
@@ -208,16 +208,29 @@ public class CreateAccount {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String initialDeposit = tfInitialDeposit.getText();
-                String name = tfname.getText();
-                String address = tfAddress.getText();
+                String fname = tfname.getText();
+                String mname = tfmname.getText();
+                String lname = tflname.getText();
+                String barangay = tfBarangay.getText();
+                String municipality = tfmunicipality.getText();
+                String province = tfprovince.getText();
                 String email = tfEmailAdd.getText();
                 String contactNo = tfContactNo.getText();
-                String id = tfID.getText();
                 String pin = String.valueOf(tfPass.getPassword());
                 double deposit;
 
-                if (name.isEmpty() || address.isEmpty() || email.isEmpty() || contactNo.isEmpty() || id.isEmpty() || pin.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Please fill up all the fields");
+                if (
+                        fname.isEmpty() ||
+                        mname.isEmpty() ||
+                        lname.isEmpty() ||
+                        barangay.isEmpty() ||
+                        municipality.isEmpty() ||
+                        province.isEmpty() ||
+                        email.isEmpty() ||
+                        contactNo.isEmpty() ||
+                        pin.isEmpty()
+                ) {
+                    JOptionPane.showMessageDialog(null, "Please fill up all fields");
                     return;
                 }
 
@@ -234,13 +247,20 @@ public class CreateAccount {
                     return;
                 }
 
-                try {
-                    User user = new User(name, email, contactNo, address, pin, deposit, "active");
-                    Database.addUser(user);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error adding user: " + ex.getMessage());
-                    return;
-                }
+                User user = new User(
+                        fname,
+                        mname,
+                        lname,
+                        barangay,
+                        municipality,
+                        province,
+                        email,
+                        contactNo,
+                        pin,
+                        deposit
+                );
+
+                if (!Database.saveUser(user)) return;
 
                 JOptionPane.showMessageDialog(null, "Account Created!");
                 tfname.setText("");
