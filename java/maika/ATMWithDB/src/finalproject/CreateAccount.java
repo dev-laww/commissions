@@ -17,18 +17,18 @@ public class CreateAccount {
     static JTextField tfname = new JTextField();//fist name
     static JTextField tfmname = new JTextField();
     static JTextField tflname = new JTextField();
-    
+
     static JPasswordField tfPass = new JPasswordField();
     JFrame frame = new JFrame();
     JLabel createAccLabel = new JLabel("CREATE ACCOUNT");
     JLabel name = new JLabel("FIRST NAME:"); //first name
     JLabel mname = new JLabel("MIDDLE NAME:");
     JLabel lname = new JLabel("LAST NAME:");
-    
+
     JLabel barangay = new JLabel("BARANGAY:"); //barangay
     JLabel municipality = new JLabel("MUNICIPALITY:");
     JLabel province = new JLabel("PROVINCE:");
-    
+
     JLabel emailAdd = new JLabel("EMAIL:");
     JTextField tfEmailAdd = new JTextField();
     JLabel contactNo = new JLabel("CONTACT NO:");
@@ -36,11 +36,11 @@ public class CreateAccount {
     JLabel accountID = new JLabel("ACCOUNT NO:");
     JLabel initialDeposit = new JLabel("INITIAL DEPOSIT:");
     JTextField tfInitialDeposit = new JTextField();
-    
+
     JTextField tfBarangay = new JTextField();//barangay
     JTextField tfmunicipality = new JTextField();
     JTextField tfprovince = new JTextField();
-    
+
     JTextField tfID = new JTextField();
     JLabel pin = new JLabel("PINCODE:");
     JButton back = new JButton("BACK");
@@ -49,30 +49,30 @@ public class CreateAccount {
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
     CreateAccount() {
-//        label.add(accountID); remove nyo na to since di accurate yung account number
+        label.add(accountID);
         label.add(createAccLabel);
-        
+
         label.add(name);
         label.add(mname);
         label.add(lname);
-        
+
         label.add(tfname);
         label.add(tflname);
         label.add(tfmname);
-        
+
         label.add(barangay);
         label.add(municipality);
-        label.add(province);       
-        
+        label.add(province);
+
         label.add(tfBarangay);
         label.add(tfmunicipality);
         label.add(tfprovince);
-        
+
         label.add(emailAdd);
         label.add(tfEmailAdd);
         label.add(contactNo);
         label.add(tfContactNo);
-//        label.add(tfID);
+        label.add(tfID);
         label.add(initialDeposit);
         label.add(tfInitialDeposit);
         label.add(pin);
@@ -109,14 +109,14 @@ public class CreateAccount {
 
         tfname.setBounds(195, 147, 365, 33);
         tfname.setFont(new Font(null, Font.BOLD, 15));
-        
+
         mname.setFont(new Font(null, Font.PLAIN, 20));
         mname.setBounds(15, 195, 300, 40);
         mname.setForeground(Color.WHITE);
 
         tfmname.setBounds(195, 197, 365, 33);
         tfmname.setFont(new Font(null, Font.BOLD, 15));
-        
+
         lname.setFont(new Font(null, Font.PLAIN, 20));
         lname.setBounds(15, 245, 300, 40);
         lname.setForeground(Color.WHITE);
@@ -130,14 +130,14 @@ public class CreateAccount {
 
         tfBarangay.setBounds(195, 302, 365, 33);
         tfBarangay.setFont(new Font(null, Font.BOLD, 15));
-        
+
         municipality.setFont(new Font(null, Font.PLAIN, 20));
         municipality.setBounds(15, 355, 300, 40);
         municipality.setForeground(Color.WHITE);
 
         tfmunicipality.setBounds(195, 357, 365, 33);
         tfmunicipality.setFont(new Font(null, Font.BOLD, 15));
-        
+
         province.setFont(new Font(null, Font.PLAIN, 20));
         province.setBounds(15, 405, 300, 40);
         province.setForeground(Color.WHITE);
@@ -271,6 +271,4 @@ public class CreateAccount {
             }
         };
     }
-} 
-    
-
+}

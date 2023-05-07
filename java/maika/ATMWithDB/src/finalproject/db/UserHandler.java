@@ -37,8 +37,8 @@ public class UserHandler {
                                     barangay,
                                     municipality,
                                     province,
-                                    contact,
                                     email,
+                                    contact,
                                     pin,
                                     balance,
                                     atm_id
