@@ -1,167 +1,130 @@
-/**
- * @author: tora
- */
-
 package finalproject.db;
 
 import javax.swing.*;
 
 public class User {
-    public final String name;
     public String id;
-    private final String email;
-    private final String contact;
-    private final String address;
-    private String pin;
+    public String name;
+    public String address;
     public double balance;
     public String status;
+    public final String atmMachine;
 
-    public User(
+    private String pin;
+    private final String firstName;
+    private final String middleName;
+    private final String lastName;
+    private String barangay;
+    private String municipality;
+    private String province;
+    private final String email;
+    private final String contact;
+
+     User(
             String id,
-            String name,
-            String email,
+            String status,
+            String firstName,
+            String middleName,
+            String lastName,
+            String barangay,
+            String municipality,
+            String province,
             String contact,
-            String address,
             String pin,
+            String email,
             double balance,
-            String status
+            String atmMachine
     ) {
-
         this.id = id;
-        this.name = name;
+        this.balance = balance;
+        this.status = status;
+        this.pin = pin;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.barangay = barangay;
+        this.municipality = municipality;
+        this.province = province;
         this.email = email;
         this.contact = contact;
-        this.address = address;
-        this.pin = pin;
-        this.balance = balance;
+        this.atmMachine = atmMachine;
 
-        String[] stats = {
-                "active",
-                "closed",
-                "locked"
-        };
-
-        for (String stat : stats) {
-            if (stat.equals(status)) {
-                this.status = status;
-                break;
-            }
-        }
+        this.name = String.format("%s %s %s", this.firstName, this.middleName, this.lastName);
+        this.address = String.format("%s, %s, %s", this.barangay, this.municipality, this.province);
     }
 
     public User(
-            String name,
-            String email,
+            String status,
+            String firstName,
+            String middleName,
+            String lastName,
+            String barangay,
+            String municipality,
+            String province,
             String contact,
-            String address,
             String pin,
+            String email,
             double balance,
-            String status
+            String atmMachine
     ) {
-        this.name = name;
+        this.balance = balance;
+        this.status = status;
+        this.pin = pin;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.barangay = barangay;
+        this.municipality = municipality;
+        this.province = province;
         this.email = email;
         this.contact = contact;
-        this.address = address;
-        this.pin = pin;
-        this.balance = balance;
-
-        String[] stats = {
-                "active",
-                "closed",
-                "locked"
-        };
-
-        for (String stat : stats) {
-            if (stat.equals(status)) {
-                this.status = status;
-                break;
-            }
-        }
-    }
-
-    public User() {
-        this.id = "0";
-        this.name = "Default User";
-        this.email = "email@mail.com";
-        this.contact = "09121234567";
-        this.address = "Address";
-        this.pin = "0000";
-        this.balance = 0;
-        this.status = "Active";
+        this.atmMachine = atmMachine;
     }
 
     public void deposit(double amount) throws Exception {
         this.balance += amount;
-        Transaction transaction = new Transaction(this.id, amount, "deposit");
-
-        Database.addTransaction(transaction);
-        Database.updateUser(this);
+//        Transaction transaction = new Transaction(this.id, amount, "deposit");
+//
+//        Database.addTransaction(transaction);
+//        Database.updateUser(this);
     }
 
-    public void withdraw(double amount) throws Exception {
-        if (this.balance < amount) {
-            throw new Exception("Insufficient balance");
-        }
+    public void withdraw(double amount) {
+//        if (this.balance < amount) {
+//            throw new Exception("Insufficient balance");
+//        }
 
         this.balance -= amount;
-        Transaction transaction = new Transaction(this.id, amount, "withdraw");
-        Database.addTransaction(transaction);
-        Database.updateUser(this);
+//        Transaction transaction = new Transaction(this.id, amount, "withdraw");
+//        Database.addTransaction(transaction);
+//        Database.updateUser(this);
     }
 
-    public void transfer(String accID, double amount) throws Exception {
-        User user = Database.getUser(accID);
-
-        if (user == null) {
-            throw new Exception("Account not found");
-        }
-
-        if (this.balance < amount) {
-            throw new Exception("Insufficient balance");
-        }
+    public void transfer(String accID, double amount) {
+//        User user = Database.getUser(accID);
+//
+//        if (user == null) {
+//            throw new Exception("Account not found");
+//        }
+//
+//        if (this.balance < amount) {
+//            throw new Exception("Insufficient balance");
+//        }
 
         this.balance -= amount;
-        Transaction transaction = new Transaction(this.id, amount, "transfer");
-        Database.updateUser(this);
-        Database.addTransaction(transaction);
-        user.balance += amount;
-        transaction = new Transaction(user.id, amount, "receive");
-        Database.updateUser(user);
-        Database.addTransaction(transaction);
     }
+
 
     public void lock() {
         this.status = "locked";
-
-        try {
-            Database.updateUser(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void unlock() {
         this.status = "active";
-
-        try {
-            Database.updateUser(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void close() {
         this.status = "closed";
-        UserHandler db = new UserHandler(this);
-        try {
-            db.save();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void open() {
-        this.status = "active";
     }
 
     public boolean isLocked() {
@@ -190,12 +153,14 @@ public class User {
         }
 
         this.pin = newPin;
+    }
 
-        try {
-            Database.updateUser(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void updateAddress(String barangay, String municipality, String province) {
+        this.barangay = barangay;
+        this.municipality = municipality;
+        this.province = province;
+
+        this.address = String.format("%s, %s, %s", this.barangay, this.municipality, this.province);
     }
 
     public String pin() {
@@ -217,6 +182,7 @@ public class User {
     public String contact() {
         return this.contact;
     }
+
 
     public String[] toLockedArray() {
         return new String[]{
