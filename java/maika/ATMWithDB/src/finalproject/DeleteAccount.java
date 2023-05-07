@@ -140,7 +140,8 @@ public class DeleteAccount {
                         return;
                     }
 
-                    Database.deleteUser(user.id);
+                    if(!user.close()) return;
+
                     JOptionPane.showMessageDialog(null, "Account deleted.");
                     frame.dispose();
                     new AdminMenu();
