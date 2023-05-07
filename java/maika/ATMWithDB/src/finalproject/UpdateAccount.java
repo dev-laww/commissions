@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 
 public class UpdateAccount {
     JFrame frame = new JFrame();
-    ImageIcon image = new ImageIcon("pic6.jpg");
+    ImageIcon image = new ImageIcon("pic6.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
     JButton backButton = new JButton("BACK");
     JButton updateButton = new JButton("UPDATE");
@@ -41,7 +41,7 @@ public class UpdateAccount {
         backButton.setBounds(30, 270, 90, 30);
         backButton.setFocusable(false);
 
-        updateButton.setBounds(470, 270, 90, 30);
+        updateButton.setBounds(450, 270, 90, 30);
         updateButton.setFocusable(false);
 
         btnSearch.setBounds(350, 270, 90, 30);
@@ -49,15 +49,15 @@ public class UpdateAccount {
         btnSearch.setVisible(isAdmin);
 
         accountIDLabel.setBounds(30, 80, 150, 30);
-        accountIDLabel.setText(isAdmin ? "Account ID: " : "Customer ID: ");
+        accountIDLabel.setText(isAdmin ? "Account NO: " : "Customer ID: ");
         accountIDLabel.setFont(new Font(null, Font.BOLD, 15));
         accountIDLabel.setForeground(Color.WHITE);
 
-        tfID.setBounds(150, 80, 300, 30);
+        tfID.setBounds(150, 80, 400, 30);
         tfID.setFont(new Font(null, Font.BOLD, 15));
         tfID.setEditable(isAdmin);
         tfID.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.id);
-        tfID.setForeground(Color.WHITE);
+        tfID.setForeground(Color.BLACK);
 
         accountNameLabel.setBounds(30, 120, 300, 30);
         accountNameLabel.setText(BankSystem.currentUser == null ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name);
@@ -69,7 +69,7 @@ public class UpdateAccount {
         address.setForeground(Color.WHITE);
         address.setFont(new Font(null, Font.BOLD, 15));
 
-        tfAddress.setBounds(150, 153, 300, 30);
+        tfAddress.setBounds(150, 153, 400, 30);
         tfAddress.setFont(new Font(null, Font.BOLD, 15));
         tfAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.address());
 
@@ -78,7 +78,7 @@ public class UpdateAccount {
         emailAddress.setForeground(Color.WHITE);
         emailAddress.setFont(new Font(null, Font.BOLD, 15));
 
-        tfEmailAddress.setBounds(150, 185, 300, 30);
+        tfEmailAddress.setBounds(150, 185, 400, 30);
         tfEmailAddress.setFont(new Font(null, Font.BOLD, 15));
         tfEmailAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.email());
 
@@ -87,7 +87,7 @@ public class UpdateAccount {
         phone.setForeground(Color.WHITE);
         phone.setFont(new Font(null, Font.BOLD, 15));
 
-        tfPhone.setBounds(150, 215, 300, 30);
+        tfPhone.setBounds(150, 215, 400, 30);
         tfPhone.setFont(new Font(null, Font.BOLD, 15));
         tfPhone.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.contact());
 

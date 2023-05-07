@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
- *
  * @author maikaordonez
  */
 public class Login {
@@ -28,15 +27,15 @@ public class Login {
     JTextField accIdTF = new JTextField();
     JLabel atm = new JLabel();
     JPasswordField pinCodeTF = new JPasswordField();
-    ImageIcon image = new ImageIcon("Login.jpg");
+    ImageIcon image = new ImageIcon("LOGIN.jpg");
     JLabel background = new JLabel("", image, JLabel.CENTER);
-    
-    Login(){
+
+    Login() {
         atm.setForeground(Color.WHITE);
         accIDLabel.setForeground(Color.WHITE);
         pinCodeLabel.setForeground(Color.WHITE);
-        
-        atm.setBounds(50, 120, 350,100);
+
+        atm.setBounds(50, 120, 350, 100);
         atm.setText("JJTM MACHINE");
         atm.setFont(new Font(null, Font.BOLD, 46));
 
@@ -50,21 +49,16 @@ public class Login {
         pinCodeTF.setBounds(88, 350, 250, 35);
         pinCodeLabel.setFont(new Font(null, Font.PLAIN, 20));
 
-        enter.setBounds(90, 400, 90, 30);
+        enter.setBounds(120, 400, 90, 30);
         enter.setText("ENTER");
         enter.setFocusable(false);
 
-        clear.setBounds(190, 400, 90, 30);
+        clear.setBounds(220, 400, 90, 30);
         clear.setText("CLEAR");
         clear.setFocusable(false);
 
-        exit.setBounds(290, 400, 90, 30);
-        exit.setText("EXIT");
-        exit.setFocusable(false);
-
         frame.add(atm);
         frame.add(background);
-        frame.add(exit);
         frame.add(clear);
         frame.add(enter);
         frame.add(pinCodeTF);
@@ -87,7 +81,7 @@ public class Login {
         background.setBounds(0, 0, 1000, 575);
 
         frame.setVisible(true);
-        
+
         // action listeners
         enter.addActionListener(new ActionListener() {
             @Override
@@ -115,13 +109,6 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 accIdTF.setText("");
                 pinCodeTF.setText("");
-            }
-        });
-
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
             }
         });
     }
@@ -186,25 +173,11 @@ public class Login {
             return;
         }
 
-        if (user.pin().equals("0000")) {
-            JOptionPane.showMessageDialog(null, "Please change your pin code!");
-            frame.dispose();
-            JPasswordField passwordField = new JPasswordField();
-            int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
-
-            if (!(result == JOptionPane.OK_OPTION)) {
-                JOptionPane.showMessageDialog(null, "Cancelled");
-                return;
-            }
-
-            String newPin = String.valueOf(passwordField.getPassword());
-
-            user.updatePin(newPin);
-
-            frame.dispose();
-            new Login();
-            return;
-        }
+//        if (!user.pin().equals("0000")) {
+//            JOptionPane.showMessageDialog(null, "Please change pin to your default pin code!");
+//            new Login();
+//            return;            
+//            }
 
         if (!user.checkPin(pinCode)) {
             JOptionPane.showMessageDialog(null, "Incorrect Pin Code!");
@@ -215,6 +188,50 @@ public class Login {
                 accIdTF.setText("");
                 pinCodeTF.setText("");
             }
+            return;
+        }
+
+        if (user.pin().equals("0000")) {
+            JOptionPane.showMessageDialog(null, "Please change your pin code!");
+            frame.dispose();
+
+            JPasswordField passwordField = new JPasswordField();
+            int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter new pin:", JOptionPane.OK_CANCEL_OPTION);
+
+            if (!(result == JOptionPane.OK_OPTION)) {
+                JOptionPane.showMessageDialog(null, "Cancelled");
+                new Login();
+                return;
+            }
+
+            String newPin = String.valueOf(passwordField.getPassword());
+
+            if (newPin.length() != 4) {
+                JOptionPane.showMessageDialog(null, "New pin code must be 4 digits!");
+                new Login();
+                return;
+            }
+
+            if (newPin.equals("0000")) {
+                JOptionPane.showMessageDialog(null, "Please enter a different pin code.");
+                new Login();
+                return;
+            }
+
+            int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to change your default pin with this new pin?", "Confirm", JOptionPane.YES_NO_OPTION);
+
+            if (choice == JOptionPane.YES_OPTION) {
+                user.updatePin(newPin);
+                JOptionPane.showMessageDialog(null, "Pin code changed successfully!");
+
+                frame.dispose();
+                BankSystem.currentUser = user; // eto yung nakalimutan nyo gawin kaya may error hahaha
+                new UserMenu();
+                return;
+
+            }
+
+            new Login();
             return;
         }
 

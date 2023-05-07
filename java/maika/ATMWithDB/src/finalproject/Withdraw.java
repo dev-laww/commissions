@@ -32,9 +32,9 @@ public class Withdraw {
     JButton nine = new JButton("9");
     JButton backspace = new JButton("<-");
     JButton clear = new JButton("CLEAR");
-    ImageIcon image = new ImageIcon("pic7.jpeg");
+    ImageIcon image = new ImageIcon("pic9.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
-    JLabel accountID = new JLabel("Account ID:");
+    JLabel accountID = new JLabel("ACCOUNT NO:");
     JTextField accountIDField = new JTextField();
     JButton[] buttons = {zero, one, two, three, four, five, six, seven, eight, nine};
     private final boolean isAdmin;
@@ -42,27 +42,27 @@ public class Withdraw {
     Withdraw(boolean isAdmin) {
         this.isAdmin = isAdmin;
 
-        label1.setBounds(110, 60, 380, 100);
+        label1.setBounds(110, 60, 400, 100);
         label1.setText("WITHDRAW");
         label1.setFont(new Font(null, Font.BOLD, 60));
         label1.setForeground(Color.WHITE);
 
-        label2.setBounds(55, 82, 500, 200);
+        label2.setBounds(65, 82, 500, 200);
         label2.setText("ENTER AMOUNT YOU WANT TO WITHDRAW");
         label2.setFont(new Font(null, Font.BOLD, 20));
         label2.setForeground(Color.WHITE);
 
-        accountID.setBounds(75, 235, 400, 40);
+        accountID.setBounds(65, 260, 400, 40);
         accountID.setFont(new Font(null, Font.BOLD, 25));
-        accountID.setForeground(Color.BLACK);
+        accountID.setForeground(Color.WHITE);
         accountID.setBackground(Color.WHITE);
 
-        accountIDField.setBounds(75, 275, 400, 40);
+        accountIDField.setBounds(75, 310, 400, 40);
         accountIDField.setFont(new Font(null, Font.BOLD, 25));
         accountIDField.setForeground(Color.BLACK);
         accountIDField.setBackground(Color.WHITE);
 
-        tf.setBounds(75, isAdmin ? 330 : 275, 400, 40);
+        tf.setBounds(75, isAdmin ? 210 : 235, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
         tf.setForeground(Color.BLACK);
         tf.setBackground(Color.WHITE);
@@ -260,12 +260,17 @@ public class Withdraw {
                     return;
                 }
 
-                if (Double.parseDouble(amount.replace(",", "")) <= 0) {
+                if (Double.parseDouble(amount.replace(",", "")) <= 99) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
                     tf.setText("");
                     return;
                 }
 
+                if (Double.parseDouble(amount.replace(",", "")) >= 25001) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
+                    tf.setText("");
+                    return;
+                }
                 if (accountID.isEmpty() && isAdmin) {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
                     return;
@@ -291,7 +296,7 @@ public class Withdraw {
 
                     tryWithdraw(user, amount);
                     frame.dispose();
-                    new Receipt(true);
+                    new Receipt(user.id, true);
                     return;
                 }
 
@@ -302,13 +307,18 @@ public class Withdraw {
 
                 tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new Receipt(false);
+                new Receipt(BankSystem.currentUser.id, false);
             }
         };
     }
 
     public static void tryWithdraw(User u, String amount) {
         try {
+            if (u.isLocked()) {
+                JOptionPane.showMessageDialog(null, "Account is locked.");
+                return;
+            }
+
             u.withdraw(Double.parseDouble(amount.replace(",", "")));
             JOptionPane.showMessageDialog(null, "Withdraw successful.");
         } catch (NumberFormatException ex) {

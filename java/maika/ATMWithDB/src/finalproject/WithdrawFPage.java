@@ -21,20 +21,18 @@ public class WithdrawFPage {
     JTextField tf = new JTextField();
     JButton exit = new JButton("CANCEL");
     JButton enter = new JButton("ENTER");
-    JButton twenty = new JButton("20");
-    JButton fifty = new JButton("50");
     JButton oneH = new JButton("100");
-    JButton twoH= new JButton("200");
+    JButton twoH = new JButton("200");
     JButton fiveH = new JButton("500");
     JButton oneK = new JButton("1000");
     JButton fiveK = new JButton("5000");
     JButton tenK = new JButton("10,000");
-    JButton amount = new JButton("ANOTHER AMOUNT");
-    ImageIcon image = new ImageIcon("pic7.jpeg");
+    JButton amount = new JButton("ENTER ANOTHER AMOUNT");
+    ImageIcon image = new ImageIcon("pic9.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
-    JLabel accountID = new JLabel("Account ID:");
+    JLabel accountID = new JLabel("ACCOUNT ID:");
     JTextField accountIDField = new JTextField();
-    JButton[] buttons = {twenty, fifty, oneH, twoH, fiveH, oneK, fiveK, tenK};
+    JButton[] buttons = {oneH, twoH, fiveH, oneK, fiveK, tenK};
     private boolean isAdmin;
 
     WithdrawFPage(boolean isAdmin) {
@@ -50,12 +48,12 @@ public class WithdrawFPage {
         label2.setFont(new Font(null, Font.BOLD, 20));
         label2.setForeground(Color.WHITE);
 
-        accountID.setBounds(75, 235, 400, 40);
+        accountID.setBounds(65, 260, 400, 40);
         accountID.setFont(new Font(null, Font.BOLD, 25));
         accountID.setForeground(Color.BLACK);
         accountID.setBackground(Color.WHITE);
 
-        accountIDField.setBounds(75, 275, 400, 40);
+        accountIDField.setBounds(75, 310, 400, 40);
         accountIDField.setFont(new Font(null, Font.BOLD, 25));
         accountIDField.setForeground(Color.BLACK);
         accountIDField.setBackground(Color.WHITE);
@@ -65,7 +63,7 @@ public class WithdrawFPage {
             accountIDField.setVisible(false);
         }
 
-        tf.setBounds(75, isAdmin ? 330 : 235, 400, 40);
+        tf.setBounds(75, isAdmin ? 210 : 235, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
         tf.setEditable(false);
         tf.setForeground(Color.BLACK);
@@ -80,71 +78,59 @@ public class WithdrawFPage {
         enter.setFont(new Font(null, Font.BOLD, 15));
         enter.setForeground(Color.BLACK);
         enter.setBackground(Color.WHITE);
-                
-        twenty.setBounds(580, 60, 100, 100);
-        twenty.setFont(new Font(null, Font.BOLD, 30));
-        twenty.setForeground(Color.BLACK);
-        twenty.setBackground(Color.WHITE);
-        
-        fifty.setBounds(710, 60, 100, 100);
-        fifty.setFont(new Font(null, Font.BOLD, 30));
-        fifty.setForeground(Color.BLACK);
-        fifty.setBackground(Color.WHITE);
-        
-        oneH.setBounds(840, 60, 100, 100);
+
+        oneH.setBounds(580, 60, 100, 100);
         oneH.setFont(new Font(null, Font.BOLD, 30));
         oneH.setForeground(Color.BLACK);
         oneH.setBackground(Color.WHITE);
-        
-        twoH.setBounds(580, 180, 100, 100);
+
+        twoH.setBounds(710, 60, 100, 100);
         twoH.setFont(new Font(null, Font.BOLD, 30));
         twoH.setForeground(Color.BLACK);
         twoH.setBackground(Color.WHITE);
-        
-        fiveH.setBounds(710, 180, 100, 100);
+
+        fiveH.setBounds(840, 60, 100, 100);
         fiveH.setFont(new Font(null, Font.BOLD, 30));
         fiveH.setForeground(Color.BLACK);
         fiveH.setBackground(Color.WHITE);
-        
-        oneK.setBounds(840, 180, 100, 100);
+
+        oneK.setBounds(580, 180, 100, 100);
         oneK.setFont(new Font(null, Font.BOLD, 30));
         oneK.setForeground(Color.BLACK);
         oneK.setBackground(Color.WHITE);
-        
-        fiveK.setBounds(580, 300, 100, 100);
+
+        fiveK.setBounds(710, 180, 100, 100);
         fiveK.setFont(new Font(null, Font.BOLD, 30));
         fiveK.setForeground(Color.BLACK);
         fiveK.setBackground(Color.WHITE);
-        
-        tenK.setBounds(710, 300, 100, 100);
+
+        tenK.setBounds(840, 180, 100, 100);
         tenK.setFont(new Font(null, Font.BOLD, 20));
         tenK.setForeground(Color.BLACK);
         tenK.setBackground(Color.WHITE);
-        
-        amount.setBounds(840, 300, 100, 100);
-        amount.setFont(new Font(null, Font.BOLD, 8));
+
+        amount.setBounds(580, 300, 360, 100);
+        amount.setFont(new Font(null, Font.BOLD, 22));
         amount.setForeground(Color.BLACK);
         amount.setBackground(Color.WHITE);
-        
-        label.setBounds(0, 0,1000, 500);
+
+        label.setBounds(0, 0, 1000, 500);
         label.add(accountID);
         label.add(accountIDField);
         label.add(accountIDField);
         label.add(oneK);
         label.add(twoH);
-        label.add(twenty);
         label.add(oneH);
         label.add(fiveK);
-        label.add(fifty);
         label.add(fiveH);
         label.add(tenK);
-        label.add(amount);        
+        label.add(amount);
         label.add(label1);
         label.add(label2);
         label.add(tf);
         label.add(exit);
         label.add(enter);
-        
+
         frame.add(label);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Withdraw");
@@ -176,7 +162,7 @@ public class WithdrawFPage {
             }
         });
 
-        for (JButton button: buttons) {
+        for (JButton button : buttons) {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -211,13 +197,13 @@ public class WithdrawFPage {
 
                     Withdraw.tryWithdraw(user, amount);
                     frame.dispose();
-                    new Receipt(true);
+                    new Receipt(user.id, true);
                     return;
                 }
 
                 Withdraw.tryWithdraw(BankSystem.currentUser, amount);
                 frame.dispose();
-                new Receipt(false);
+                new Receipt(BankSystem.currentUser.id, false);
             }
         });
     }
@@ -225,6 +211,4 @@ public class WithdrawFPage {
     WithdrawFPage() {
         this(false);
     }
-
-
 }

@@ -4,6 +4,8 @@
 
 package finalproject;
 
+import static finalproject.Search.col;
+import static finalproject.Search.model;
 import finalproject.db.Database;
 import finalproject.db.User;
 
@@ -14,16 +16,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LockedAccounts {
-    JFrame frame = new JFrame("Locked Accounts");
+    JFrame frame = new JFrame("LOCKED ACCOUNTS");
     static String[] col = {"Status", "Account No.", "Name"};
     static DefaultTableModel model = new DefaultTableModel(null, col);
-    JLabel header2 = new JLabel("Locked Accounts");
-    JLabel accId = new JLabel("Account ID:");
+    JLabel header2 = new JLabel("LOCKED ACCOUNT");
+    JLabel accId = new JLabel("ACCOUNT NO:");
     JTextField txtAccId = new JTextField();
-    JButton btnCancel = new JButton("Cancel");
-    JButton btnUnlock = new JButton("Unlock");
+    JButton btnCancel = new JButton("CANCEL");
+    JButton btnUnlock = new JButton("UNLOCK");
+    JButton btnSearch = new JButton();
     JTable jt = new JTable(null, col);
     JScrollPane sp = new JScrollPane(jt);
+    ImageIcon image = new ImageIcon("pic9.png");
+    JLabel background = new JLabel("", image, JLabel.CENTER);
 
     LockedAccounts() {
         int count = 0;
@@ -48,24 +53,40 @@ public class LockedAccounts {
 
         model.setDataVector(tableData, col);
 
-        header2.setBounds(348, 40, 390, 50);
-        header2.setFont(new Font("Times New Roman", 8, 18));
-        frame.add(header2);
+        header2.setBounds(230, 35, 390, 50);
+        header2.setFont(new Font("Times New Roman", 8, 35)); 
+        header2.setForeground(Color.WHITE);
+        background.add(header2);
 
-        accId.setBounds(460, 100, 100, 20);
-        frame.add(accId);
-        txtAccId.setBounds(550, 100, 150, 20);
-        frame.add(txtAccId);
+        accId.setBounds(100, 110, 150, 20);
+        accId.setFont(new Font(null, Font.BOLD, 15));
+        accId.setForeground(Color.WHITE);
+        background.add(accId);
+        
+        
+        txtAccId.setBounds(220, 110, 300, 20);
+        background.add(txtAccId);
 
+        btnSearch.setBounds(535, 110, 100, 20);
+        btnSearch.setText("SEARCH");
+        btnSearch.setFocusable(false);
+        background.add(btnSearch);
+        
         btnUnlock.setBounds(100, 380, 110, 20);
-        frame.add(btnUnlock);
+        btnUnlock.setFocusable(false);
+        background.add(btnUnlock);
 
         btnCancel.setBounds(590, 380, 110, 20);
-        frame.add(btnCancel);
+        btnCancel.setFocusable(false);
+        background.add(btnCancel);
 
         sp.setBounds(100, 150, 600, 200);
         jt.setModel(model);
-        frame.add(sp);
+        background.add(sp);
+        
+        background.setBounds(0,0,800,480);
+
+        frame.add(background);
 
         frame.setSize(800, 480);
         frame.setLocationRelativeTo(null);//setLocationRelativeTo(frame);
@@ -75,6 +96,7 @@ public class LockedAccounts {
 
         txtAccId.addActionListener(getActionListener());
         btnUnlock.addActionListener(getActionListener());
+        btnSearch.addActionListener(getActionListener());
 
         btnCancel.addActionListener(new ActionListener() {
             @Override
@@ -95,6 +117,11 @@ public class LockedAccounts {
                     JOptionPane.showMessageDialog(null, "Please enter an account ID.");
                     return;
                 }
+                
+                if (accId.length() != 8) {
+                    JOptionPane.showMessageDialog(null, "Account ID must be 8 digits.");
+                    return;
+                }
 
                 User user = Database.getUser(accId);
 
@@ -107,6 +134,8 @@ public class LockedAccounts {
                     JOptionPane.showMessageDialog(null, "Account is not locked.");
                     return;
                 }
+                
+                model.setDataVector(new String[][]{user.toArray()}, col);
 
                 JPasswordField passwordField = new JPasswordField();
                 int result = JOptionPane.showConfirmDialog(null, passwordField, "Enter admin password:", JOptionPane.OK_CANCEL_OPTION);
@@ -117,11 +146,12 @@ public class LockedAccounts {
                 }
 
                 String adminPass = String.valueOf(passwordField.getPassword());
-
-                if (!Database.admin.get("admin").equals(adminPass)) {
-                    JOptionPane.showMessageDialog(null, "Wrong password");
-                    return;
+                String storedPassword = Database.admin.get("1234");
+                if (storedPassword != null && !storedPassword.equals(adminPass)) {
+                JOptionPane.showMessageDialog(null, "Wrong password");
+                return;
                 }
+
 
                 user.unlock();
                 frame.dispose();

@@ -22,12 +22,12 @@ public class UserMenu {
     JPanel panel = new JPanel();
 
     UserMenu() {
-        miniStatement.setBounds(60, 330, 380, 50);
+        miniStatement.setBounds(60, 325, 380, 50);
         miniStatement.setText("VIEW MINISTATEMENT");
         miniStatement.setFont(new Font(null, Font.PLAIN, 25));
         miniStatement.setFocusable(false);
 
-        deposit.setBounds(60, 35, 380, 50);
+        deposit.setBounds(60, 40, 380, 50);
         deposit.setText("DEPOSIT");
         deposit.setFont(new Font(null, Font.PLAIN, 25));
         deposit.setFocusable(false);
@@ -53,7 +53,7 @@ public class UserMenu {
         exit.setFocusable(false);
 
 
-        frame.setSize(500, 500);
+        frame.setSize(500, 550);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
@@ -65,7 +65,7 @@ public class UserMenu {
         label.add(transfer);
         label.add(miniStatement);
         label.add(panel);
-        label.setBounds(0, 0, 500, 500);
+        label.setBounds(0, 0, 500, 550);
 
 
         frame.add(exit);

@@ -12,18 +12,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Search {
-    JFrame frame = new JFrame("Search Accounts");
+    JFrame frame = new JFrame("NEW ACCOUNTS");
     static String[] col = {"Status", "Account No.", "Name", "Address", "Email", "Contact", "Balance"};
     static DefaultTableModel model = new DefaultTableModel(null, col);
-    JLabel header2 = new JLabel("Search Accounts");
-    JLabel accId = new JLabel("Account ID:");
+    JLabel header2 = new JLabel("CUSTOMER DETAILS");
+    JLabel accId = new JLabel("ACCOUNT NO:");
     JTextField txtAccId = new JTextField();
-    JButton btnCancel = new JButton("Cancel");
-    JButton btnSearch = new JButton("Search");
+    JButton btnCancel = new JButton("CANCEL");
+    JButton btnSearch = new JButton();
     JTable jt = new JTable(null, col);
     JScrollPane sp = new JScrollPane(jt);
+    ImageIcon image = new ImageIcon("pic9.png");
+    JLabel background = new JLabel("", image, JLabel.CENTER);
 
     Search() {
         String[][] tableData = new String[Database.users().size()][7];
@@ -32,25 +35,36 @@ public class Search {
         }
         model.setDataVector(tableData, col);
 
-        header2.setBounds(348, 40, 390, 50);
-        header2.setFont(new Font("Times New Roman", 8, 18));
-        frame.add(header2);
+        header2.setBounds(230, 35, 390, 50);
+        header2.setFont(new Font("Times New Roman", 8, 35)); 
+        header2.setForeground(Color.WHITE);
+        background.add(header2);
 
-        accId.setBounds(460, 100, 100, 20);
-        frame.add(accId);
-        txtAccId.setBounds(550, 100, 150, 20);
-        frame.add(txtAccId);
+        accId.setBounds(100, 110, 150, 20);
+        accId.setFont(new Font(null, Font.BOLD, 15));
+        accId.setForeground(Color.WHITE);
+        background.add(accId);
+        
+        
+        txtAccId.setBounds(220, 110, 300, 20);
+        background.add(txtAccId);
 
-        btnSearch.setBounds(100, 380, 110, 20);
-        frame.add(btnSearch);
+        btnSearch.setBounds(535, 110, 100, 20);
+        btnSearch.setText("SEARCH");
+        btnSearch.setFocusable(false);
+        background.add(btnSearch);
 
         btnCancel.setBounds(590, 380, 110, 20);
-        frame.add(btnCancel);
+        btnCancel.setFocusable(false);
+        background.add(btnCancel);
 
         sp.setBounds(100, 150, 600, 200);
         jt.setModel(model);
-        frame.add(sp);
+        background.add(sp);
+        
+        background.setBounds(0,0,800,480);
 
+        frame.add(background);
         frame.setSize(800, 480);
         frame.setLocationRelativeTo(null);//setLocationRelativeTo(frame);
         frame.setLayout(null);

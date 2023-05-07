@@ -101,10 +101,6 @@ public class TransactionHandler {
         ps.setString(1, userID);
         ResultSet rs = ps.executeQuery();
 
-        if (!rs.next()) {
-            return null;
-        }
-
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         while (rs.next()) {
@@ -117,6 +113,10 @@ public class TransactionHandler {
             );
 
             transactions.add(transaction);
+        }
+
+        if (transactions.size() == 0) {
+            return null;
         }
 
         conn.close();

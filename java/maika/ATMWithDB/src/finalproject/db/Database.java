@@ -12,7 +12,7 @@ public class Database {
     public static HashMap<String, String> admin = new HashMap<>();
 
     static {
-        admin.put("admin", "admin");
+        admin.put("1001", "1234");
     }
 
     public static void deleteUser(String id) throws SQLException {
@@ -118,34 +118,6 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>();
-        }
-    }
-
-    public static Transaction getLastTransaction() {
-        Connection conn = Database.getConnection();
-
-        if (conn == null)
-            return null;
-
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * from transactions ORDER BY datetime DESC LIMIT 1");
-            ResultSet rs = ps.executeQuery();
-
-            if (!rs.next()) {
-                return null;
-            }
-
-            return new Transaction(
-                    rs.getString("id"),
-                    rs.getString("user_id"),
-                    rs.getDouble("amount"),
-                    rs.getString("type"),
-                    rs.getTimestamp("datetime")
-            );
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }

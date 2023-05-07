@@ -31,9 +31,9 @@ public class Deposit {
     JButton nine = new JButton("9");
     JButton backspace = new JButton("<-");
     JButton clear = new JButton("CLEAR");
-    ImageIcon image = new ImageIcon("pic7.jpeg");
+    ImageIcon image = new ImageIcon("pic9.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
-    JLabel accountID = new JLabel("Account ID:");
+    JLabel accountID = new JLabel("ACCOUNT NO:");
     JTextField accountIDField = new JTextField();
     private final boolean isAdmin;
     JButton[] buttons = {zero, one, two, three, four, five, six, seven, eight, nine};
@@ -41,7 +41,7 @@ public class Deposit {
     public Deposit(boolean isAdmin) {
         this.isAdmin = isAdmin;
 
-        label1.setBounds(150, 60, 380, 100);
+        label1.setBounds(150, 60, 400, 100);
         label1.setText("DEPOSIT");
         label1.setFont(new Font(null, Font.BOLD, 60));
         label1.setForeground(Color.WHITE);
@@ -51,17 +51,17 @@ public class Deposit {
         label2.setFont(new Font(null, Font.BOLD, 20));
         label2.setForeground(Color.WHITE);
 
-        accountID.setBounds(75, 235, 400, 40);
+        accountID.setBounds(65, 260, 400, 40);
         accountID.setFont(new Font(null, Font.BOLD, 25));
-        accountID.setForeground(Color.BLACK);
+        accountID.setForeground(Color.WHITE);
         accountID.setBackground(Color.WHITE);
 
-        accountIDField.setBounds(75, 275, 400, 40);
+        accountIDField.setBounds(75, 310, 400, 40);
         accountIDField.setFont(new Font(null, Font.BOLD, 25));
         accountIDField.setForeground(Color.BLACK);
         accountIDField.setBackground(Color.WHITE);
 
-        tf.setBounds(75, isAdmin ? 330 : 235, 400, 40);
+        tf.setBounds(75, isAdmin ? 210 : 235, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
         tf.setForeground(Color.BLACK);
         tf.setBackground(Color.WHITE);
@@ -227,6 +227,11 @@ public class Deposit {
 
     private void tryDeposit(User u, String amount) {
         try {
+            if(u.isLocked()) {
+                JOptionPane.showMessageDialog(null, "Account is locked.");
+                return;
+            }
+
             u.deposit(Double.parseDouble(amount));
             JOptionPane.showMessageDialog(null, "Deposit successful.");
         } catch (NumberFormatException ex) {
@@ -258,6 +263,19 @@ public class Deposit {
                     JOptionPane.showMessageDialog(null, "Please enter a valid account ID.");
                     return;
                 }
+                
+                if (Double.parseDouble(amount.replace(",", "")) <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
+                    tf.setText("");
+                    return;
+                }
+
+                if (Double.parseDouble(amount.replace(",", "")) >= 25001) {
+                    JOptionPane.showMessageDialog(null, "LIMIT REACH.");
+                    tf.setText("");
+                    return;
+                }
+
 
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
@@ -269,13 +287,13 @@ public class Deposit {
 
                     tryDeposit(user, amount);
                     frame.dispose();
-                    new Receipt(true);
+                    new Receipt(user.id, true);
                     return;
                 }
 
                 tryDeposit(BankSystem.currentUser, amount);
                 frame.dispose();
-                new Receipt(false);
+                new Receipt(BankSystem.currentUser.id, false);
             }
         };
     }

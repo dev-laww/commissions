@@ -19,7 +19,7 @@ public class AdminMenu {
     JButton deposit = new JButton();
     JButton locked = new JButton();
     JButton exit = new JButton();
-    ImageIcon image = new ImageIcon("pic6.jpg");
+    ImageIcon image = new ImageIcon("pic6.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
 
@@ -48,15 +48,15 @@ public class AdminMenu {
         deleteAcc.setText("DELETE ACCOUNT");
         deleteAcc.setFocusable(false);
 
-        searchAcc.setBounds(130, 370, 250, 50);
-        searchAcc.setText("SEARCH ACCOUNT");
+        searchAcc.setBounds(130, 130, 250, 50);
+        searchAcc.setText("CUSTOMER DETAILS");
         searchAcc.setFocusable(false);
 
-        locked.setBounds(430, 290, 250, 50);
+        locked.setBounds(130, 370, 250, 50);
         locked.setText("LOCKED ACCOUNTS");
         locked.setFocusable(false);
 
-        exit.setBounds(430, 370, 250, 50);
+        exit.setBounds(430, 290, 250, 50);
         exit.setText("EXIT");
         exit.setFocusable(false);
 
@@ -131,7 +131,7 @@ public class AdminMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new WithdrawFPage(true);
+                new Withdraw(true);
             }
         });
 

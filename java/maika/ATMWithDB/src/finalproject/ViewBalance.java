@@ -16,7 +16,7 @@ public class ViewBalance {
     JButton exit = new JButton("CANCEL");
     JLabel balance = new JLabel();
     
-    ImageIcon image = new ImageIcon("pic7.jpeg");
+    ImageIcon image = new ImageIcon("pic9.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
 
     ViewBalance() {
@@ -55,10 +55,17 @@ public class ViewBalance {
         frame.setVisible(true);
         
         exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new UserMenu();
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        int choice = JOptionPane.showConfirmDialog(frame, "Do you want to perform another transaction?", "Confirm", JOptionPane.YES_NO_OPTION);
+        
+        if (choice == JOptionPane.YES_OPTION) {
+            frame.dispose();
+            new UserMenu();
+        } else {
+            frame.dispose();
+            new Login();
+                }
             }
         });
     }

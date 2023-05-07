@@ -31,42 +31,50 @@ public class Transfer {
     JButton nine = new JButton("9");
     JButton backspace = new JButton("<-");
     JButton clear = new JButton("CLEAR");
-    ImageIcon image = new ImageIcon("pic7.jpeg");
+    ImageIcon image = new ImageIcon("pic9.png");
     JLabel label = new JLabel("", image, JLabel.CENTER);
-    JLabel accountID = new JLabel("Account ID:");
+    JLabel accountID = new JLabel("ACCOUNT NO:");
+    JLabel transferID = new JLabel("TRANSFER TO:");
     JTextField accountIDField = new JTextField();
     JTextField receiverIDField = new JTextField();
+    JButton point = new JButton(".");
     private final boolean isAdmin;
-    JButton[] buttons = {zero, one, two, three, four, five, six, seven, eight, nine};
+    JButton[] buttons = {zero, one, two, three, four, five, six, seven, eight, nine, point};
 
     Transfer(boolean isAdmin) {
         this.isAdmin = isAdmin;
-        label1.setBounds(150, 60, 380, 100);
-        label1.setText("DEPOSIT");
-        label1.setFont(new Font(null, Font.BOLD, 60));
+
+        label1.setBounds(80, 0, 400, 150);
+        label1.setText("TRANSFER MONEY");
+        label1.setFont(new Font(null, Font.BOLD, 40));
         label1.setForeground(Color.WHITE);
 
-        label2.setBounds(65, 82, 500, 200);
-        label2.setText("ENTER AMOUNT YOU WANT TO DEPOSIT");
+        label2.setBounds(65, 60, 500, 150);
+        label2.setText("ENTER AMOUNT YOU WANT TO TRANSFER");
         label2.setFont(new Font(null, Font.BOLD, 20));
         label2.setForeground(Color.WHITE);
 
-        accountID.setBounds(75, 235, 400, 40);
+        accountID.setBounds(65, 215, 400, 40);
         accountID.setFont(new Font(null, Font.BOLD, 25));
-        accountID.setForeground(Color.BLACK);
+        accountID.setForeground(Color.WHITE);
         accountID.setBackground(Color.WHITE);
 
-        accountIDField.setBounds(75, 275, 400, 40);
+        accountIDField.setBounds(75, 260, 400, 40);
         accountIDField.setFont(new Font(null, Font.BOLD, 25));
         accountIDField.setForeground(Color.BLACK);
         accountIDField.setBackground(Color.WHITE);
 
-        receiverIDField.setBounds(75, isAdmin ? 330 : 280, 400, 40);
+        transferID.setBounds(65, isAdmin ? 305 : 215, 400, 40);
+        transferID.setFont(new Font(null, Font.BOLD, 25));
+        transferID.setForeground(Color.WHITE);
+        transferID.setBackground(Color.WHITE);
+
+        receiverIDField.setBounds(75, isAdmin ? 350 : 265, 400, 40);
         receiverIDField.setFont(new Font(null, Font.BOLD, 25));
         receiverIDField.setForeground(Color.BLACK);
         receiverIDField.setBackground(Color.WHITE);
 
-        tf.setBounds(75, isAdmin ? 370 : 235, 400, 40);
+        tf.setBounds(75, isAdmin ? 170 : 165, 400, 40);
         tf.setFont(new Font(null, Font.BOLD, 25));
         tf.setForeground(Color.BLACK);
         tf.setBackground(Color.WHITE);
@@ -77,15 +85,20 @@ public class Transfer {
             accountID.setVisible(false);
         }
 
-        exit.setBounds(295, isAdmin ? 410 : 330, 200, 40);
+        exit.setBounds(295, isAdmin ? 420 : 330, 200, 40);
         exit.setFont(new Font(null, Font.BOLD, 15));
         exit.setForeground(Color.BLACK);
         exit.setBackground(Color.WHITE);
 
-        enter.setBounds(60, isAdmin ? 410 : 330, 200, 40);
+        enter.setBounds(60, isAdmin ? 420 : 330, 200, 40);
         enter.setFont(new Font(null, Font.BOLD, 15));
         enter.setForeground(Color.BLACK);
         enter.setBackground(Color.WHITE);
+
+        point.setBounds(710, 420, 80, 80);
+        point.setFont(new Font(null, Font.BOLD, 25));
+        point.setForeground(Color.BLACK);
+        point.setBackground(Color.WHITE);
 
         zero.setBounds(710, 330, 80, 80);
         zero.setFont(new Font(null, Font.BOLD, 25));
@@ -147,7 +160,7 @@ public class Transfer {
         backspace.setForeground(Color.BLACK);
         backspace.setBackground(Color.WHITE);
 
-        label.setBounds(0, 0, 1000, 500);
+        label.setBounds(0, 0, 1000, 550);
         label.add(clear);
         label.add(backspace);
         label.add(zero);
@@ -163,6 +176,8 @@ public class Transfer {
         label.add(label1);
         label.add(label2);
         label.add(tf);
+        label.add(point);
+        label.add(transferID);
         label.add(accountID);
         label.add(accountIDField);
         label.add(receiverIDField);
@@ -171,8 +186,7 @@ public class Transfer {
 
         frame.add(label);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Transfer");
-        frame.setSize(1000, 500);
+        frame.setSize(1000, 550);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -233,12 +247,12 @@ public class Transfer {
 
     private void tryTransfer(User u, String receiverID, double amount) {
 
-        try{
+        try {
             u.transfer(receiverID, amount);
             JOptionPane.showMessageDialog(null, "Transfer successful.");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Transfer Failed!\n" + e.getMessage());
         }
     }
 
@@ -255,13 +269,8 @@ public class Transfer {
                     return;
                 }
 
-                if (accountID.isEmpty() && isAdmin) {
-                    JOptionPane.showMessageDialog(null, "Please enter an account ID.");
-                    return;
-                }
-
-                if (accountID.length() != 8 && isAdmin) {
-                    JOptionPane.showMessageDialog(null, "Please enter a valid account ID.");
+                if (receiverID.length() != 8 && isAdmin) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid account ID of receiver.");
                     return;
                 }
 
@@ -275,8 +284,19 @@ public class Transfer {
                     return;
                 }
 
+                if (BankSystem.currentUser.id.equals(receiverID)) {
+                    JOptionPane.showMessageDialog(null, "You cannot transfer money to yourself.");
+                    return;
+                }
+
                 if (Double.parseDouble(amount.replace(",", "")) <= 0) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
+                    tf.setText("");
+                    return;
+                }
+
+                if (Double.parseDouble(amount.replace(",", "")) >= 25000.10) {
+                    JOptionPane.showMessageDialog(null, "LIMIT REACH");
                     tf.setText("");
                     return;
                 }
@@ -288,11 +308,26 @@ public class Transfer {
                     return;
                 }
 
+                if (receiver.isLocked()) {
+                    JOptionPane.showMessageDialog(null, "Receiver account is locked.");
+                    return;
+                }
+
+                if (BankSystem.currentUser.id.equals(receiverID)) {
+                    JOptionPane.showMessageDialog(null, "You cannot transfer money to yourself.");
+                    return;
+                }
+
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
 
                     if (user == null) {
                         JOptionPane.showMessageDialog(null, "Account ID does not exist.");
+                        return;
+                    }
+
+                    if (user.id.equals(receiverID)) {
+                        JOptionPane.showMessageDialog(null, "You cannot transfer money to the same user.");
                         return;
                     }
 
@@ -303,7 +338,7 @@ public class Transfer {
 
                     tryTransfer(user, receiverID, Double.parseDouble(amount));
                     frame.dispose();
-                    new Receipt(true);
+                    new Receipt(user.id, true);
                     return;
                 }
 
@@ -314,7 +349,7 @@ public class Transfer {
 
                 tryTransfer(BankSystem.currentUser, receiverID, Double.parseDouble(amount));
                 frame.dispose();
-                new Receipt(false);
+                new Receipt(BankSystem.currentUser.id, false);
             }
         };
     }

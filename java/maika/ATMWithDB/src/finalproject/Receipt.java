@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Receipt {
     JLabel label = new JLabel();
@@ -14,23 +15,24 @@ public class Receipt {
     JTextArea tf = new JTextArea();
     JButton ok = new JButton("OK");
 
-    Receipt(boolean isFromAdmin) {
+    Receipt(String userID, boolean isFromAdmin) {
         Font font = new Font("JetBrains Mono NL", Font.PLAIN,12);
         tf.setEditable(false);
         tf.setFont(font);
         tf.setEditable(false);
         tf.setBackground(Color.LIGHT_GRAY);
-        tf.setBounds(20, 80, 560, 470);
+        tf.setBounds(10, 10, 265, 240);
 
-        ok.setBounds(250, 560, 100, 30);
+        ok.setBounds(115, 200, 70, 30);
         ok.setFocusable(false);
 
         label.add(ok);
         label.add(tf);
 
         frame.add(label);
-        frame.setSize(650, 700);
-        frame.setTitle("Receipt");
+        frame.setSize(285, 290);
+        frame.setTitle("RECEIPT");
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
@@ -47,17 +49,20 @@ public class Receipt {
             }
         });
 
-        Transaction transaction = Database.getLastTransaction();
+        ArrayList<Transaction> transactions = Database.getUserTransactions(userID);
 
-        if (transaction == null) {
+        if (transactions == null) {
             JOptionPane.showMessageDialog(null, "No transactions found.");
             return;
         }
 
-        String sb = String.format("%s%n%n", transaction.timestamp) +
-                String.format("XXXXX%s%n", transaction.userID().substring(transaction.userID().length() - 3)) +
-                String.format("Serial No. %s%n", transaction.id) +
-                String.format("%-20s %20.2f", transaction.type.substring(0, 1).toUpperCase() + transaction.type.substring(1), transaction.amount);
+        Transaction transaction = transactions.get(transactions.size() - 1);
+
+        String sb = "\t  JJTM MACHINE\n\n" + String.format("  DATE : TIME \n  %s%n%n", transaction.timestamp) +
+                String.format("  ACCOUNT ID: XXXXX%s%n", transaction.userID().substring(transaction.userID().length() - 3)) +
+                String.format("  Serial No. %s%n", transaction.id) +
+                String.format("  %-20s %20.2f", transaction.type.substring(0, 1).toUpperCase() + transaction.type.substring(1), transaction.amount) +
+                "\n\n\n        Thank you for using JJTM MACHINE";
 
         tf.setText(sb);
     }
