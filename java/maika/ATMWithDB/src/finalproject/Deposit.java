@@ -227,11 +227,6 @@ public class Deposit {
 
     private void tryDeposit(User u, String amount) {
         try {
-            if(u.isLocked()) {
-                JOptionPane.showMessageDialog(null, "Account is locked.");
-                return;
-            }
-
             u.deposit(Double.parseDouble(amount));
             JOptionPane.showMessageDialog(null, "Deposit successful.");
         } catch (NumberFormatException ex) {
@@ -276,12 +271,22 @@ public class Deposit {
                     return;
                 }
 
+                if (BankSystem.currentUser.isLocked()) {
+                    JOptionPane.showMessageDialog(null, "Account is locked.");
+                    return;
+                }
+
 
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
 
                     if (user == null) {
                         JOptionPane.showMessageDialog(null, "Account does not exist.");
+                        return;
+                    }
+
+                    if(user.isLocked()) {
+                        JOptionPane.showMessageDialog(null, "Account is locked.");
                         return;
                     }
 
