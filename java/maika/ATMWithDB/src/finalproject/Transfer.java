@@ -284,11 +284,6 @@ public class Transfer {
                     return;
                 }
 
-                if (BankSystem.currentUser.id.equals(receiverID)) {
-                    JOptionPane.showMessageDialog(null, "You cannot transfer money to yourself.");
-                    return;
-                }
-
                 if (Double.parseDouble(amount.replace(",", "")) <= 0) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
                     tf.setText("");
@@ -313,11 +308,6 @@ public class Transfer {
                     return;
                 }
 
-                if (BankSystem.currentUser.id.equals(receiverID)) {
-                    JOptionPane.showMessageDialog(null, "You cannot transfer money to yourself.");
-                    return;
-                }
-
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
 
@@ -336,6 +326,11 @@ public class Transfer {
                         return;
                     }
 
+                    if(user.isLocked()) {
+                        JOptionPane.showMessageDialog(null, "Account is locked.");
+                        return;
+                    }
+
                     tryTransfer(user, receiverID, Double.parseDouble(amount));
                     frame.dispose();
                     new Receipt(user.id, true);
@@ -344,6 +339,16 @@ public class Transfer {
 
                 if (BankSystem.currentUser.balance < Double.parseDouble(amount.replace(",", ""))) {
                     JOptionPane.showMessageDialog(null, "Insufficient funds.");
+                    return;
+                }
+
+                if(BankSystem.currentUser.isLocked()) {
+                    JOptionPane.showMessageDialog(null, "Account is locked.");
+                    return;
+                }
+
+                if (BankSystem.currentUser.id.equals(receiverID)) {
+                    JOptionPane.showMessageDialog(null, "You cannot transfer money to yourself.");
                     return;
                 }
 
