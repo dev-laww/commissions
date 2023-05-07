@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
+    static String atmMachine = "ATM-3001";
     public static HashMap<String, String> admin = new HashMap<>();
     static {
         admin.put("1001", "1234");
@@ -37,7 +38,7 @@ public class Database {
         }
     }
 
-    public static void deleteUser(String id){
+    public static boolean deleteUser(String id){
         try {
             User user = UserHandler.getUser(id);
             UserHandler model = new UserHandler(user);
@@ -45,17 +46,23 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+
+        return true;
     }
 
-    public static void saveTransaction(Transaction transaction) {
+    public static boolean saveTransaction(Transaction transaction) {
         try {
             TransactionHandler model = new TransactionHandler(transaction);
             model.save();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+
+        return true;
     }
 
     public static ArrayList<Transaction> getUserTransactions(String userID) {
@@ -100,14 +107,17 @@ public class Database {
         }
     }
 
-    public static void saveUser(User user) {
+    public static boolean saveUser(User user) {
         try {
             UserHandler model = new UserHandler(user);
             model.save();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+
+        return true;
     }
 
     public static ArrayList<User> users() {

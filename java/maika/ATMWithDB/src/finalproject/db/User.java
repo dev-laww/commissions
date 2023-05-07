@@ -17,10 +17,10 @@ public class User {
     private String barangay;
     private String municipality;
     private String province;
-    private final String email;
-    private final String contact;
+    private String email;
+    private String contact;
 
-     User(
+    User(
             String id,
             String status,
             String firstName,
@@ -54,7 +54,6 @@ public class User {
     }
 
     public User(
-            String status,
             String firstName,
             String middleName,
             String lastName,
@@ -62,13 +61,12 @@ public class User {
             String municipality,
             String province,
             String contact,
-            String pin,
             String email,
-            double balance,
-            String atmMachine
+            String pin,
+            double balance
     ) {
         this.balance = balance;
-        this.status = status;
+        this.status = "active";
         this.pin = pin;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -78,7 +76,7 @@ public class User {
         this.province = province;
         this.email = email;
         this.contact = contact;
-        this.atmMachine = atmMachine;
+        this.atmMachine = Database.atmMachine;
     }
 
     public void deposit(double amount) {
@@ -123,17 +121,22 @@ public class User {
 
     }
 
-
     public void lock() {
         this.status = "locked";
+
+        Database.saveUser(this);
     }
 
     public void unlock() {
         this.status = "active";
+
+        Database.saveUser(this);
     }
 
-    public void close() {
+    public boolean close() {
         this.status = "closed";
+
+        return Database.saveUser(this) && Database.deleteUser(this.id);
     }
 
     public boolean isLocked() {
@@ -161,10 +164,14 @@ public class User {
             return;
         }
 
+        if (!Database.saveUser(this)) return;
+
         this.pin = newPin;
     }
 
-    public void updateAddress(String barangay, String municipality, String province) {
+    public void updateDetails(String barangay, String municipality, String province, String email, String contact) {
+        this.email = email;
+        this.contact = contact;
         this.barangay = barangay;
         this.municipality = municipality;
         this.province = province;

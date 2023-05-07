@@ -90,8 +90,9 @@ public class UserHandler {
         ps.setString(1, user.id);
         ps.executeUpdate();
 
-        ps = conn.prepareStatement("INSERT INTO droppped_transactions WHERE user_id = ?");
+        ps = conn.prepareStatement("INSERT INTO dropped_transactions SELECT * FROM transactions WHERE user_id = ?");
         ps.setString(1, user.id);
+        ps.executeUpdate();
 
         ps = conn.prepareStatement("DELETE FROM users WHERE id = ?");
         ps.setString(1, user.id);

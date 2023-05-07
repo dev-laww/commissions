@@ -34,7 +34,6 @@ public class TransactionHandler {
                             transfer_user_id,
                             type,
                             amount
-
                             ) VALUES (?,?,?,?)
                             """
             );
@@ -45,7 +44,7 @@ public class TransactionHandler {
         }
 
         ps = conn.prepareStatement(
-                "UPDATE transactions SET user_id = ?, amount = ?, type = ? WHERE id = " + transaction.id
+                "UPDATE transactions SET user_id = ?, transfer_user_id = ? amount = ?, type = ? WHERE id = " + transaction.id
         );
 
         formatStatement(transaction, ps);
@@ -154,8 +153,10 @@ public class TransactionHandler {
     }
 
     private void formatStatement(Transaction transaction, PreparedStatement ps) throws SQLException {
+        String transferUserID = transaction.transferUserID();
         ps.setString(1, transaction.userID());
-        ps.setDouble(2, transaction.amount);
+        ps.setInt(2, transferUserID == null ? 0 : Integer.parseInt(transferUserID));
         ps.setString(3, transaction.type);
+        ps.setDouble(4, transaction.amount);
     }
 }
