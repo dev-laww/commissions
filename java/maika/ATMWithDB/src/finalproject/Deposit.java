@@ -271,11 +271,6 @@ public class Deposit {
                     return;
                 }
 
-                if (BankSystem.currentUser.isLocked()) {
-                    JOptionPane.showMessageDialog(null, "Account is locked.");
-                    return;
-                }
-
 
                 if (isAdmin) {
                     User user = Database.getUser(accountID);
@@ -293,6 +288,11 @@ public class Deposit {
                     tryDeposit(user, amount);
                     frame.dispose();
                     new Receipt(user.id, true);
+                    return;
+                }
+
+                if (BankSystem.currentUser.isLocked()) {
+                    JOptionPane.showMessageDialog(null, "Account is locked.");
                     return;
                 }
 
