@@ -20,12 +20,16 @@ public class UpdateAccount {
     JButton updateButton = new JButton("UPDATE");
     JLabel accountIDLabel = new JLabel();
     JLabel accountNameLabel = new JLabel();
-    JLabel address = new JLabel();
-    JTextField tfAddress = new JTextField();
+    JLabel barangay = new JLabel();
+    JTextField tfBarangay = new JTextField();
+    JLabel municipality = new JLabel();
+    JTextField tfMunicipality = new JTextField();
+    JLabel province = new JLabel();
+    JTextField tfProvince = new JTextField();
     JLabel emailAddress = new JLabel();
     JTextField tfEmailAddress = new JTextField();
-    JLabel phone = new JLabel();
-    JTextField tfPhone = new JTextField();
+    JLabel contact = new JLabel();
+    JTextField tfContact = new JTextField();
     JLabel label1 = new JLabel("UPDATE ACCOUNT");
     JTextField tfID = new JTextField();
     JButton btnSearch = new JButton("SEARCH");
@@ -38,10 +42,10 @@ public class UpdateAccount {
         label1.setBounds(110, 18, 400, 50);
         label1.setForeground(Color.WHITE);
 
-        backButton.setBounds(30, 270, 90, 30);
+        backButton.setBounds(30, 310, 90, 30);
         backButton.setFocusable(false);
 
-        updateButton.setBounds(450, 270, 90, 30);
+        updateButton.setBounds(450, 310, 90, 30);
         updateButton.setFocusable(false);
 
         btnSearch.setBounds(350, 270, 90, 30);
@@ -60,54 +64,76 @@ public class UpdateAccount {
         tfID.setForeground(Color.BLACK);
 
         accountNameLabel.setBounds(30, 120, 300, 30);
-        accountNameLabel.setText(BankSystem.currentUser == null ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name);
+        accountNameLabel.setText(BankSystem.currentUser == null ? "Account Name: " : "Customer Name: " + BankSystem.currentUser.name());
         accountNameLabel.setFont(new Font(null, Font.BOLD, 15));
         accountNameLabel.setForeground(Color.WHITE);
 
-        address.setText("Address:");
-        address.setBounds(30, 155, 100, 30);
-        address.setForeground(Color.WHITE);
-        address.setFont(new Font(null, Font.BOLD, 15));
+        barangay.setText("Address:");
+        barangay.setBounds(30, 155, 100, 30);
+        barangay.setForeground(Color.WHITE);
+        barangay.setFont(new Font(null, Font.BOLD, 15));
 
-        tfAddress.setBounds(150, 153, 400, 30);
-        tfAddress.setFont(new Font(null, Font.BOLD, 15));
-        tfAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.address());
+        tfBarangay.setBounds(150, 153, 400, 30);
+        tfBarangay.setFont(new Font(null, Font.BOLD, 15));
+        tfBarangay.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.address());
+
+        municipality.setText("Municipality:");
+        municipality.setBounds(30, 186, 200, 30);
+        municipality.setForeground(Color.WHITE);
+        municipality.setFont(new Font(null, Font.BOLD, 15));
+
+        tfMunicipality.setBounds(150, 185, 400, 30);
+        tfMunicipality.setFont(new Font(null, Font.BOLD, 15));
+        tfMunicipality.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.municipality());
+
+        province.setText("Province:");
+        province.setBounds(30, 217, 100, 30);
+        province.setForeground(Color.WHITE);
+        province.setFont(new Font(null, Font.BOLD, 15));
+
+        tfProvince.setBounds(150, 215, 400, 30);
+        tfProvince.setFont(new Font(null, Font.BOLD, 15));
+        tfProvince.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.province());
 
         emailAddress.setText("Email:");
-        emailAddress.setBounds(30, 186, 200, 30);
+        emailAddress.setBounds(30, 240, 100, 30);
         emailAddress.setForeground(Color.WHITE);
         emailAddress.setFont(new Font(null, Font.BOLD, 15));
 
-        tfEmailAddress.setBounds(150, 185, 400, 30);
+        tfEmailAddress.setBounds(150, 243, 400, 30);
         tfEmailAddress.setFont(new Font(null, Font.BOLD, 15));
         tfEmailAddress.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.email());
 
-        phone.setText("Phone:");
-        phone.setBounds(30, 217, 100, 30);
-        phone.setForeground(Color.WHITE);
-        phone.setFont(new Font(null, Font.BOLD, 15));
+        contact.setText("Contact:");
+        contact.setBounds(30, 270, 100, 30);
+        contact.setForeground(Color.WHITE);
+        contact.setFont(new Font(null, Font.BOLD, 15));
 
-        tfPhone.setBounds(150, 215, 400, 30);
-        tfPhone.setFont(new Font(null, Font.BOLD, 15));
-        tfPhone.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.contact());
+        tfContact.setBounds(150, 273, 400, 30);
+        tfContact.setFont(new Font(null, Font.BOLD, 15));
+        tfContact.setText(BankSystem.currentUser == null ? "" : BankSystem.currentUser.contact());
 
         label.add(label1);
         label.add(accountIDLabel);
         label.add(tfID);
         label.add(accountNameLabel);
-        label.add(address);
-        label.add(tfAddress);
+        label.add(barangay);
+        label.add(tfBarangay);
+        label.add(municipality);
+        label.add(tfMunicipality);
+        label.add(province);
+        label.add(tfProvince);
         label.add(emailAddress);
         label.add(tfEmailAddress);
-        label.add(phone);
-        label.add(tfPhone);
+        label.add(contact);
+        label.add(tfContact);
         label.add(backButton);
         label.add(updateButton);
         label.add(btnSearch);
         label.setBounds(0, 0, 600, 350);
 
         frame.add(label);
-        frame.setSize(600, 350);
+        frame.setSize(600, 430);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
@@ -131,9 +157,9 @@ public class UpdateAccount {
         btnSearch.addActionListener(searchActionListener());
         updateButton.addActionListener(getActionListener());
         tfID.addActionListener(searchActionListener());
-        tfAddress.addActionListener(getActionListener());
+        tfBarangay.addActionListener(getActionListener());
         tfEmailAddress.addActionListener(getActionListener());
-        tfPhone.addActionListener(getActionListener());
+        tfContact.addActionListener(getActionListener());
     }
 
     UpdateAccount() {
@@ -141,35 +167,35 @@ public class UpdateAccount {
     }
 
     private void tryUpdate(User u) {
-        String address = tfAddress.getText();
+        String barangay = tfBarangay.getText();
+        String municipality = tfMunicipality.getText();
+        String province = tfProvince.getText();
         String email = tfEmailAddress.getText();
-        String phone = tfPhone.getText();
+        String phone = tfContact.getText();
 
-        if (address.isEmpty() || email.isEmpty() || phone.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+        if (barangay.isEmpty() || municipality.isEmpty() || province.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill up all fields", "Info", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        if (u.address().equals(address) && u.email().equals(email) && u.contact().equals(phone)) {
+        if (u.barangay().equals(barangay) && u.municipality().equals(municipality) && u.province().equals(province) && u.email().equals(email) && u.contact().equals(phone)) {
             JOptionPane.showMessageDialog(null, "No changes made", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        User user = new User(u.id, u.name, email, phone, address, u.pin(), u.balance, u.status);
-        try {
-            Database.updateUser(user);
-            JOptionPane.showMessageDialog(null, "Account updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            frame.dispose();
+        u.updateDetails(barangay, municipality, province, email, phone);
 
-            if (!isAdmin) {
-                new UserMenu();
-                return;
-            }
+        if (!Database.saveUser(u)) return;
 
-            new AdminMenu();
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Account updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        frame.dispose();
+
+        if (!isAdmin) {
+            new UserMenu();
+            return;
         }
+
+        new AdminMenu();
     }
 
     private ActionListener searchActionListener() {
@@ -185,9 +211,11 @@ public class UpdateAccount {
                 }
 
                 accountNameLabel.setText("Account Name: " + user.name());
-                tfAddress.setText(user.address());
+                tfBarangay.setText(user.barangay());
+                tfMunicipality.setText(user.municipality());
+                tfProvince.setText(user.province());
                 tfEmailAddress.setText(user.email());
-                tfPhone.setText(user.contact());
+                tfContact.setText(user.contact());
             }
         };
     }
