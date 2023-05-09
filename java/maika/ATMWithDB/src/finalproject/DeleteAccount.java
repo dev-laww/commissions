@@ -137,7 +137,7 @@ public class DeleteAccount {
                 }
 
                 String adminPass = String.valueOf(passwordField.getPassword());
-                String storedPassword = Database.admin.get("1234");
+                String storedPassword = Database.admin.get("1001");
                 if (storedPassword != null && !storedPassword.equals(adminPass)) {
                     JOptionPane.showMessageDialog(null, "Wrong password");
                     return;
