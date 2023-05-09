@@ -82,7 +82,6 @@ public class MiniStatement {
         background.add(sp);
 
         background.setBounds(0,0,800,480);
-
         
         frame.add(background);
         frame.setSize(800, 480);

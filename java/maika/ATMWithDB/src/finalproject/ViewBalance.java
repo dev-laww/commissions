@@ -57,7 +57,7 @@ public class ViewBalance {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        Transaction transaction = new Transaction(Database.user.id, 0, "view ministatement");
+        Transaction transaction = new Transaction(Database.user.id, 0, "view balance");
         if (!Database.saveTransaction(transaction)) {
             frame.dispose();
             new UserMenu();
