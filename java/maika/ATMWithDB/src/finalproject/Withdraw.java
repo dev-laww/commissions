@@ -290,7 +290,7 @@ public class Withdraw {
                         return;
                     }
 
-                    if(user.isLocked()) {
+                    if (user.isLocked()) {
                         JOptionPane.showMessageDialog(null, "Account is locked.");
                         return;
                     }
@@ -300,7 +300,7 @@ public class Withdraw {
                         return;
                     }
 
-                    tryWithdraw(user, amount);
+                    if (!tryWithdraw(user, amount)) return;
                     frame.dispose();
                     new Receipt(user.id, true);
                     return;
@@ -311,28 +311,30 @@ public class Withdraw {
                     return;
                 }
 
-                if(Database.user.isLocked()) {
+                if (Database.user.isLocked()) {
                     JOptionPane.showMessageDialog(null, "Account is locked.");
                     return;
                 }
 
-                tryWithdraw(Database.user, amount);
+                if (!tryWithdraw(Database.user, amount)) return;
                 frame.dispose();
                 new Receipt(Database.user.id, false);
             }
         };
     }
 
-    public static void tryWithdraw(User u, String amount) {
+    public static boolean tryWithdraw(User u, String amount) {
         try {
             u.withdraw(Double.parseDouble(amount.replace(",", "")));
             JOptionPane.showMessageDialog(null, "Withdraw successful.");
+            return true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Withdraw failed.\n" + ex.getMessage());
         }
+        return false;
     }
 }
 

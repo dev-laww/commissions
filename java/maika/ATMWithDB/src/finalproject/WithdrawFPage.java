@@ -194,13 +194,13 @@ public class WithdrawFPage {
                         return;
                     }
 
-                    Withdraw.tryWithdraw(user, amount);
+                    if (!Withdraw.tryWithdraw(user, amount)) return;
                     frame.dispose();
                     new Receipt(user.id, true);
                     return;
                 }
 
-                Withdraw.tryWithdraw(Database.user, amount);
+                if (!Withdraw.tryWithdraw(Database.user, amount)) return;
                 frame.dispose();
                 new Receipt(Database.user.id, false);
             }
