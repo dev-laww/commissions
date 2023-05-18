@@ -1,5 +1,6 @@
 import re
 import tkinter as tk
+from datetime import datetime
 from tkinter import messagebox
 from tkinter import ttk
 
@@ -187,6 +188,10 @@ class Add_Form(tk.Frame):
         self.contact_number_field.delete(0, tk.END)
 
 
+def get_current_month():
+    return datetime.now().strftime("%B")
+
+
 class Update_Form(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -200,7 +205,11 @@ class Update_Form(tk.Frame):
         self.salary_rate_field = tk.Entry(self)
         self.contact_number_field = tk.Entry(self)
         self.date_label = tk.Label(self, text="Date: ")
-        self.date_field = tk.Entry(self)
+        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                  "November", "December"]
+
+        self.date_field = ttk.Combobox(self, values=months)
+        self.date_field.set(get_current_month())
         self.hours_label = tk.Label(self, text="Hours Worked: ")
         self.hours_worked_field = tk.Entry(self)
         self.save_button = tk.Button(self, text="Update", command=self.update_employee)
@@ -221,20 +230,20 @@ class Update_Form(tk.Frame):
         self.rank_field.grid(row=4, column=1)
         self.salary_rate_field.grid(row=5, column=1)
         self.contact_number_field.grid(row=6, column=1)
-        self.date_label.grid(row=1, column=3, sticky='e')
-        self.date_field.grid(row=1, column=4, sticky='w')
-        self.hours_label.grid(row=2, column=3, sticky='e')
-        self.hours_worked_field.grid(row=2, column=4, sticky='w')
+        self.date_label.grid(row=9, column=2, sticky='e')
+        self.date_field.grid(row=9, column=3, sticky='w')
+        self.hours_label.grid(row=9, column=4, sticky='e')
+        self.hours_worked_field.grid(row=9, column=5, sticky='w')
         self.back_button.grid(row=9, column=0, sticky='w', padx=20, pady=10)
         self.save_button.grid(row=9, column=1, sticky='e', padx=20, pady=10)
-        self.add_salary_button.grid(row=3, column=4, padx=20, pady=10)
+        self.add_salary_button.grid(row=9, column=6, padx=20, pady=10)
 
         columns = ("date", "rendered_hours", "gross_salary")
         self.table = ttk.Treeview(self, columns=columns, show='headings')
         self.table.heading("date", text="Date")
         self.table.heading("rendered_hours", text="Rendered Hours")
         self.table.heading("gross_salary", text="Gross Salary")
-        self.table.grid(row=0, column=2, rowspan=9, padx=20, pady=10)
+        self.table.grid(row=0, column=2, rowspan=9, columnspan=5, padx=20, pady=10)
 
     def load_employee_data(self, employee_id):
         self.clear_fields()
@@ -274,6 +283,13 @@ class Update_Form(tk.Frame):
             messagebox.showerror("Add Salary", "Please fill up all fields")
             return False
 
+        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+         "November", "December"]
+
+        if date not in months:
+            messagebox.showerror("Add Salary", "Invalid month")
+            return False
+
         try:
             int(hours_worked)
             return True
@@ -289,7 +305,7 @@ class Update_Form(tk.Frame):
         try:
             payroll = models.Payroll()
             payroll.employee_id = self.employee_id
-            payroll.date = self.date_field.get()
+            payroll.date = f'{self.date_field.get()} {datetime.now().year}'
             payroll.rendered_hours = int(self.hours_worked_field.get())
             payroll.salary = float(self.hours_worked_field.get()) * float(self.salary_rate_field.get())
 
