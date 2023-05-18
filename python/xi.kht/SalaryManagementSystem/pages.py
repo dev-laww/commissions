@@ -3,6 +3,7 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox
 from tkinter import ttk
+from tkcalendar import Calendar, DateEntry
 
 import database_handler
 import models
@@ -205,11 +206,13 @@ class Update_Form(tk.Frame):
         self.salary_rate_field = tk.Entry(self)
         self.contact_number_field = tk.Entry(self)
         self.date_label = tk.Label(self, text="Date: ")
-        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-                  "November", "December"]
 
-        self.date_field = ttk.Combobox(self, values=months)
-        self.date_field.set(get_current_month())
+        # months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+        #           "November", "December"]
+        #
+        # self.date_field = ttk.Combobox(self, values=months)
+        self.date_field = DateEntry(self, width=12, background='darkblue', foreground='white', borderwidth=2)
+
         self.hours_label = tk.Label(self, text="Hours Worked: ")
         self.hours_worked_field = tk.Entry(self)
         self.save_button = tk.Button(self, text="Update", command=self.update_employee)
@@ -283,12 +286,14 @@ class Update_Form(tk.Frame):
             messagebox.showerror("Add Salary", "Please fill up all fields")
             return False
 
+        # Edit this if you edited the date_field
         months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
          "November", "December"]
 
         if date not in months:
             messagebox.showerror("Add Salary", "Invalid month")
             return False
+        # --------------------------------------------
 
         try:
             int(hours_worked)
