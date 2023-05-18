@@ -15,7 +15,7 @@ class DBHandler:
     def read_employee(self):
         employees = []
 
-        query = f'SELECT * FROM {self.employee_table}'
+        query = f'SELECT * FROM {self.employee_table} ORDER BY employee_name'
         self.cursor.execute(query)
 
         for row in self.cursor:
@@ -59,6 +59,7 @@ class DBHandler:
             new_employee.rank = row[4]
             new_employee.salary_rate = row[5]
             new_employee.contact_number = row[6]
+            new_employee.payrolls = self.read_payroll(new_employee.id)
             return new_employee
 
     def update_employee(self, employee: models.Employee):
@@ -69,8 +70,8 @@ class DBHandler:
         self.conn.commit()
 
     def search_employee(self, key):
-        key = '%' + key + '%'
-        query = f'SELECT * FROM {self.employee_table} WHERE employee_name LIKE ?'
+        key = f'{key}%'
+        query = f"SELECT * FROM {self.employee_table} WHERE employee_name LIKE ? ORDER BY employee_name"
         values = (key,)
         self.cursor.execute(query, values)
 
@@ -87,6 +88,31 @@ class DBHandler:
             employees.append(new_employee)
 
         return employees
+
+    def read_payroll(self, employee_id):
+        query = f"SELECT * FROM {self.salary_table} WHERE employee_id = ?"
+        values = (employee_id,)
+        cursor = self.conn.cursor()
+
+        cursor.execute(query, values)
+
+        payrolls = []
+        for row in cursor:
+            new_payroll = models.Payroll()
+            new_payroll.id = row[0]
+            new_payroll.employee_id = row[1]
+            new_payroll.date = row[2]
+            new_payroll.rendered_hours = row[3]
+            new_payroll.salary = row[4]
+            payrolls.append(new_payroll)
+
+        return payrolls
+
+    def add_payroll(self, payroll: models.Payroll):
+        query = "INSERT INTO Salary_table (employee_id, date, rendered_hours, salary) VALUES (?, ?, ?, ?)"
+        values = (payroll.employee_id, payroll.date, payroll.rendered_hours, payroll.salary)
+        self.cursor.execute(query, values)
+        self.conn.commit()
 
     def close(self):
         self.conn.close()

@@ -1,3 +1,4 @@
+import re
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -12,9 +13,7 @@ class Dashboard(tk.Frame):
         self.parent = master
 
         columns = ("id", "employee_number", "employee_name", "rank")
-
         self.table = ttk.Treeview(self, columns=columns, show='headings')
-
         self.table.heading("id", text="id")
         self.table.heading("employee_number", text="Employee No.")
         self.table.heading("employee_name", text="Employee Name")
@@ -69,7 +68,7 @@ class Dashboard(tk.Frame):
             db_conn.delete_employee(id)
             db_conn.close()
 
-            self.update_table()
+        self.update_table()
 
     def go_to_update_form(self):
         selected_items = self.table.selection()
@@ -100,6 +99,7 @@ class Add_Form(tk.Frame):
         self.salary_rate_field = tk.Entry(self)
         self.contact_number_field = tk.Entry(self)
         self.save_button = tk.Button(self, text="Save", command=self.save_employee)
+        self.back_button = tk.Button(self, text="Back", command=self.go_to_dashboard)
 
         label_Texts = ["Employee Number: ", "Employee Name: ", "Age: ", "Rank: ", "Salary Rate: ", "Contact Number: "]
 
@@ -113,9 +113,41 @@ class Add_Form(tk.Frame):
         self.salary_rate_field.grid(row=4, column=1)
         self.contact_number_field.grid(row=5, column=1)
         self.save_button.grid(row=6, column=1, sticky='e', padx=20, pady=10)
+        self.back_button.grid(row=6, column=1, sticky='w', padx=20, pady=10)
 
     def validate_date(self):
-        # Input validation
+        employee_number = self.number_field.get()
+        employee_name = self.name_field.get()
+        age = self.age_field.get()
+        rank = self.rank_field.get()
+        salary_rate = self.salary_rate_field.get()
+        contact_number = self.contact_number_field.get()
+
+        # Perform validation checks
+        if not employee_number or not employee_name or not age or not rank or not salary_rate or not contact_number:
+            messagebox.showerror("Validation Error", "All fields must be filled in.")
+            return False
+
+        try:
+            int(age)  # Check if age is a valid integer
+        except ValueError:
+            messagebox.showerror("Validation Error", "Age must be a valid integer.")
+            return False
+
+        try:
+            float(salary_rate)  # Check if salary rate is a valid float
+        except ValueError:
+            messagebox.showerror("Validation Error", "Salary rate must be a valid number.")
+            return False
+
+        if not re.match(r'^\d{10}$', contact_number):
+            # If you get questions about this say it is needed as it validates the contact number
+            # and make sure that the input is a 10-digit number
+            messagebox.showerror("Validation Error", "Contact number must be a 10-digit number.")
+            return False
+
+        # Additional validation checks can be added as needed
+
         return True
 
     def save_employee(self):
@@ -129,6 +161,11 @@ class Add_Form(tk.Frame):
             new_employee.rank = self.rank_field.get()
             new_employee.salary_rate = float(self.salary_rate_field.get())
             new_employee.contact_number = self.contact_number_field.get()
+
+            proceed = messagebox.askyesno("Add Employee", "Do you want to add the employee?")
+
+            if not proceed:
+                return
 
             db_conn = database_handler.DBHandler()
             db_conn.add_employee(new_employee)
@@ -162,13 +199,20 @@ class Update_Form(tk.Frame):
         self.rank_field = tk.Entry(self)
         self.salary_rate_field = tk.Entry(self)
         self.contact_number_field = tk.Entry(self)
+        self.date_label = tk.Label(self, text="Date: ")
+        self.date_field = tk.Entry(self)
+        self.hours_label = tk.Label(self, text="Hours Worked: ")
+        self.hours_worked_field = tk.Entry(self)
         self.save_button = tk.Button(self, text="Update", command=self.update_employee)
+        self.back_button = tk.Button(self, text="Back", command=self.go_to_dashboard)
+        self.add_salary_button = tk.Button(self, text="Add Salary", command=self.add_salary)
+        self.employee_id = None
 
-        label_Texts = ["ID: ", "Employee Number: ", "Employee Name: ", "Age: ", "Rank: ", "Salary Rate: ",
+        label_texts = ["ID: ", "Employee Number: ", "Employee Name: ", "Age: ", "Rank: ", "Salary Rate: ",
                        "Contact Number: "]
 
-        for i in range(len(label_Texts)):
-            tk.Label(self, text=label_Texts[i]).grid(row=i, column=0, sticky='e')
+        for i, label_text in enumerate(label_texts):
+            tk.Label(self, text=label_text).grid(row=i, column=0, sticky='e')
 
         self.id_label.grid(row=0, column=1)
         self.number_field.grid(row=1, column=1)
@@ -177,17 +221,29 @@ class Update_Form(tk.Frame):
         self.rank_field.grid(row=4, column=1)
         self.salary_rate_field.grid(row=5, column=1)
         self.contact_number_field.grid(row=6, column=1)
-        self.save_button.grid(row=7, column=1, sticky='e', padx=20, pady=10)
+        self.date_label.grid(row=1, column=3, sticky='e')
+        self.date_field.grid(row=1, column=4, sticky='w')
+        self.hours_label.grid(row=2, column=3, sticky='e')
+        self.hours_worked_field.grid(row=2, column=4, sticky='w')
+        self.back_button.grid(row=9, column=0, sticky='w', padx=20, pady=10)
+        self.save_button.grid(row=9, column=1, sticky='e', padx=20, pady=10)
+        self.add_salary_button.grid(row=3, column=4, padx=20, pady=10)
 
-    def on_return(self, **kwargs):
-        self.id = kwargs['employee_id']
-        self.id_label.config(text=self.id)
+        columns = ("date", "rendered_hours", "gross_salary")
+        self.table = ttk.Treeview(self, columns=columns, show='headings')
+        self.table.heading("date", text="Date")
+        self.table.heading("rendered_hours", text="Rendered Hours")
+        self.table.heading("gross_salary", text="Gross Salary")
+        self.table.grid(row=0, column=2, rowspan=9, padx=20, pady=10)
+
+    def load_employee_data(self, employee_id):
+        self.clear_fields()
+        self.id_label.config(text=employee_id)
+        self.employee_id = employee_id
 
         db_conn = database_handler.DBHandler()
-        employee_data = db_conn.read_one_employee(self.id)
-        db_conn.close
-
-        self.clear_fields()
+        employee_data = db_conn.read_one_employee(employee_id)
+        db_conn.close()
 
         self.number_field.insert(0, employee_data.employee_number)
         self.name_field.insert(0, employee_data.employee_name)
@@ -195,6 +251,11 @@ class Update_Form(tk.Frame):
         self.rank_field.insert(0, employee_data.rank)
         self.salary_rate_field.insert(0, employee_data.salary_rate)
         self.contact_number_field.insert(0, employee_data.contact_number)
+
+        self.table.delete(*self.table.get_children())
+
+        for payroll in employee_data.payrolls:
+            self.table.insert("", "end", values=(payroll.date, payroll.rendered_hours, payroll.salary))
 
     def clear_fields(self):
         self.name_field.delete(0, tk.END)
@@ -204,16 +265,87 @@ class Update_Form(tk.Frame):
         self.salary_rate_field.delete(0, tk.END)
         self.contact_number_field.delete(0, tk.END)
 
-    def validate_date(self):
-        # Input validation
+    def validate_payroll(self):
+
+        date = self.date_field.get()
+        hours_worked = self.hours_worked_field.get()
+
+        if not date or not hours_worked:
+            messagebox.showerror("Add Salary", "Please fill up all fields")
+            return False
+
+        try:
+            int(hours_worked)
+            return True
+        except ValueError as e:
+            print(e)
+            messagebox.showerror("Add Salary", "Rendered Hours must be numbers")
+            return False
+
+    def add_salary(self):
+        if not self.validate_payroll():
+            return
+
+        try:
+            payroll = models.Payroll()
+            payroll.employee_id = self.employee_id
+            payroll.date = self.date_field.get()
+            payroll.rendered_hours = int(self.hours_worked_field.get())
+            payroll.salary = float(self.hours_worked_field.get()) * float(self.salary_rate_field.get())
+
+            db_conn = database_handler.DBHandler()
+            db_conn.add_payroll(payroll)
+            db_conn.close()
+
+            self.load_employee_data(self.employee_id)
+
+            self.date_field.delete(0, tk.END)
+            self.hours_worked_field.delete(0, tk.END)
+
+            messagebox.showinfo("Add Salary", "Salary added successfully")
+        except ValueError as e:
+            print(e)
+            messagebox.showerror("Add Salary", "Rendered Hours and Gross Salary must be numbers")
+
+    def validate_data(self):
+        employee_number = self.number_field.get()
+        employee_name = self.name_field.get()
+        age = self.age_field.get()
+        rank = self.rank_field.get()
+        salary_rate = self.salary_rate_field.get()
+        contact_number = self.contact_number_field.get()
+
+        # Perform validation checks
+        if not employee_number or not employee_name or not age or not rank or not salary_rate or not contact_number:
+            messagebox.showerror("Validation Error", "All fields must be filled in.")
+            return False
+
+        try:
+            int(age)  # Check if age is a valid integer
+        except ValueError:
+            messagebox.showerror("Validation Error", "Age must be a valid integer.")
+            return False
+
+        try:
+            float(salary_rate)  # Check if salary rate is a valid float
+        except ValueError:
+            messagebox.showerror("Validation Error", "Salary rate must be a valid number.")
+            return False
+
+        if not re.match(r'^\d{10}$', contact_number):
+            # If you get questions about this say it is needed as it validates the contact number
+            # and make sure that the input is a 10-digit number
+            messagebox.showerror("Validation Error", "Contact number must be a 10-digit number.")
+            return False
+
         return True
 
     def update_employee(self):
-        if not self.validate_date():
+        if not self.validate_data():
             return
+
         try:
             new_employee = models.Employee()
-            new_employee.id = self.id
             new_employee.employee_number = self.number_field.get()
             new_employee.employee_name = self.name_field.get()
             new_employee.age = int(self.age_field.get())
@@ -236,3 +368,6 @@ class Update_Form(tk.Frame):
 
     def go_to_dashboard(self):
         self.parent.change_window('Dashboard')
+
+    def on_return(self, employee_id=None):
+        self.load_employee_data(employee_id)
