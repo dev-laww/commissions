@@ -41,7 +41,7 @@ def generate_suggestions(path: str) -> List[str]:
 
             # If item is a file, appends to suggestions list
             if os.path.isfile(item_path):
-                suggestions.append(' '.join([word.capitalize() for word in item.split('-')]))
+                suggestions.append(' '.join([word.capitalize() for word in item.split('-')]).replace('.txt', ''))
 
         return suggestions
 
