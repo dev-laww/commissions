@@ -4,6 +4,8 @@ from datetime import datetime
 from textwrap import dedent
 from tkinter import messagebox
 
+import qrcode
+
 from utils import generate_suggestions, Constants
 
 
@@ -138,7 +140,7 @@ class AddEntry(tk.Tk):
         if self.suggestions_box_1.size() == 0:
             messagebox.showinfo('No Results', 'No matching results found. Please Add A New Location')
 
-    def transfer_items(self, e):
+    def transfer_items(self, event):
         selected_indices_1 = self.suggestions_box_1.curselection()
 
         for index in selected_indices_1:
@@ -161,25 +163,17 @@ class AddEntry(tk.Tk):
 
             self.suggestions_box_2.delete(index)
 
-        # creates method for generating suggestion for the results
-
     def add_new_choice(self):
-        # Retrieves input from new_choice_entry
         new_choice = self.new_choice_entry.get()
 
-        # Check if the input contains a comma
         if ',' in new_choice:
             self.logger.warning(f'Invalid location input: {new_choice}')
             messagebox.showerror('Invalid Input', 'Commas are not allowed in the location name.')
             return
 
-        # Indicates the file where the new item will be stored
-
-        # Opens file and appends new_choice into the file
         with open(Constants.LOCATIONS_PATH, 'a') as file:
             file.write(f'\n{new_choice}')
 
-        # Shows a messagebox to confirm that the new input is successful
         messagebox.showinfo('New Location Added', 'The location has been added successfully.')
         self.logger.info(f'Added new location: {new_choice}')
 
@@ -210,16 +204,10 @@ class AddEntry(tk.Tk):
             messagebox.showerror('Invalid Input', 'Age must be an Integer')
             self.age_entry.delete(0, tk.END)
 
-        # Exports all user input within add entry into a text file
-
     def export_input(self):
-        # Retrieves user input for age
         name = self.name_entry.get()
-
-        # Retrieves user input for age
         get_age = self.age_entry.get()
 
-        # Validate age input
         try:
             get_age = int(get_age)
             if get_age <= 0 or get_age >= 100:
@@ -230,7 +218,6 @@ class AddEntry(tk.Tk):
             messagebox.showerror('Invalid Age', 'Please enter a valid age (1-99).')
             return
 
-        # Retrieves user input for gender
         gender_selected = self.selected_gender.get()
 
         gender_map = {
@@ -240,19 +227,11 @@ class AddEntry(tk.Tk):
         }
 
         gender = gender_map.get(gender_selected, 'Prefer Not To Say')
-
-        # Retrieves user input for address
         address = self.address_entry.get()
-
-        # Retrieves user input for contact details
         contact = self.contact_entry.get()
 
-        # Retrieve all items in suggestions_box_2
         self.selected_items = self.suggestions_box_2.get(0, tk.END)
-
         location = ', '.join(self.selected_items)
-
-        # Retrieves user selected option for Covid-19 Test Results
         selected_option = self.selected_option.get()
 
         test_map = {
@@ -283,10 +262,7 @@ class AddEntry(tk.Tk):
             self.logger.warning(f'Missing fields: {", ".join(missing_fields)}')
             return
 
-        # Create a timestamp with the current date and time
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-        # creates the content to be displayed within the text file
         content = dedent(f'''
             Timestamp: {timestamp}
             Name: {name}
@@ -298,9 +274,16 @@ class AddEntry(tk.Tk):
             Locations Visited Last 14 Days: {location}
         ''')
 
+        if test_result == 'Yes-Positive':
+            self.add_to_confirmed_cases(name, location)
+
         try:
-            with open(f'{Constants.ENTRIES_PATH}/{name}.txt', 'w') as file:
+            file_name = f'{name.replace(" ", "-").lower()}'
+            with open(f'{Constants.ENTRIES_PATH}/{file_name}.txt', 'w') as file:
                 file.write(content)
+
+            qr_code = qrcode.make(content)
+            qr_code.save(f'{Constants.QR_CODES_PATH}/{file_name}.png')
 
             messagebox.showinfo('Export Successful', f'Content exported')
             self.logger.info(f'Exported entry for {name}.')
@@ -321,9 +304,7 @@ class AddEntry(tk.Tk):
         self.clear()
         self.logger.info(f'Exported entry for {name}.')
 
-
     def show_possible_contacts(self):
-        # Get the locations visited by the user in the last 14 days
         visited_locations = self.suggestions_box_2.get(0, tk.END)
 
         try:
@@ -331,6 +312,7 @@ class AddEntry(tk.Tk):
                 confirmed_cases = file.read().splitlines()
         except FileNotFoundError:
             messagebox.showinfo('No Confirmed Cases', 'There are no confirmed cases yet.')
+            return
 
         word_counts = {location: 0 for location in visited_locations}
 
@@ -353,12 +335,10 @@ class AddEntry(tk.Tk):
                 if location in word_counts:
                     word_counts[location] += 1
 
-        # Create a new window to display the results
         contacts_window = tk.Toplevel(self)
         contacts_window.title('Possible Contacts with Confirmed Cases in the Last 14 Days')
         contacts_window.geometry('400x300')
 
-        # Display the number of confirmed cases for each visited location
         for location in visited_locations:
             num_cases = word_counts[location]
             label_text = dedent(f'''
@@ -369,12 +349,9 @@ class AddEntry(tk.Tk):
             location_label.pack()
 
     def add_to_confirmed_cases(self, name, location):
-        # Get the current timestamp
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        # Add the user's name, locations, and timestamp to the confirmed cases list
         self.confirmed_cases.append((name, location, timestamp))
-        # Save the confirmed cases to the 'Confirmed cases' text file
         with open(Constants.CONFIRMED_CASES_PATH, 'a') as file:
             file.write(f'{name}\t{location}\t{timestamp}\n')
 
@@ -387,18 +364,10 @@ class AddEntry(tk.Tk):
         self.search_location.insert(0, 'Search For Locations')
         self.new_choice_entry.delete(0, tk.END)
 
-        # Clear selected gender and test result options
         self.selected_gender.set(0)
         self.selected_option.set(0)
 
-        # Clear both listbox
         self.suggestions_box_2.delete(0, tk.END)
 
-        # Clear the selected items lists
         self.selected_items = []
         self.selected_items_2 = []
-
-
-if __name__ == '__main__':
-    root = ContactTracing()
-    root.mainloop()
