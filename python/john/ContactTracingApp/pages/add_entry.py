@@ -9,18 +9,20 @@ import qrcode
 from utils import generate_suggestions, Constants
 
 
-class AddEntry(tk.Tk):
-    def __init__(self):
-        super().__init__()
-
+class AddEntry:
+    def __init__(self, root: tk.Tk):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
         self.logger.addHandler(Constants.FILE_HANDLER)
         self.logger.addHandler(Constants.STREAM_HANDLER)
 
-        self.title('Contact Tracing')
-        self.geometry('1000x600')
-        self.resizable(False, False)
+        self.logger.info('Initializing Add Entry Page')
+
+        self.root = root
+
+        self.root.title('Contact Tracing')
+        self.root.geometry('1000x600')
+        self.root.resizable(False, False)
 
         self.selected_items = []
         self.selected_items_2 = []
@@ -28,50 +30,50 @@ class AddEntry(tk.Tk):
         self.selected_gender = tk.IntVar()
         self.confirmed_cases = []
 
-        self.title_label = tk.Label(self, text='Please Fill Out The Following Information: ', font=('Arial', 16))
+        self.title_label = tk.Label(self.root, text='Please Fill Out The Following Information: ', font=('Arial', 16))
         self.title_label.place(x=300, y=50)
 
-        self.demographic_label = tk.Label(self, text='Basic Demographic')
+        self.demographic_label = tk.Label(self.root, text='Basic Demographic')
         self.demographic_label.place(x=100, y=90)
 
-        self.name_label = tk.Label(self, text='Full Name:')
+        self.name_label = tk.Label(self.root, text='Full Name:')
         self.name_label.place(x=100, y=140)
-        self.name_entry = tk.Entry(self)
+        self.name_entry = tk.Entry(self.root)
         self.name_entry.place(x=100, y=160)
 
-        self.age_label = tk.Label(self, text='Age:')
+        self.age_label = tk.Label(self.root, text='Age:')
         self.age_label.place(x=100, y=220)
-        self.age_entry = tk.Entry(self)
+        self.age_entry = tk.Entry(self.root)
         self.age_entry.place(x=100, y=240)
 
         self.age_entry.bind('<KeyRelease>', self.validate_age_entry)
 
-        self.gender_label = tk.Label(self, text='Gender:')
+        self.gender_label = tk.Label(self.root, text='Gender:')
         self.gender_label.place(x=100, y=300)
 
-        female_radio = tk.Radiobutton(self, text='Female', variable=self.selected_gender, value='1')
+        female_radio = tk.Radiobutton(self.root, text='Female', variable=self.selected_gender, value='1')
         female_radio.place(x=100, y=320)
 
-        male_radio = tk.Radiobutton(self, text='Male', variable=self.selected_gender, value='2')
+        male_radio = tk.Radiobutton(self.root, text='Male', variable=self.selected_gender, value='2')
         male_radio.place(x=100, y=340)
 
-        prefer_not_radio = tk.Radiobutton(self, text='Prefer Not To Say', variable=self.selected_gender, value='3')
+        prefer_not_radio = tk.Radiobutton(self.root, text='Prefer Not To Say', variable=self.selected_gender, value='3')
         prefer_not_radio.place(x=100, y=360)
 
-        self.address_label = tk.Label(self, text='Adress:')
+        self.address_label = tk.Label(self.root, text='Adress:')
         self.address_label.place(x=100, y=420)
-        self.address_entry = tk.Entry(self)
+        self.address_entry = tk.Entry(self.root)
         self.address_entry.place(x=100, y=440)
 
-        self.contact_label = tk.Label(self, text='Contact Details:')
+        self.contact_label = tk.Label(self.root, text='Contact Details:')
         self.contact_label.place(x=100, y=500)
-        self.contact_entry = tk.Entry(self)
+        self.contact_entry = tk.Entry(self.root)
         self.contact_entry.place(x=100, y=520)
 
-        self.test_label = tk.Label(self, text='What Locations Have you been to the last 14 days?:')
+        self.test_label = tk.Label(self.root, text='What Locations Have you been to the last 14 days?:')
         self.test_label.place(x=300, y=90)
 
-        self.search_location = tk.Entry(self, font=('Helvetica', 16), fg='gray')
+        self.search_location = tk.Entry(self.root, font=('Helvetica', 16), fg='gray')
         self.search_location.place(x=300, y=110)
 
         default_text = 'Search For Locations'
@@ -79,16 +81,16 @@ class AddEntry(tk.Tk):
         self.search_location.bind('<FocusIn>', self.on_entry_click)
         self.search_location.bind('<FocusOut>', self.on_entry_leave)
 
-        self.suggestions_box_1_results = tk.Label(self, text='Results:')
+        self.suggestions_box_1_results = tk.Label(self.root, text='Results:')
         self.suggestions_box_1_results.place(x=300, y=140)
 
-        self.suggestions_box_1 = tk.Listbox(self, width=50, selectmode=tk.MULTIPLE)
+        self.suggestions_box_1 = tk.Listbox(self.root, width=50, selectmode=tk.MULTIPLE)
         self.suggestions_box_1.place(x=300, y=160)
 
-        self.suggestions_box_2_results = tk.Label(self, text='Selected Location:')
+        self.suggestions_box_2_results = tk.Label(self.root, text='Selected Location:')
         self.suggestions_box_2_results.place(x=300, y=330)
 
-        self.suggestions_box_2 = tk.Listbox(self, width=50, selectmode=tk.MULTIPLE)
+        self.suggestions_box_2 = tk.Listbox(self.root, width=50, selectmode=tk.MULTIPLE)
         self.suggestions_box_2.place(x=300, y=350)
 
         self.search_location.bind('<KeyRelease>', self.check)
@@ -96,28 +98,30 @@ class AddEntry(tk.Tk):
         self.suggestions_box_1.bind('<<ListboxSelect>>', self.transfer_items)
         self.suggestions_box_2.bind('<<ListboxSelect>>', self.transfer_items)
 
-        self.test_label = tk.Label(self, text='Add New Location:')
+        self.test_label = tk.Label(self.root, text='Add New Location:')
         self.test_label.place(x=650, y=90)
-        self.new_choice_entry = tk.Entry(self)
+        self.new_choice_entry = tk.Entry(self.root)
         self.new_choice_entry.place(x=650, y=110)
 
-        self.new_choice_button = tk.Button(self, text='Add New Location', command=self.add_new_choice)
+        self.new_choice_button = tk.Button(self.root, text='Add New Location', command=self.add_new_choice)
         self.new_choice_button.place(x=650, y=140)
 
-        self.test_label = tk.Label(self, text='Have you been tested for the last 14 days?:')
+        self.test_label = tk.Label(self.root, text='Have you been tested for the last 14 days?:')
         self.test_label.place(x=650, y=220)
 
-        yes_negative_radio = tk.Radiobutton(self, text='Yes-Negative', variable=self.selected_option, value='1')
+        yes_negative_radio = tk.Radiobutton(self.root, text='Yes-Negative', variable=self.selected_option, value='1')
         yes_negative_radio.place(x=650, y=240)
 
-        yes_positive_radio = tk.Radiobutton(self, text='Yes-Positive', variable=self.selected_option, value='2')
+        yes_positive_radio = tk.Radiobutton(self.root, text='Yes-Positive', variable=self.selected_option, value='2')
         yes_positive_radio.place(x=650, y=260)
 
-        no_radio = tk.Radiobutton(self, text='No', variable=self.selected_option, value='3')
+        no_radio = tk.Radiobutton(self.root, text='No', variable=self.selected_option, value='3')
         no_radio.place(x=650, y=280)
 
-        button = tk.Button(self, text='Submit', command=self.export_input)
+        button = tk.Button(self.root, text='Submit', command=self.export_input)
         button.place(x=500, y=550)
+
+        self.logger.info('Add Entry Page Initialized')
 
     def check(self, e):
         typed = self.search_location.get().lower()
@@ -335,7 +339,7 @@ class AddEntry(tk.Tk):
                 if location in word_counts:
                     word_counts[location] += 1
 
-        contacts_window = tk.Toplevel(self)
+        contacts_window = tk.Toplevel(self.root)
         contacts_window.title('Possible Contacts with Confirmed Cases in the Last 14 Days')
         contacts_window.geometry('400x300')
 
