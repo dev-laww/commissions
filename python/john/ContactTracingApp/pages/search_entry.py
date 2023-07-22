@@ -1,4 +1,6 @@
+import logging
 import os
+import time
 import tkinter as tk
 from tkinter import messagebox
 
@@ -7,14 +9,22 @@ from PIL import ImageTk, Image
 from utils import Constants, generate_suggestions
 
 
-class SearchEntry(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title('Contact Tracing')
-        self.geometry('600x400')
-        self.resizable(False, False)
+class SearchEntry:
+    def __init__(self, root: tk.Tk):
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        self.logger.addHandler(Constants.FILE_HANDLER)
+        self.logger.addHandler(Constants.STREAM_HANDLER)
 
-        self.search_entry = tk.Entry(self, font=('Helvetica', 20), fg='gray')
+        self.logger.info('Initializing Search Entry Page')
+
+        self.root = root
+
+        self.root.title('Search Entry')
+        self.root.geometry('600x400')
+        self.root.resizable(False, False)
+
+        self.search_entry = tk.Entry(self.root, font=('Helvetica', 20), fg='gray')
         self.search_entry.pack(pady=40)
 
         default_text = 'Search For Entries'
@@ -22,20 +32,23 @@ class SearchEntry(tk.Tk):
         self.search_entry.bind('<FocusIn>', self.on_entry_click)
         self.search_entry.bind('<FocusOut>', self.on_entry_leave)
 
-        self.result_label = tk.Label(self, text='Results: ')
+        self.result_label = tk.Label(self.root, text='Results: ')
         self.result_label.pack()
 
-        self.suggestions_box = tk.Listbox(self, width=50)
+        self.suggestions_box = tk.Listbox(self.root, width=50)
         self.suggestions_box.pack()
 
-        self.log_book = tk.Button(self, text='View Log Book', command=self.see_log_book)
+        self.log_book = tk.Button(self.root, text='View Log Book', command=self.see_log_book)
         self.log_book.pack()
 
         self.search_entry.bind('<KeyRelease>', self.check)
 
         self.suggestions_box.bind('<<ListboxSelect>>', self.__fillout)
 
+        self.logger.info('Search Entry Page Initialized')
+
     def check(self, event):
+        time.sleep(0.1)
         typed = self.search_entry.get()
 
         if typed == '':
@@ -57,13 +70,14 @@ class SearchEntry(tk.Tk):
         self.search_entry.delete(0, tk.END)
         self.search_entry.insert(0, self.suggestions_box.get(tk.ANCHOR))
 
-        file_path = os.path.join(Constants.ENTRIES_PATH, self.suggestions_box.get(tk.ANCHOR))
-        if os.path.isfile(file_path):
-            with open(file_path, 'r') as file:
+        file_name = self.suggestions_box.get(tk.ANCHOR).lower().replace(' ', '-')
+
+        if os.path.isfile(f'{Constants.ENTRIES_PATH}/{file_name}.txt'):
+            with open(f'{Constants.ENTRIES_PATH}/{file_name}.txt', 'r') as file:
                 file_content = file.read()
                 self.display_file_content(
                     file_content,
-                    self.suggestions_box.get(tk.ANCHOR).replace('.txt', '')
+                    file_name
                 )
 
     def __update(self, data):
@@ -73,7 +87,9 @@ class SearchEntry(tk.Tk):
             self.suggestions_box.insert(tk.END, item)
 
     def display_file_content(self, content, file_name):
-        window = tk.Toplevel(self)
+        window = tk.Toplevel(self.root)
+
+        window.geometry('400x400')
 
         text_widget = tk.Text(window, height=10, width=50)
         text_widget.pack(pady=(10, 0), padx=10)
@@ -100,7 +116,9 @@ class SearchEntry(tk.Tk):
             self.search_entry.configure(foreground='gray')
 
     def see_log_book(self):
-        log_window = tk.Toplevel(self)
+        self.logger.info('Viewing Log Book')
+
+        log_window = tk.Toplevel(self.root)
         log_window.title('Log Book')
         log_window.geometry('400x300')
 
